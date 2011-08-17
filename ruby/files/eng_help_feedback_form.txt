@@ -1,0 +1,61 @@
+﻿
+<script type="text/javascript">
+  var feedbackSubmitted=false;
+</script>
+<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="javascript:postSubmit();"></iframe>
+<form name="HelpFeedbackForm" onsubmit="javascript:submitClicked();" action="https://spreadsheets.google.com/spreadsheet/formResponse?formkey=dGdfUDdpTTVOVUFMbXFiYjJubHRLMGc6MQ&amp;ifq" method="POST" id="ss-form" target="hidden_iframe"> 
+<hr/> 
+<p class="SubHeading">How did you rate this page?</p> 
+<table border="0" cellpadding="5" cellspacing="0"><tr> 
+<tr class="BodyText"> 
+<td><input type="radio" name="entry.6.group" value="1" id="group_6_1" onclick="javascript:enableSubmitButton();"><img src="../../Images/star.png"/></input></td> 
+<td><input type="radio" name="entry.6.group" value="2" id="group_6_2" onclick="javascript:enableSubmitButton();"><img src="../../Images/star.png"/><img src="../../Images/star.png"/></input></td> 
+<td><input type="radio" name="entry.6.group" value="3" id="group_6_3" onclick="javascript:enableSubmitButton();"><img src="../../Images/star.png"/><img src="../../Images/star.png"/><img src="../../Images/star.png"/></input></td> 
+<td><input type="radio" name="entry.6.group" value="4" id="group_6_4" onclick="javascript:enableSubmitButton();"><img src="../../Images/star.png"/><img src="../../Images/star.png"/><img src="../../Images/star.png"/><img src="../../Images/star.png"/></input></td> 
+<td><input type="radio" name="entry.6.group" value="5" id="group_6_5" onclick="javascript:enableSubmitButton();"><img src="../../Images/star.png"/><img src="../../Images/star.png"/><img src="../../Images/star.png"/><img src="../../Images/star.png"/><img src="../../Images/star.png"/></input></td></tr></table> 
+<textarea name="entry.7.single" rows="6" cols="50" id="entry_7" onclick="javascript:clearDefaultComment();">Add additional comments.</textarea> 
+<input type="hidden" name="entry.8.single" value="Autopopulate with page URL" id="entry_8">
+<input type="hidden" name="entry.9.single" value="<medidata-product-name>" id="entry_9"/>
+<br/>
+<input type="hidden" name="pageNumber" value="0"> 
+<input type="hidden" name="backupCache" value=""> 
+<input type="submit" name="submit" id="submitControl" value="Submit" disabled="true" onclick="javascript:clearDefaultComment();"></form>
+<script type="text/javascript">
+var submitControl=document.getElementById('submitControl');
+function enableSubmitButton()
+{
+submitControl.disabled=false;
+}
+</script>
+<script type="text/javascript">
+helpFeedBackForm=document.forms['ss-form'];
+function submitClicked()
+{
+feedbackSubmitted=true;
+urlField=helpFeedBackForm.elements['entry_8'];
+urlField.value=document.URL;
+}
+</script>
+<script type="text/javascript">
+function postSubmit()
+{
+  if(feedbackSubmitted)
+  {
+    alert('Thank you for your feedback.');
+	helpFeedBackForm.reset();
+	submitControl.disabled=true;
+	
+  }
+}
+</script>
+<script type="text/javascript">
+function clearDefaultComment()
+{
+defaultCommentField=document.getElementById('entry_7');
+if (defaultCommentField.value=="Add additional comments.")
+  {
+   defaultCommentField.value="";
+  }
+}
+</script>
+</body>
