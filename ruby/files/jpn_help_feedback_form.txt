@@ -22,21 +22,19 @@
 <input type="submit" name="submit" id="submitControl" value="Submit" disabled="true" onclick="javascript:clearDefaultComment();"></form>
 <script type="text/javascript">
 var submitControl=document.getElementById('submitControl');
+helpFeedBackForm=document.forms['ss-form'];
 function enableSubmitButton()
 {
 submitControl.disabled=false;
 }
-</script>
-<script type="text/javascript">
-helpFeedBackForm=document.forms['ss-form'];
+
 function submitClicked()
 {
 feedbackSubmitted=true;
 urlField=helpFeedBackForm.elements['entry_8'];
 urlField.value=document.URL;
 }
-</script>
-<script type="text/javascript">
+
 function postSubmit()
 {
   if(feedbackSubmitted)
@@ -47,8 +45,7 @@ function postSubmit()
 	
   }
 }
-</script>
-<script type="text/javascript">
+
 function clearDefaultComment()
 {
 defaultCommentField=document.getElementById('entry_7');
