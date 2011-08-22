@@ -48,7 +48,10 @@ aLangs.each do |lang|
   
   #copy the star graphic to the WebHelp systems
   FileUtils.cp "files/star.png", strWebHelpImagesFolder + "star.png"
+  FileUtils.cp "files/star_on.gif", strWebHelpImagesFolder + "star_on.gif"
+  FileUtils.cp "files/star_off.gif", strWebHelpImagesFolder + "star_off.gif"
 
+  
   aFiles = Dir[strPath + "/**/*.htm"]
   puts "File: " + strWebHelp
   print "Working"
