@@ -21,7 +21,7 @@
 <a onclick="setRating(this)" id="_3" title="Average" onmouseover="hoverOver(this)" onmouseout="hoverOff(this)"></a> 
 <a onclick="setRating(this)" id="_4" title="Good" onmouseover="hoverOver(this)" onmouseout="hoverOff(this)"></a> 
 <a onclick="setRating(this)" id="_5" title="Excellent" onmouseover="hoverOver(this)" onmouseout="hoverOff(this)"></a> </div>
-<span id="rateStatus"></span>
+<span id="rateStatus" class="BodyText"></span>
 <table border="0" cellpadding="5" cellspacing="0"><tr> 
 <tr class="BodyText"> 
 <td><input type="radio" name="entry.6.group" value="1" id="group_6_1" onclick="javascript:enableSubmitButton();"><img src="../../Images/star.png"/></input></td> 
@@ -135,6 +135,8 @@ function setRating(me){
 	
 	//Switch on the stars up to the current rating.
 	hoverOver(preSet);
+	
+	enableSubmitButton();
 	
 }
 
