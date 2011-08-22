@@ -3,11 +3,18 @@ require 'fileutils.rb'
 
 hSettings = Hash[*File.read("hpp.ini").scan(/^(.*)=(.*)$/).flatten]
 
+if hSettings["language"].nil?
+
+  puts "No language specified."
+  abort
+  
+end
+  
 aLangs = hSettings["language"].split(",")
 
 if aLangs.length > 1 and !(hSettings["webhelp"].include? "<LANG>")
 
-  puts "Multiple languages specified but no <LANG> in WebHelp path."
+  puts "No <LANG> in WebHelp path but multiple languages specified."
   abort
 
 end
@@ -30,12 +37,10 @@ aLangs.each do |lang|
   #update the product name.
   strFeedbackForm["<medidata-product-name>"] = hSettings["product"]
   
+  strWebHelp = String.new(hSettings["webhelp"])
   if hSettings["webhelp"].include? "<LANG>"
-    strWebHelp = String.new(hSettings["webhelp"])
     strWebHelp["<LANG>"] = lang
   end	
-  
- 
   
   strPath, strFile = wh.splitPathAndFile(strWebHelp)
   strWebHelpContentsFolder = strPath + "/" + File.basename(strFile, '.htm') + "/"
@@ -62,7 +67,7 @@ aLangs.each do |lang|
       begin
         strHTMLFile = File.read(element)
       rescue
-        #puts "Couldn't open " + element + ". Reason: bad file name."
+        puts "Couldn't open " + element
       end
 
       begin
@@ -82,7 +87,7 @@ aLangs.each do |lang|
       begin
         strHTMLFile = File.read(element)
       rescue
-        #puts "Couldn't open " + element + ". Reason: bad file name."
+        puts "Couldn't open " + element
       end
   
       aScaffoldingFiles = hSettings["tracked_scaffolding_files"].split(",")
@@ -94,7 +99,7 @@ aLangs.each do |lang|
 	      begin
             strHTMLFile = File.read(element)
           rescue
-            #puts "Couldn't open " + element + ". Reason: bad file name."
+            puts "Couldn't open " + element
           end
 	  
 	      begin
