@@ -1,0 +1,30 @@
+﻿function onSubmit(e) {
+  
+  //Copy the received feedback to another sheet.
+  
+  var ssRange = SpreadsheetApp.getActive().getActiveRange();
+  var firstRow = ssRange.getRow();
+  var lastRow = ssRange.getLastRow();
+  var firstCol = ssRange.getColumn();
+  var lastCol = ssRange.getLastColumn();
+  var bSheet = SpreadsheetApp.getActive().getSheetByName("Backup");
+  ssRange.copyValuesToRange(bSheet, firstCol, lastCol, firstRow, lastRow);    
+  
+ 
+  //Send a notification e-mail.
+  //
+  //var fbTimestamp = e.values[0];
+  //var fbProduct = e.values[4];
+  //var fbUrl = e.values[3];
+  //var fbRating = e.values[1];
+  //var fbComments = e.values[2];
+  //   
+  //var fbBody  = "Timestamp: " + fbTimestamp + "\r\n";    
+  //fbBody     += "Product:   " + fbProduct + "\r\n";
+  //fbBody     += "URL:       " + fbUrl + "\r\n";
+  //fbBody     += "Rating:    " + fbRating + "\r\n";
+  //fbBody     += "Comments:  " + fbComments + "\r\n";
+  //
+  //MailApp.sendEmail("glynn.naughton@gmail.com", "Help feedback received", fbBody);
+  
+}
