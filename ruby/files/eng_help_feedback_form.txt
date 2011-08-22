@@ -20,8 +20,9 @@
 <a onclick="setRating(this)" id="_2" title="Less poor" onmouseover="hoverOver(this)" onmouseout="hoverOff(this)"></a> 
 <a onclick="setRating(this)" id="_3" title="Average" onmouseover="hoverOver(this)" onmouseout="hoverOff(this)"></a> 
 <a onclick="setRating(this)" id="_4" title="Good" onmouseover="hoverOver(this)" onmouseout="hoverOff(this)"></a> 
-<a onclick="setRating(this)" id="_5" title="Excellent" onmouseover="hoverOver(this)" onmouseout="hoverOff(this)"></a> </div>
-<span id="rateStatus" class="BodyText"></span>
+<a onclick="setRating(this)" id="_5" title="Excellent" onmouseover="hoverOver(this)" onmouseout="hoverOff(this)"></a> 
+<input type="text" id="rateStatus" class="BodyText"></input>
+</div>
 <table border="0" cellpadding="5" cellspacing="0"><tr> 
 <tr class="BodyText"> 
 <td><input type="radio" name="entry.6.group" value="1" id="group_6_1" onclick="javascript:enableSubmitButton();"><img src="../../Images/star.png"/></input></td> 
@@ -72,12 +73,10 @@ if (defaultCommentField.value=="Add additional comments.")
   }
 }
 
-var sMax;	// Isthe maximum number of stars
-var preSet; // Is the PreSet value onces a selection has been made
-var rated;
+var sMax;	// Is the maximum number of stars
+var currentRating; // Is the currentRating value onces a selection has been made
 
 //Switch on the stars depending on which one we're hovering over.
-
 function hoverOver(num){
 
     //Get the total number of stars.
@@ -98,14 +97,15 @@ function hoverOver(num){
 			}
 		}
 	
-    //Set the rating value in the interface.	
-	document.getElementById("rateStatus").innerHTML = num.title;	
+    //Set the rating text in the interface.	
+	//document.getElementById("rateStatus").innerHTML = num.title;
+    document.getElementById("rateStatus").value = num.title;	
 	
 }
 
 // For when you roll out of the the whole thing //
 function hoverOff(me){
-	if(!preSet){	
+	if(!currentRating){	
 	    
 		//No rating, so switch off all the stars.
 		for(i=1; i<=sMax; i++){		
@@ -117,24 +117,23 @@ function hoverOff(me){
 	else{
 	
 	    //Switch on the stars up to the rating.
-		hoverOver(preSet);
-		//document.getElementById("rateStatus").innerHTML = document.getElementById("ratingSaved").innerHTML;
+		hoverOver(currentRating);
+		
 	}
 }
 
 
-// When you actually rate something //
+// Set the rating when the user clicks the star.
 function setRating(me){
 	
-	//Set this link as the current rating.
-	preSet = me;
+	//Set this <a> link as the current rating.
+	currentRating = me;
 	
 	//Set the rating in the input field.
-	document.getElementById("entry_10").value = preSet.id.replace("_", '');
+	document.getElementById("entry_10").value = currentRating.id.replace("_", '');
     
-	
 	//Switch on the stars up to the current rating.
-	hoverOver(preSet);
+	hoverOver(currentRating);
 	
 	enableSubmitButton();
 	
