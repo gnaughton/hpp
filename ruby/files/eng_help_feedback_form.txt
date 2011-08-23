@@ -53,10 +53,9 @@ function postSubmit()
 	
 	document.getElementById('entry_7').value="Add additional comments.";
 	
-	/*
-	By passing a reference to currentRating to hoverOff(), and setting currentRating to null,
-	we fool hoverOff() into switching off all the stars up to the current rating star.
-	*/
+	
+	//Get a reference to currentRating, set currentRating to null, then pass the reference to hoverOff().
+	//This fools hoverOff() into switching off all the stars.
 	pretendHover = currentRating;
 	currentRating = null;
 	hoverOff(pretendHover);
