@@ -11,8 +11,9 @@
 	#rateMe{float:left; clear:both; width:100%; height:auto; padding:0px; margin:0px;}
 	#rateMe li{float:left;list-style:none;}
 	#rateMe li a:hover,
-	#rateMe .on{background:url(../../Images/star_on.gif) no-repeat;}
-	#rateMe a{float:left;background:url(../../Images/star_off.gif) no-repeat;width:12px; height:12px;}
+	#rateMe .on{background:url(../../Images/star_on.jpg) no-repeat;}
+	#rateMe .hovered{background:url(../../Images/star_hover.jpg) no-repeat;}
+	#rateMe a{float:left;background:url(../../Images/star_off.jpg) no-repeat;width:21px; height:21px;}
 	.saved{color:red; }
 </style>
 <div id="rateMe"> 
@@ -79,67 +80,85 @@ var currentRating; // Is the currentRating value onces a selection has been made
 //Switch on/off stars depending on which one we're hovering over.
 function hoverOver(hoveredOver){
 
-    //Get the total number of stars.
-	sMax = 0;	
-	for(n=0; n<hoveredOver.parentNode.childNodes.length; n++){
-		if(hoveredOver.parentNode.childNodes[n].nodeName == "A"){
-			sMax++;	
-		}
+    //Get the current rating.
+	if(currentRating) {
+	  curr = currentRating.id.replace("_", '');
+	} else {
+	  curr=0;
 	}
 	
-	//Loop through and switch on/off stars.
-	s = hoveredOver.id.replace("_", ''); 
-	for(i=1; i<=sMax; i++){		
-		if(i<=s){
-		    //Switch on stars up to the hovered-over star.
-			document.getElementById("_"+i).className = "on";
-		}else{
-		    //Switch off stars after the hovered-over star.
-			document.getElementById("_"+i).className = "";
-			}
-		}
+	//Get the hovered-over star. 
+	hov = hoveredOver.id.replace("_", ''); 
 	
-    //Set the rating text in the interface.	
-	//document.getElementById("rateStatus").innerHTML = hoveredOver.title;
-    document.getElementById("rateStatus").value = hoveredOver.title;
+	//Set the hovered-over star to the hover graphic.
+	document.getElementById("_"+hov).className = "hovered";
+	
+	//Note: if the hovered-over star (hov) is <= the current rating (curr), we don't need to do anything else.
+	
+	//If hov>curr, switch on all the stars between CR+1 and HS-1.
+	for(i=parseInt(curr)+1; i<hov; i++) {
+	  document.getElementById("_"+i).className = "on";
+	}
+	
+	//Set the rating in the interface.
+	document.getElementById("rateStatus").value = hoveredOver.title;
 	
 }
 
-//Switch on/off stars when the user moves away from the stars area.
-function hoverOff(me){ 
-	if(!currentRating){	
-	    
-		//No rating, so switch off all the stars.
-		for(i=1; i<=sMax; i++){		
-			document.getElementById("_"+i).className = "";
-			//document.getElementById("rateStatus").innerHTML = me.parentNode.title;
-		}
-	
-	}
-	else{
-	
-	    //Switch on the stars up to the rating.
-		hoverOver(currentRating);
-		
-	}
-}
+//Switch on/off stars when the user moves away from the stars area or onto another star.
+function hoverOff(exHover){ 
 
+    //Get the hovered-over star and the current rating star.
+	hov=exHover.id.replace("_",'');
+	if(currentRating) {
+	  curr=currentRating.id.replace("_",'');
+	} else {
+	  curr=0;
+	}
+	
+	//Switch on all stars up to and including the current rating. 
+	//Switch off all stars from current rating + 1 to the hovered-over star.
+	//If there is no current rating this will switch off all the stars.
+	for(i=1; i<=hov; i++) {
+	
+	  if(i<=curr) {
+	    document.getElementById("_"+i).className="on";
+	  } else {
+	    document.getElementById("_"+i).className="";
+	  }
+	
+	}
+	
+    
+}
 
 // Set the rating when the user clicks the star.
-function setRating(me){
+function setRating(clickedRating){
 	
-	//Set this <a> link as the current rating.
-	currentRating = me;
+	//The clicked rating was previously hovered-over, so change its graphic to the graphic for the switched-on star.
+	//The logic in hoverOver() has already switched on all the stars below the clicked rating.
+	newrating = clickedRating.id.replace("_", ''); 
+	document.getElementById("_"+newrating).className = "on";
 	
 	//Set the rating in the input field.
-	document.getElementById("entry_10").value = currentRating.id.replace("_", '');
+	document.getElementById("entry_10").value = newrating;
+	
+	//If the clicked rating (newrating) is lower than the previous rating (oldrating), switch off all the stars between newrating+1 and oldrating. 
+	if(currentRating) {
+	  oldrating=currentRating.id.replace("_",'');
+	  
+	  if(newrating < oldrating) {
+	    for(i=parseInt(newrating)+1; i<=oldrating; i++) {
+		 document.getElementById("_"+i).className = "";
+		}
+	  }
+	}
+	
+	//Update the reference to the current rating to the rating just clicked.
+	currentRating = clickedRating;
     
-	//Switch on the stars up to the current rating.
-	hoverOver(currentRating);
-	
 	submitControl.disabled = false;
-	
-	
+		
 }
 
 
