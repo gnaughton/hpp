@@ -92,14 +92,21 @@ function hoverOver(hoveredOver){
 	//Get the hovered-over star. 
 	hov = hoveredOver.id.replace("_", ''); 
 	
+	if(hov>curr) {
+	  style_suffix = "_almost";
+	} else {
+	  style_suffix = "";
+	}
+	
+	
 	//Set the hovered-over star to the hover graphic.
-	document.getElementById("_"+hov).className = "hovered";
+	document.getElementById("_"+hov).className = "hovered" + style_suffix;
 	
 	//Note: if the hovered-over star (hov) is <= the current rating (curr), we don't need to do anything else.
 	
 	//If hov>curr, switch on all the stars between CR+1 and HS-1.
 	for(i=parseInt(curr)+1; i<hov; i++) {
-	  document.getElementById("_"+i).className = "on";
+	  document.getElementById("_"+i).className = "on" + style_suffix;
 	}
 	
 	//Set the rating in the interface.
