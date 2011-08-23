@@ -12,6 +12,8 @@
 	#rateMe li a:hover,
 	#rateMe .on{background:url(../../Images/star_on.jpg) no-repeat;}
 	#rateMe .hovered{background:url(../../Images/star_hover.jpg) no-repeat;}
+	#rateMe .on_almost{background:url(../../Images/star_on_almost.jpg) no-repeat;}
+	#rateMe .hovered_almost{background:url(../../Images/star_hover_almost.jpg) no-repeat;}
 	#rateMe a{float:left;background:url(../../Images/star_off.jpg) no-repeat;width:21px; height:21px;}
 	.saved{color:red; }
 </style>
