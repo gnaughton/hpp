@@ -98,7 +98,6 @@ function hoverOver(hoveredOver){
 	  style_suffix = "";
 	}
 	
-	
 	//Set the hovered-over star to the hover graphic.
 	document.getElementById("_"+hov).className = "hovered" + style_suffix;
 	
@@ -144,24 +143,38 @@ function hoverOff(exHover){
 // Set the rating when the user clicks the star.
 function setRating(clickedRating){
 	
-	//The clicked rating was previously hovered-over, so change its graphic to the graphic for the switched-on star.
-	//The logic in hoverOver() has already switched on all the stars below the clicked rating.
+	
+	//We need to switch on all the stars up to the clicked star with the "on" graphic.
+	//The stars up to the clicked star are in "almost" state.
 	newrating = clickedRating.id.replace("_", ''); 
-	document.getElementById("_"+newrating).className = "on";
+	if(currentRating) {
+	 oldrating=currentRating.id.replace("_",'');
+	} else {
+	  oldrating=0;
+	}
+	
+	//Find out how far up the list of stars we need to go.
+	//Everything above maxrating is already be switched off.
+	if (newrating>oldrating) {
+	  maxrating=newrating;
+	} else {
+	  maxrating=oldrating;
+	}
+	
+	for(i=1; i<=maxrating; i++ ) {
+	
+	  if(i<=newrating) {
+	    //Switch on all stars up to the clicked star.
+	    document.getElementById("_"+i).className = "on";
+	  } else {
+	    //Switch off all stars above the clicked star.
+	   document.getElementById("_"+i).className = "";
+	  }
+	  
+	}
 	
 	//Set the rating in the input field.
 	document.getElementById("entry_10").value = newrating;
-	
-	//If the clicked rating (newrating) is lower than the previous rating (oldrating), switch off all the stars between newrating+1 and oldrating. 
-	if(currentRating) {
-	  oldrating=currentRating.id.replace("_",'');
-	  
-	  if(newrating < oldrating) {
-	    for(i=parseInt(newrating)+1; i<=oldrating; i++) {
-		 document.getElementById("_"+i).className = "";
-		}
-	  }
-	}
 	
 	//Update the reference to the current rating to the rating just clicked.
 	currentRating = clickedRating;
