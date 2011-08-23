@@ -76,41 +76,43 @@ if (defaultCommentField.value=="Add additional comments.")
 var sMax;	// Is the maximum number of stars
 var currentRating; // Is the currentRating value onces a selection has been made
 
-//Switch on the stars depending on which one we're hovering over.
-function hoverOver(num){
+//Switch on/off stars depending on which one we're hovering over.
+function hoverOver(hoveredOver){
 
     //Get the total number of stars.
 	sMax = 0;	
-	for(n=0; n<num.parentNode.childNodes.length; n++){
-		if(num.parentNode.childNodes[n].nodeName == "A"){
+	for(n=0; n<hoveredOver.parentNode.childNodes.length; n++){
+		if(hoveredOver.parentNode.childNodes[n].nodeName == "A"){
 			sMax++;	
 		}
 	}
 	
-	//Loop through and switch on stars.
-	s = num.id.replace("_", ''); 
+	//Loop through and switch on/off stars.
+	s = hoveredOver.id.replace("_", ''); 
 	for(i=1; i<=sMax; i++){		
 		if(i<=s){
+		    //Switch on stars up to the hovered-over star.
 			document.getElementById("_"+i).className = "on";
 		}else{
+		    //Switch off stars after the hovered-over star.
 			document.getElementById("_"+i).className = "";
 			}
 		}
 	
     //Set the rating text in the interface.	
-	//document.getElementById("rateStatus").innerHTML = num.title;
-    document.getElementById("rateStatus").value = num.title;	
+	//document.getElementById("rateStatus").innerHTML = hoveredOver.title;
+    document.getElementById("rateStatus").value = hoveredOver.title;	
 	
 }
 
-// For when you roll out of the the whole thing //
+//Switch on/off stars when the user moves away from the stars area.
 function hoverOff(me){
 	if(!currentRating){	
 	    
 		//No rating, so switch off all the stars.
 		for(i=1; i<=sMax; i++){		
 			document.getElementById("_"+i).className = "";
-			document.getElementById("rateStatus").innerHTML = me.parentNode.title;
+			//document.getElementById("rateStatus").innerHTML = me.parentNode.title;
 		}
 	
 	}
@@ -135,7 +137,8 @@ function setRating(me){
 	//Switch on the stars up to the current rating.
 	hoverOver(currentRating);
 	
-	enableSubmitButton();
+	submitControl.disabled = false;
+	
 	
 }
 
