@@ -101,12 +101,12 @@ function hoverOver(hoveredOver){
 	
     //Set the rating text in the interface.	
 	//document.getElementById("rateStatus").innerHTML = hoveredOver.title;
-    document.getElementById("rateStatus").value = hoveredOver.title;	
+    document.getElementById("rateStatus").value = hoveredOver.title;
 	
 }
 
 //Switch on/off stars when the user moves away from the stars area.
-function hoverOff(me){
+function hoverOff(me){ 
 	if(!currentRating){	
 	    
 		//No rating, so switch off all the stars.
