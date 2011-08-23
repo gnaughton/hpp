@@ -6,9 +6,8 @@
 <form name="HelpFeedbackForm" onsubmit="javascript:submitClicked();" action="https://spreadsheets.google.com/spreadsheet/formResponse?formkey=dGdfUDdpTTVOVUFMbXFiYjJubHRLMGc6MQ&amp;ifq" method="POST" id="ss-form" target="hidden_iframe"> 
 <hr/> 
 <p class="SubHeading">How did you rate this page?</p> 
-</br>
 <style type="text/css">
-	#rateMe{float:left; clear:both; width:100%; height:auto; padding:0px; margin:0px;}
+	#rateMe{float:left; clear:both; width:100%; height:auto; padding:0px; margin-top:5px; margin-bottom:5px;}
 	#rateMe li{float:left;list-style:none;}
 	#rateMe li a:hover,
 	#rateMe .on{background:url(../../Images/star_on.jpg) no-repeat;}
@@ -22,17 +21,9 @@
 <a onclick="setRating(this)" id="_3" title="Average" onmouseover="hoverOver(this)" onmouseout="hoverOff(this)"></a> 
 <a onclick="setRating(this)" id="_4" title="Good" onmouseover="hoverOver(this)" onmouseout="hoverOff(this)"></a> 
 <a onclick="setRating(this)" id="_5" title="Excellent" onmouseover="hoverOver(this)" onmouseout="hoverOff(this)"></a> 
-<input type="text" id="rateStatus" class="BodyText"></input>
 </div>
-<table border="0" cellpadding="5" cellspacing="0"><tr> 
-<tr class="BodyText"> 
-<td><input type="radio" name="entry.6.group" value="1" id="group_6_1" onclick="javascript:enableSubmitButton();"><img src="../../Images/star.png"/></input></td> 
-<td><input type="radio" name="entry.6.group" value="2" id="group_6_2" onclick="javascript:enableSubmitButton();"><img src="../../Images/star.png"/><img src="../../Images/star.png"/></input></td> 
-<td><input type="radio" name="entry.6.group" value="3" id="group_6_3" onclick="javascript:enableSubmitButton();"><img src="../../Images/star.png"/><img src="../../Images/star.png"/><img src="../../Images/star.png"/></input></td> 
-<td><input type="radio" name="entry.6.group" value="4" id="group_6_4" onclick="javascript:enableSubmitButton();"><img src="../../Images/star.png"/><img src="../../Images/star.png"/><img src="../../Images/star.png"/><img src="../../Images/star.png"/></input></td> 
-<td><input type="radio" name="entry.6.group" value="5" id="group_6_5" onclick="javascript:enableSubmitButton();"><img src="../../Images/star.png"/><img src="../../Images/star.png"/><img src="../../Images/star.png"/><img src="../../Images/star.png"/><img src="../../Images/star.png"/></input></td></tr></table> 
 <input type="hidden" name="entry.10.single" id="entry_10"></input>
-<textarea name="entry.7.single" rows="6" cols="50" id="entry_7" onclick="javascript:clearDefaultComment();">Add additional comments.</textarea> 
+<textarea name="entry.7.single" rows="4" cols="30" id="entry_7" onclick="javascript:clearDefaultComment();">Add additional comments.</textarea> 
 <input type="hidden" name="entry.8.single" value="Autopopulate with page URL" id="entry_8">
 <input type="hidden" name="entry.9.single" value="<medidata-product-name>" id="entry_9"/>
 <br/>
@@ -59,7 +50,17 @@ function postSubmit()
   if(feedbackSubmitted)
   {
     alert('Thank you for your feedback.');
-	helpFeedBackForm.reset();
+	
+	document.getElementById('entry_7').value="Add additional comments.";
+	
+	/*
+	By passing a reference to currentRating to hoverOff(), and setting currentRating to null,
+	we fool hoverOff() into switching off all the stars up to the current rating star.
+	*/
+	pretendHover = currentRating;
+	currentRating = null;
+	hoverOff(pretendHover);
+	
 	submitControl.disabled=true;
 	
   }
@@ -101,7 +102,7 @@ function hoverOver(hoveredOver){
 	}
 	
 	//Set the rating in the interface.
-	document.getElementById("rateStatus").value = hoveredOver.title;
+	//document.getElementById("rateStatus").value = hoveredOver.title;
 	
 }
 
