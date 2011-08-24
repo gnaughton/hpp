@@ -32,7 +32,7 @@ end
 
 aLangs.each do |lang|
 
-  strFeedbackFile = "files/" + lang.downcase + "_help_feedback_form.txt"
+  strFeedbackFile = "files/" + lang.downcase + "_help_feedback_form.htm"
   strFeedbackForm = File.read(strFeedbackFile)
   #update the product name.
   strFeedbackForm["<medidata-product-name>"] = hSettings["product"]
