@@ -92,9 +92,20 @@ function hoverOver(hoveredOver){
 	//Get the hovered-over star. 
 	hov = hoveredOver.id.replace("_", ''); 
 	
+	/*
+	  Stars that are 'almost' switched on are above the current rating and appear paler than 'on' stars.
+	  This makes navigation over the stars clearer.
+	  There are two 'almost' flavours: 'on' and 'hover'.
+	  Example: if the current rating is 3 and the user hovers the mouse over star 5 the display is:
+	  on | on | on | on_almost | hover_almost
+	  Current rating: none, hover star 3:
+	  on_almost | on_almost | hover_almost | off | off
+	*/
+	
+	//Get the suffix that determines whether stars have 'almost' or 'on' format:
 	if(hov>curr) {
 	  style_suffix = "_almost";
-	} else {
+	} else { 
 	  style_suffix = "";
 	}
 	
@@ -107,10 +118,6 @@ function hoverOver(hoveredOver){
 	for(i=parseInt(curr)+1; i<hov; i++) {
 	  document.getElementById("_"+i).className = "on" + style_suffix;
 	}
-	
-	//Set the rating in the interface.
-	//document.getElementById("rateStatus").value = hoveredOver.title;
-	
 }
 
 //Switch on/off stars when the user moves away from the stars area or onto another star.
@@ -128,10 +135,9 @@ function hoverOff(exHover){
 	//Switch off all stars from current rating + 1 to the hovered-over star.
 	//If there is no current rating this will switch off all the stars.
 	for(i=1; i<=hov; i++) {
-	
 	  if(i<=curr) {
 	    document.getElementById("_"+i).className="on";
-	  } else {
+	  } else { 
 	    document.getElementById("_"+i).className="";
 	  }
 	
@@ -144,8 +150,8 @@ function hoverOff(exHover){
 function setRating(clickedRating){
 	
 	
-	//We need to switch on all the stars up to the clicked star with the "on" graphic.
-	//The stars up to the clicked star are in "almost" state.
+	//We need to switch on all the stars from the previous rating up to the clicked star with the "on" graphic.
+	//(Currently these stars are in 'almost' state.)
 	newrating = clickedRating.id.replace("_", ''); 
 	if(currentRating) {
 	 oldrating=currentRating.id.replace("_",'');
@@ -154,7 +160,7 @@ function setRating(clickedRating){
 	}
 	
 	//Find out how far up the list of stars we need to go.
-	//Everything above maxrating is already be switched off.
+	//(All stars above maxrating have already been switched off by hoverOff().)
 	if (newrating>oldrating) {
 	  maxrating=newrating;
 	} else {
@@ -167,7 +173,7 @@ function setRating(clickedRating){
 	    //Switch on all stars up to the clicked star.
 	    document.getElementById("_"+i).className = "on";
 	  } else {
-	    //Switch off all stars above the clicked star.
+	    //Switch off all stars above the clicked star up to maxrating.
 	   document.getElementById("_"+i).className = "";
 	  }
 	  
@@ -179,6 +185,7 @@ function setRating(clickedRating){
 	//Update the reference to the current rating to the rating just clicked.
 	currentRating = clickedRating;
     
+	//Enable the Submit button.
 	submitControl.disabled = false;
 		
 }
