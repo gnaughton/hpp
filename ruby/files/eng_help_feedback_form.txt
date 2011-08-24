@@ -7,17 +7,17 @@
 <hr/> 
 <p class="SubHeading">How did you rate this page?</p> 
 <style type="text/css">
-	#rateMe{float:left; clear:both; width:100%; height:auto; padding:0px; margin-top:5px; margin-bottom:5px;}
-	#rateMe li{float:left;list-style:none;}
-	#rateMe li a:hover,
-	#rateMe .on{background:url(../../Images/star_on.jpg) no-repeat;}
-	#rateMe .hovered{background:url(../../Images/star_hover.jpg) no-repeat;}
-	#rateMe .on_almost{background:url(../../Images/star_on_almost.jpg) no-repeat;}
-	#rateMe .hovered_almost{background:url(../../Images/star_hover_almost.jpg) no-repeat;}
-	#rateMe a{float:left;background:url(../../Images/star_off.jpg) no-repeat;width:21px; height:21px;}
+	#starRating{float:left; clear:both; width:100%; height:auto; padding:0px; margin-top:5px; margin-bottom:5px;}
+	#starRating li{float:left;list-style:none;}
+	#starRating li a:hover,
+	#starRating .on{background:url(../../Images/star_on.jpg) no-repeat;}
+	#starRating .hovered{background:url(../../Images/star_hover.jpg) no-repeat;}
+	#starRating .on_almost{background:url(../../Images/star_on_almost.jpg) no-repeat;}
+	#starRating .hovered_almost{background:url(../../Images/star_hover_almost.jpg) no-repeat;}
+	#starRating a{float:left;background:url(../../Images/star_off.jpg) no-repeat;width:21px; height:21px;}
 	.saved{color:red; }
 </style>
-<div id="rateMe"> 
+<div id="starRating"> 
 <a onclick="setRating(this)" id="_1" title="Poor" onmouseover="hoverOver(this)" onmouseout="hoverOff(this)"></a> 
 <a onclick="setRating(this)" id="_2" title="Less poor" onmouseover="hoverOver(this)" onmouseout="hoverOff(this)"></a> 
 <a onclick="setRating(this)" id="_3" title="Average" onmouseover="hoverOver(this)" onmouseout="hoverOff(this)"></a> 
