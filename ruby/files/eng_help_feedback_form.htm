@@ -28,7 +28,7 @@
 </div>
 
 <input type="hidden" name="entry.10.single" id="entry_10"></input>
-<textarea name="entry.7.single" rows="2" cols="30" id="entry_7" onclick="javascript:clearDefaultComment();">Additional feedback/comments.</textarea> 
+<textarea name="entry.7.single" disabled="disabled" rows="2" cols="30" id="entry_7" onclick="javascript:clearDefaultComment();">Additional feedback/comments.</textarea> 
 <input type="hidden" name="entry.8.single" value="Autopopulate with page URL" id="entry_8">
 <input type="hidden" name="entry.9.single" value="<medidata-product-name>" id="entry_9"/>
 <br/>
@@ -68,7 +68,11 @@ function postSubmit()
 	currentRating = null;
 	hoverOff(pretendHover);
 	
+	//Re-disable the Submit button.
 	submitControl.disabled=true;
+	
+	//Re-disable the textarea.
+	document.getElementById("entry_7").disabled="disabled";
 	
   }
 }
@@ -177,6 +181,8 @@ function hoverOff(exHover){
 // Set the rating when the user clicks the star.
 function setRating(clickedRating){
 	
+	//Enable the textarea.
+	document.getElementById("entry_7").disabled="";
 	
 	//We need to switch on all the stars from the previous rating up to the clicked star with the "on" graphic.
 	//(Currently these stars are in 'almost' state.)
