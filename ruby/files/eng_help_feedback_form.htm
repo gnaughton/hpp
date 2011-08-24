@@ -28,7 +28,7 @@
 </div>
 
 <input type="hidden" name="entry.10.single" id="entry_10"></input>
-<textarea name="entry.7.single" disabled="disabled" rows="2" cols="30" id="entry_7" onclick="javascript:clearDefaultComment();">Additional feedback/comments.</textarea> 
+<textarea name="entry.7.single" disabled="disabled" rows="2" cols="30" id="entry_7" onclick="javascript:clearComment();">Additional feedback/comments.</textarea> 
 <input type="hidden" name="entry.8.single" value="Autopopulate with page URL" id="entry_8">
 <input type="hidden" name="entry.9.single" value="<medidata-product-name>" id="entry_9"/>
 <br/>
@@ -77,13 +77,9 @@ function postSubmit()
   }
 }
 
-function clearDefaultComment()
+function clearComment()
 {
-defaultCommentField=document.getElementById('entry_7');
-if (defaultCommentField.value=="Additional feedback/comments.")
-  {
-   defaultCommentField.value="";
-  }
+defaultCommentField=document.getElementById('entry_7').value="";
 }
 
 var currentRating; // Is the currentRating value onces a selection has been made
@@ -184,6 +180,9 @@ function setRating(clickedRating){
 	//Enable the textarea.
 	document.getElementById("entry_7").disabled="";
 	
+	//Clear the comment from the textarea.
+	clearComment();
+	
 	//We need to switch on all the stars from the previous rating up to the clicked star with the "on" graphic.
 	//(Currently these stars are in 'almost' state.)
 	newrating = clickedRating.id.replace("_", ''); 
@@ -224,6 +223,12 @@ function setRating(clickedRating){
     
 	//Enable the Submit button.
 	submitControl.disabled = false;
+	
+	//Prepare the textarea for comments.
+	textArea = document.getElementById("entry_7");
+	textArea.disabled="";
+	textArea.value="";
+	textArea.focus();
 		
 }
 
