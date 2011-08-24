@@ -15,7 +15,6 @@
 	#starRating .on_almost{background:url(../../Images/star_on_almost.jpg) no-repeat;}
 	#starRating .hovered_almost{background:url(../../Images/star_hover_almost.jpg) no-repeat;}
 	#starRating a{float:left;background:url(../../Images/star_off.jpg) no-repeat;width:21px; height:21px;}
-	.saved{color:red; }
 </style>
 <div id="starRating"> 
 <a onclick="setRating(this)" id="_1" title="Poor" onmouseover="hoverOver(this)" onmouseout="hoverOff(this)"></a> 
@@ -76,7 +75,6 @@ if (defaultCommentField.value=="Add additional comments.")
   }
 }
 
-var sMax;	// Is the maximum number of stars
 var currentRating; // Is the currentRating value onces a selection has been made
 
 //Switch on/off stars depending on which one we're hovering over.
