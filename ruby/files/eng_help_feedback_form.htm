@@ -7,7 +7,7 @@
 <hr/> 
 <p class="SubHeading">How do you rate this topic?</p> 
 <style type="text/css">
-	#starRating{float:left; clear:both; width:100%; height:auto; padding:0px; margin-top:5px; margin-bottom:5px;}
+	#starRating{float:left; clear:both; width:100%; height:auto; padding:0px; margin-top:5px;}
 	#starRating li{float:left;list-style:none;}
 	#starRating li a:hover,
 	#starRating .on{background:url(../../Images/star_on.jpg) no-repeat;}
@@ -15,8 +15,7 @@
 	#starRating .on_almost{background:url(../../Images/star_on_almost.jpg) no-repeat;}
 	#starRating .hovered_almost{background:url(../../Images/star_hover_almost.jpg) no-repeat;}
 	#starRating a{float:left;background:url(../../Images/star_off.jpg) no-repeat;width:21px; height:21px;}
-	#starRating .rating_on{margin-left:5px;border-style:none;padding-top:4px;}
-	#starRating .rating_almost{margin-left:5px;border-style:none;padding-top:4px;color:#979696;}
+	
 </style>
 <div id="starRating"> 
 <a onclick="setRating(this)" id="_1" title="Not useful" onmouseover="hoverOver(this)" onmouseout="hoverOff(this)"></a> 
@@ -24,9 +23,16 @@
 <a onclick="setRating(this)" id="_3" title="Useful" onmouseover="hoverOver(this)" onmouseout="hoverOff(this)"></a> 
 <a onclick="setRating(this)" id="_4" title="Very useful" onmouseover="hoverOver(this)" onmouseout="hoverOff(this)"></a> 
 <a onclick="setRating(this)" id="_5" title="Just what I needed" onmouseover="hoverOver(this)" onmouseout="hoverOff(this)"></a>
+</div>
+<br/>
+<style type="text/css">
+    #showRatingText{float:left; clear:both; width:100%; height:auto; padding:0px;font-size:0.8em;font-family:sans-serif;margin-top:2px;margin-bottom:4px;}
+	#showRatingText .rating_on{border-style:none;}
+	#showRatingText .rating_almost{border-style:none;color:#979696;}
+</style>
+<div id="showRatingText">
 <input type="text" class="rating_almost" id="ratingText"/>
 </div>
-
 <input type="hidden" name="entry.10.single" id="entry_10"></input>
 <textarea name="entry.7.single" disabled="disabled" rows="2" cols="30" id="entry_7">Additional feedback/comments.</textarea> 
 <input type="hidden" name="entry.8.single" value="Autopopulate with page URL" id="entry_8">
@@ -34,7 +40,7 @@
 <br/>
 <input type="hidden" name="pageNumber" value="0"> 
 <input type="hidden" name="backupCache" value=""> 
-<input type="submit" name="submit" id="submitControl" style="margin-top:5px;" value="Submit" disabled="true" onclick="javascript:clearDefaultComment();"></form>
+<input type="submit" name="submit" id="submitControl" style="margin-top:5px;" value="Submit feedback" disabled="true" onclick="javascript:clearDefaultComment();"></form>
 <script type="text/javascript">
 var submitControl=document.getElementById('submitControl');
 helpFeedBackForm=document.forms['ss-form'];
@@ -107,8 +113,7 @@ function hoverOver(hoveredOver){
 	  on_almost | on_almost | hover_almost | off | off
 	*/
 	
-	//Get the suffix that determines whether stars have 'almost' or 'on' format:
-	if(hov>curr) {
+ 	if(hov>curr) {
 	  style_suffix = "_almost";
 	} else { 
 	  style_suffix = "";
