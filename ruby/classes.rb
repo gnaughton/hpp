@@ -23,6 +23,10 @@ class FeedbackFormProcessor
 
   def setFeedbackForm (lang)
   
+    if !($hSettings["do_feedbackforms"]=="yes") 
+	  return 
+	end
+  
     @FEEDBACK_FORM = File.read("files/ff/" + lang.downcase + "_help_feedback_form.htm")
     #update the product name.
     @FEEDBACK_FORM["<medidata-product-name>"] = $hSettings["product"]
@@ -31,7 +35,11 @@ class FeedbackFormProcessor
   
   def copyFormGraphics (strWebHelpImagesFolder)
   
-    FileUtils.cp "files/ff/star_on.jpg", strWebHelpImagesFolder + "star_on.jpg"
+    if !($hSettings["do_feedbackforms"]=="yes") 
+	  return 
+	end
+	
+	FileUtils.cp "files/ff/star_on.jpg", strWebHelpImagesFolder + "star_on.jpg"
     FileUtils.cp "files/ff/star_on_almost.jpg", strWebHelpImagesFolder + "star_on_almost.jpg"
     FileUtils.cp "files/ff/star_off.jpg", strWebHelpImagesFolder + "star_off.jpg"
     FileUtils.cp "files/ff/star_hover.jpg", strWebHelpImagesFolder + "star_hover.jpg"
@@ -40,6 +48,10 @@ class FeedbackFormProcessor
   end
   
   def addFeedbackForm (strHTMLFile)
+  
+     if !($hSettings["do_feedbackforms"]="yes") 
+	   return 
+	 end
   
     strHTMLFile['</body>'] = @FEEDBACK_FORM
   
