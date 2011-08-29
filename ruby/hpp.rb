@@ -24,7 +24,7 @@ wh = WebHelp.new
 
 begin
   
-  strTrackingScript = File.read("files/ga_tracking_script.txt")
+  strTrackingScript = File.read("files/ga/ga_tracking_script.txt")
   
 rescue
   puts "Couldn't open  GA tracking file."
@@ -32,7 +32,7 @@ end
 
 aLangs.each do |lang|
 
-  strFeedbackFile = "files/" + lang.downcase + "_help_feedback_form.htm"
+  strFeedbackFile = "files/ff/" + lang.downcase + "_help_feedback_form.htm"
   strFeedbackForm = File.read(strFeedbackFile)
   #update the product name.
   strFeedbackForm["<medidata-product-name>"] = hSettings["product"]
@@ -47,11 +47,11 @@ aLangs.each do |lang|
   strWebHelpImagesFolder = strPath + "/Images/"
   
   #copy the star graphic to the WebHelp systems
-  FileUtils.cp "files/star_on.jpg", strWebHelpImagesFolder + "star_on.jpg"
-  FileUtils.cp "files/star_on_almost.jpg", strWebHelpImagesFolder + "star_on_almost.jpg"
-  FileUtils.cp "files/star_off.jpg", strWebHelpImagesFolder + "star_off.jpg"
-  FileUtils.cp "files/star_hover.jpg", strWebHelpImagesFolder + "star_hover.jpg"
-  FileUtils.cp "files/star_hover_almost.jpg", strWebHelpImagesFolder + "star_hover_almost.jpg"
+  FileUtils.cp "files/ff/star_on.jpg", strWebHelpImagesFolder + "star_on.jpg"
+  FileUtils.cp "files/ff/star_on_almost.jpg", strWebHelpImagesFolder + "star_on_almost.jpg"
+  FileUtils.cp "files/ff/star_off.jpg", strWebHelpImagesFolder + "star_off.jpg"
+  FileUtils.cp "files/ff/star_hover.jpg", strWebHelpImagesFolder + "star_hover.jpg"
+  FileUtils.cp "files/ff/star_hover_almost.jpg", strWebHelpImagesFolder + "star_hover_almost.jpg"
 
   
   aFiles = Dir[strPath + "/**/*.htm"]
