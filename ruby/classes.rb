@@ -3,6 +3,10 @@ class GAProcessor
 
   def initialize
   
+    if $hSettings["do_analytics"] != "yes" 
+	  return 
+	end
+  
     @TRACKING_SCRIPT = File.read("files/ga/ga_tracking_script.txt")
   rescue
     puts "Couldn't open  GA tracking file."
@@ -10,6 +14,10 @@ class GAProcessor
   end
   
   def addTrackingCode (htmlFile)
+  
+    if $hSettings["do_analytics"] != "yes" 
+	  return 
+	end
   
     htmlFile['</head>'] = @TRACKING_SCRIPT
 	#puts "Added tracking code to: " + @TRACKING_SCRIPT
@@ -23,7 +31,7 @@ class FeedbackFormProcessor
 
   def setFeedbackForm (lang)
   
-    if !($hSettings["do_feedbackforms"]=="yes") 
+    if $hSettings["do_feedbackforms"] != "yes" 
 	  return 
 	end
   
@@ -35,7 +43,7 @@ class FeedbackFormProcessor
   
   def copyFormGraphics (strWebHelpImagesFolder)
   
-    if !($hSettings["do_feedbackforms"]=="yes") 
+    if $hSettings["do_feedbackforms"] != "yes" 
 	  return 
 	end
 	
@@ -49,7 +57,7 @@ class FeedbackFormProcessor
   
   def addFeedbackForm (strHTMLFile)
   
-     if !($hSettings["do_feedbackforms"]="yes") 
+     if $hSettings["do_feedbackforms"] != "yes" 
 	   return 
 	 end
   
