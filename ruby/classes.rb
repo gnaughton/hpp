@@ -31,12 +31,69 @@ class WebHelp
  
 end
 
-class LogFile
+class GAProcessor
 
-  def initialize (strWebHelp)
+  def initialize
   
-    puts "LogFile constructor! For " + strWebHelp
-	
+    @TRACKING_SCRIPT = File.read("files/ga/ga_tracking_script.txt")
+  rescue
+    puts "Couldn't open  GA tracking file."
+	abort
+  end
+  
+  def addTrackingCode (htmlFile)
+  
+    htmlFile['</head>'] = @TRACKING_SCRIPT
+	#puts "Added tracking code to: " + @TRACKING_SCRIPT
+  
+  end
+
+
+end
+
+class FeedbackFormProcessor
+
+  def setFeedbackForm (lang)
+  
+    @FEEDBACK_FORM = File.read("files/ff/" + lang.downcase + "_help_feedback_form.htm")
+    #update the product name.
+    @FEEDBACK_FORM["<medidata-product-name>"] = $hSettings["product"]
+  
+  end
+  
+  def copyFormGraphics (strWebHelpImagesFolder)
+  
+    FileUtils.cp "files/ff/star_on.jpg", strWebHelpImagesFolder + "star_on.jpg"
+    FileUtils.cp "files/ff/star_on_almost.jpg", strWebHelpImagesFolder + "star_on_almost.jpg"
+    FileUtils.cp "files/ff/star_off.jpg", strWebHelpImagesFolder + "star_off.jpg"
+    FileUtils.cp "files/ff/star_hover.jpg", strWebHelpImagesFolder + "star_hover.jpg"
+    FileUtils.cp "files/ff/star_hover_almost.jpg", strWebHelpImagesFolder + "star_hover_almost.jpg"
+  
+  end
+  
+  def addFeedbackForm (strHTMLFile)
+  
+    strHTMLFile['</body>'] = @FEEDBACK_FORM
+  
+  end
+
+
+end
+
+def writeFile(fileInWebHelp, strHTMLFile)
+
+    fTaggedFile = File.open(fileInWebHelp, 'w')
+    fTaggedFile.write (strHTMLFile)
+    fTaggedFile.close
+
+end
+
+def openFile(fileInWebHelp)
+
+  begin
+    return File.read(fileInWebHelp)
+  rescue
+    puts "Couldn't open " + fileInWebHelp
   end
 
 end

@@ -1,18 +1,18 @@
 ﻿load 'classes.rb'
 require 'fileutils.rb'
 
-hSettings = Hash[*File.read("hpp.ini").scan(/^(.*)=(.*)$/).flatten]
+$hSettings = Hash[*File.read("hpp.ini").scan(/^(.*)=(.*)$/).flatten]
 
-if hSettings["language"].nil?
+if $hSettings["language"].nil?
 
   puts "No language specified."
   abort
   
 end
   
-aLangs = hSettings["language"].split(",")
+aLangs = $hSettings["language"].split(",")
 
-if aLangs.length > 1 and !(hSettings["webhelp"].include? "<LANG>")
+if aLangs.length > 1 and !($hSettings["webhelp"].include? "<LANG>")
 
   puts "No <LANG> in WebHelp path but multiple languages specified."
   abort
@@ -21,24 +21,15 @@ end
 
 
 wh = WebHelp.new
-
-begin
-  
-  strTrackingScript = File.read("files/ga/ga_tracking_script.txt")
-  
-rescue
-  puts "Couldn't open  GA tracking file."
-end
+ga = GAProcessor.new
+ff = FeedbackFormProcessor.new
 
 aLangs.each do |lang|
 
-  strFeedbackFile = "files/ff/" + lang.downcase + "_help_feedback_form.htm"
-  strFeedbackForm = File.read(strFeedbackFile)
-  #update the product name.
-  strFeedbackForm["<medidata-product-name>"] = hSettings["product"]
+  #build the WebHelp path/file and extract all the various bits from it.
   
-  strWebHelp = String.new(hSettings["webhelp"])
-  if hSettings["webhelp"].include? "<LANG>"
+  strWebHelp = String.new($hSettings["webhelp"])
+  if $hSettings["webhelp"].include? "<LANG>"
     strWebHelp["<LANG>"] = lang
   end	
   
@@ -46,74 +37,50 @@ aLangs.each do |lang|
   strWebHelpContentsFolder = strPath + "/" + File.basename(strFile, '.htm') + "/"
   strWebHelpImagesFolder = strPath + "/Images/"
   
-  #copy the star graphic to the WebHelp systems
-  FileUtils.cp "files/ff/star_on.jpg", strWebHelpImagesFolder + "star_on.jpg"
-  FileUtils.cp "files/ff/star_on_almost.jpg", strWebHelpImagesFolder + "star_on_almost.jpg"
-  FileUtils.cp "files/ff/star_off.jpg", strWebHelpImagesFolder + "star_off.jpg"
-  FileUtils.cp "files/ff/star_hover.jpg", strWebHelpImagesFolder + "star_hover.jpg"
-  FileUtils.cp "files/ff/star_hover_almost.jpg", strWebHelpImagesFolder + "star_hover_almost.jpg"
-
+  #tell the feedback form processor to build the text of the form.
+  ff.setFeedbackForm (lang)
   
+  #copy the star graphic to the WebHelp systems
+  ff.copyFormGraphics (strWebHelpImagesFolder)
+ 
   aFiles = Dir[strPath + "/**/*.htm"]
   puts "File: " + strWebHelp
   print "Working"
-  aFiles.each do |element|
+  aFiles.each do |fileInWebHelp|
 
     #are we in the contents directory tree? if so, tag everything with the GA code,
-    #and add the help feedback form.
-    if element.include? strWebHelpContentsFolder
+    #add the help feedback form, and write the modified file to disc.
+    if fileInWebHelp.include? strWebHelpContentsFolder
      
-      begin
-        element["?"] = "\'"
-      rescue
-      #the script shouldn't fail because the replace didn't find anything, but we don't need to do anything.
-      end
-
-      begin
-        strHTMLFile = File.read(element)
-      rescue
-        puts "Couldn't open " + element
-      end
-
-      begin
+      strHTMLFile = openFile(fileInWebHelp)
+	  
+	  begin
         print "."
-        #puts "Added GA tracking code and feedback form to " + element
-        strHTMLFile['</head>'] = strTrackingScript
-	    strHTMLFile['</body>'] = strFeedbackForm
-        fTaggedFile = File.open(element, 'w')
-        fTaggedFile.write (strHTMLFile)
-        fTaggedFile.close
+        ga.addTrackingCode (strHTMLFile)
+		ff.addFeedbackForm (strHTMLFile)
+        writeFile(fileInWebHelp, strHTMLFile)
       rescue
   
       end
   
     else  #we're not in the contents folder, so tag the scaffolding files with GA code.
   
-      begin
-        strHTMLFile = File.read(element)
-      rescue
-        puts "Couldn't open " + element
-      end
-  
-      aScaffoldingFiles = hSettings["tracked_scaffolding_files"].split(",")
+      
+	  strHTMLFile = openFile(fileInWebHelp)
+	  
+      aScaffoldingFiles = $hSettings["tracked_scaffolding_files"].split(",")
       #loop through the scaffolding files
 	  aScaffoldingFiles.each do |sf|
       
-	    if element.include? sf
+	    if fileInWebHelp.include? sf
 	  
-	      begin
-            strHTMLFile = File.read(element)
-          rescue
-            puts "Couldn't open " + element
-          end
-	  
+	      strHTMLFile = openFile(fileInWebHelp) 
+	      
 	      begin
 	        print "."
-	        #puts "Added GA tracking code to " + element
-            strHTMLFile['</head>'] = strTrackingScript
-	        fTaggedFile = File.open(element, 'w')
-            fTaggedFile.write (strHTMLFile)
-            fTaggedFile.close
+	        ga.addTrackingCode (strHTMLFile)
+			writeFile(fileInWebHelp, strHTMLFile)
+	        
           rescue
   
           end 
