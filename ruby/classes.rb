@@ -45,7 +45,6 @@ class FeedbackFormProcessor
   
   end
 
-
 end
 
 def writeFile(fileInWebHelp, strHTMLFile)
