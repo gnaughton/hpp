@@ -17,11 +17,11 @@ aLangs.each do |lang|
   strPath, strFile, strWebHelpContentsFolder, strWebHelpImagesFolder = parseWebHelpFile(strWebHelp, lang)
   
   #tell the feedback form processor to build the text of the form.
-  ff.setFeedbackForm (lang)
+  ff.setFeedbackForm (lang) if $hSettings["do_feedbackforms"]
   
   #copy the star graphic to the WebHelp systems
-  ff.copyFormGraphics (strWebHelpImagesFolder)
- 
+  ff.copyFormGraphics (strWebHelpImagesFolder) if $hSettings["do_feedbackforms"]
+  
   #find all the HTML files in all the folders and subfolders. 
   aFiles = Dir[strPath + "/**/*.htm"]
   puts "File: " + strWebHelp
@@ -38,9 +38,9 @@ aLangs.each do |lang|
 	  
 	  begin
         print "."
-        ga.addTrackingCode (strHTMLFile)
-		ff.addFeedbackForm (strHTMLFile)
-        writeFile(fileInWebHelp, strHTMLFile)
+        ga.addTrackingCode (strHTMLFile) if $hSettings["do_analytics"]
+		ff.addFeedbackForm (strHTMLFile) if $hSettings["do_feedbackforms"]
+		writeFile(fileInWebHelp, strHTMLFile)
       rescue
   
       end
@@ -60,7 +60,7 @@ aLangs.each do |lang|
 	      
 	      begin
 	        print "."
-	        ga.addTrackingCode (strHTMLFile)
+	        ga.addTrackingCode (strHTMLFile) if $hSettings["do_analytics"]
 			writeFile(fileInWebHelp, strHTMLFile)
 	        
           rescue
