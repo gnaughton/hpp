@@ -14,59 +14,58 @@ sm = ShowmeProcessor.new
 aLangs.each do |lang|
 
   #get the WebHelp path/file and extract all the various bits from it.
-  strWebHelp = String.new($hSettings["webhelp"])
-  strPath, strFile, strWebHelpContentsFolder, strWebHelpImagesFolder = parseWebHelpFile(strWebHelp, lang)
+  webhelp = String.new($hSettings["webhelp"])
+  webhelp_path, webhelp_file, webhelp_contents_folder, webhelp_images_folder = parseWebHelpFile(webhelp, lang)
   
   #tell the feedback form processor to build the text of the form.
   ff.setFeedbackForm (lang) if $hSettings["do_feedbackforms"]
   
   #copy the star graphic to the WebHelp systems
-  ff.copyFormGraphics (strWebHelpImagesFolder) if $hSettings["do_feedbackforms"]
+  ff.copyFormGraphics (webhelp_images_folder) if $hSettings["do_feedbackforms"]
   
   #find all the HTML files in all the folders and subfolders. 
-  aFiles = Dir[strPath + "/**/*.htm"]
-  puts "File: " + strWebHelp
+  aFiles = Dir[webhelp_path + "/**/*.htm"]
+  puts "File: " + webhelp
   print "Working"
   
   #loop around them.
-  aFiles.each do |fileInWebHelp|
-
+  aFiles.each do |file_in_webhelp|
+  
     #are we in the contents directory tree? if so:
 	# - tag everything with the GA code,
     # - add the help feedback form, 
 	# - add the showme links
 	# - write the modified file to disc.
-	if fileInWebHelp.include? strWebHelpContentsFolder
+	if file_in_webhelp.include? webhelp_contents_folder
      
-      strHTMLFile = openFile(fileInWebHelp)
+      its_html = openFile(file_in_webhelp)
 	  
 	  begin
         print "."
-        ga.addTrackingCode (strHTMLFile) if $hSettings["do_analytics"]
-		ff.addFeedbackForm (strHTMLFile) if $hSettings["do_feedbackforms"]
-		sm.addShowmeLinks(fileInWebHelp, strHTMLFile, lang) if $hSettings["do_showmes"]
-		writeFile(fileInWebHelp, strHTMLFile)
+        ga.addTrackingCode (its_html) if $hSettings["do_analytics"]
+		ff.addFeedbackForm (its_html) if $hSettings["do_feedbackforms"]
+		sm.addShowmeLinks(file_in_webhelp, its_html, lang) if $hSettings["do_showmes"]
+		writeFile(file_in_webhelp, its_html)
       rescue
   
       end
   
     else  #we're not in the contents folder, so tag the scaffolding files with GA code.
   
-      
-	  strHTMLFile = openFile(fileInWebHelp)
+      its_html = openFile(file_in_webhelp)
 	  
       aScaffoldingFiles = $hSettings["tracked_scaffolding_files"].split(",")
       #loop through the scaffolding files
 	  aScaffoldingFiles.each do |sf|
       
-	    if fileInWebHelp.include? sf
+	    if file_in_webhelp.include? sf
 	  
-	      strHTMLFile = openFile(fileInWebHelp) 
+	      its_html = openFile(file_in_webhelp) 
 	      
 	      begin
 	        print "."
-	        ga.addTrackingCode (strHTMLFile) if $hSettings["do_analytics"]
-			writeFile(fileInWebHelp, strHTMLFile)
+	        ga.addTrackingCode (its_html) if $hSettings["do_analytics"]
+			writeFile(file_in_webhelp, its_html)
 	        
           rescue
   

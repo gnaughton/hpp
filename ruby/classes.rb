@@ -55,6 +55,7 @@ class ShowmeProcessor
 	@CONTEXT_TEMPLATE = File.read("files/sm/context_link_template.txt")
 	@LINKS = IO.readlines("files/sm/showmes.txt")
 	
+	
   end
 
   def addShowmeLinks(file_in_webhelp, its_html, lang)
@@ -64,34 +65,41 @@ class ShowmeProcessor
 	
 	@LINKS.each do |this_link|
 	
-	  next if this_link[0]=="#"
+	  next if this_link[0]=="#" #or !file_in_webhelp.include? target_file
 	  
-	  link_text, link_file, webhelp_file = this_link.split("||")
+	  link_text, link_file, target_file = this_link.split("|")
 	  
-	  if  webhelp_file = $hSettings["showme_list"]
-		template = String.new(@LIST_TEMPLATE)
+	  path, file = splitPathAndFile(file_in_webhelp)
+	  
+	  puts file + " " + target_file  + " ", ("YES!" if file==target_file)
+	  
+	  #puts "WebHelp:\r\n" + file_in_webhelp + "\r\nTarget: " + target_file if file_in_webhelp.include? target_file
+	  
+	  if target_file = $hSettings["showme_list"]
+	  #it's a link in the list of showmes.
+		
+        template = String.new(@LIST_TEMPLATE)
 		template["<LINK_TEXT>"] = link_text
-	  else
-	    template = String.new(@CONTEXT_TEMPLATE)
+		
+      else
+	  #it's a contextual link.
+		
+		template = String.new(@CONTEXT_TEMPLATE)
 		template = link_text + template
-	  end
-	  
+		
+      end #it's a link in the list of showmes.
+		
 	  url = bucket + link_file
 	  template["<URL>"] = url
-	  template["<LINK_TEXT>"] = link_text
 	  its_html[link_text] = template
 	  
-	writeFile(file_in_webhelp,its_html)
-	
-    end #@LINKS
+	  #puts target_file, template if template.include? "i_help_video.png"
+	  
+	end #@LINKS
 	
   end #addShowmeLinks
   
-  def addContextualShowmes(file_in_webhelp, its_html, bucket)
-  
-  end
-	
-end
+end #ShowmeProcessor
 
 def writeFile(fileInWebHelp, strHTMLFile)
 
