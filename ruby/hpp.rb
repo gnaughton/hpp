@@ -9,6 +9,7 @@ aLangs = checkLanguage()
 
 ga = GAProcessor.new
 ff = FeedbackFormProcessor.new
+sm = ShowmeProcessor.new
 
 aLangs.each do |lang|
 
@@ -30,9 +31,12 @@ aLangs.each do |lang|
   #loop around them.
   aFiles.each do |fileInWebHelp|
 
-    #are we in the contents directory tree? if so, tag everything with the GA code,
-    #add the help feedback form, and write the modified file to disc.
-    if fileInWebHelp.include? strWebHelpContentsFolder
+    #are we in the contents directory tree? if so:
+	# - tag everything with the GA code,
+    # - add the help feedback form, 
+	# - add the showme links
+	# - write the modified file to disc.
+	if fileInWebHelp.include? strWebHelpContentsFolder
      
       strHTMLFile = openFile(fileInWebHelp)
 	  
@@ -40,6 +44,7 @@ aLangs.each do |lang|
         print "."
         ga.addTrackingCode (strHTMLFile) if $hSettings["do_analytics"]
 		ff.addFeedbackForm (strHTMLFile) if $hSettings["do_feedbackforms"]
+		sm.addShowmeLinks(fileInWebHelp, strHTMLFile, lang) if $hSettings["do_showmes"]
 		writeFile(fileInWebHelp, strHTMLFile)
       rescue
   

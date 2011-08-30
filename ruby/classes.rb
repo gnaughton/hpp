@@ -47,6 +47,44 @@ class FeedbackFormProcessor
 
 end
 
+class ShowmeProcessor
+
+  def initialize
+  
+    @TEMPLATE = File.read("files/sm/showme_list_link_template.txt")
+	@LIST = IO.readlines("files/sm/showme_list.txt")
+	
+  end
+
+  def addShowmeLinks(file_in_webhelp, its_html, lang)
+  
+    
+	bucket=String.new($hSettings["s3_bucket"])
+	bucket["<LANG>"] = lang
+	
+    return if !file_in_webhelp.include? $hSettings["showme_list"]
+	
+	
+	@LIST.each do |this_link|
+	
+	  template=String.new(@TEMPLATE)
+	  link_text, link_file = this_link.split(",")
+	  url = bucket + link_file
+	  template["<URL>"] = url
+	  template["<LINK_TEXT>"] = link_text
+	  its_html[link_text] = template
+	  
+	  
+    end
+	
+	writeFile(file_in_webhelp,its_html)
+	
+  end
+
+
+
+end
+
 def writeFile(fileInWebHelp, strHTMLFile)
 
     fTaggedFile = File.open(fileInWebHelp, 'w')
