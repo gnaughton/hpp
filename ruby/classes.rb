@@ -51,38 +51,46 @@ class ShowmeProcessor
 
   def initialize
   
-    @TEMPLATE = File.read("files/sm/showme_list_link_template.txt")
-	@LIST = IO.readlines("files/sm/showme_list.txt")
+    @LIST_TEMPLATE = File.read("files/sm/list_link_template.txt")
+	@CONTEXT_TEMPLATE = File.read("files/sm/context_link_template.txt")
+	@LINKS = IO.readlines("files/sm/showmes.txt")
 	
   end
 
   def addShowmeLinks(file_in_webhelp, its_html, lang)
   
-    
-	bucket=String.new($hSettings["s3_bucket"])
+    bucket=String.new($hSettings["s3_bucket"])
 	bucket["<LANG>"] = lang
 	
-    return if !file_in_webhelp.include? $hSettings["showme_list"]
+	@LINKS.each do |this_link|
 	
-	
-	@LIST.each do |this_link|
-	
-	  template=String.new(@TEMPLATE)
-	  link_text, link_file = this_link.split(",")
+	  next if this_link[0]=="#"
+	  
+	  link_text, link_file, webhelp_file = this_link.split("||")
+	  
+	  if  webhelp_file = $hSettings["showme_list"]
+		template = String.new(@LIST_TEMPLATE)
+		template["<LINK_TEXT>"] = link_text
+	  else
+	    template = String.new(@CONTEXT_TEMPLATE)
+		template = link_text + template
+	  end
+	  
 	  url = bucket + link_file
 	  template["<URL>"] = url
 	  template["<LINK_TEXT>"] = link_text
 	  its_html[link_text] = template
 	  
-	  
-    end
-	
 	writeFile(file_in_webhelp,its_html)
 	
+    end #@LINKS
+	
+  end #addShowmeLinks
+  
+  def addContextualShowmes(file_in_webhelp, its_html, bucket)
+  
   end
-
-
-
+	
 end
 
 def writeFile(fileInWebHelp, strHTMLFile)
