@@ -63,37 +63,34 @@ class ShowmeProcessor
     bucket=String.new($hSettings["s3_bucket"])
 	bucket["<LANG>"] = lang
 	
+	
 	@LINKS.each do |this_link|
 	
-	  next if this_link[0]=="#" #or !file_in_webhelp.include? target_file
+	  next if this_link[0]=="#" #or !file_in_webhelp.include? webhelp_file_to_update
 	  
-	  link_text, link_file, target_file = this_link.split("|")
+	  link_text, wrapper_file, webhelp_file_to_update = this_link.split("|")
 	  
-	  path, file = splitPathAndFile(file_in_webhelp)
-	  
-	  puts file + " " + target_file  + " ", ("YES!" if file==target_file)
-	  
-	  #puts "WebHelp:\r\n" + file_in_webhelp + "\r\nTarget: " + target_file if file_in_webhelp.include? target_file
-	  
-	  if target_file = $hSettings["showme_list"]
+	  if webhelp_file_to_update == $hSettings["showme_list"]
 	  #it's a link in the list of showmes.
-		
+		puts "It's in the list! " + webhelp_file_to_update
         template = String.new(@LIST_TEMPLATE)
 		template["<LINK_TEXT>"] = link_text
 		
       else
 	  #it's a contextual link.
-		
+		puts "It's contextual! " + webhelp_file_to_update
 		template = String.new(@CONTEXT_TEMPLATE)
-		template = link_text + template
+		template = (link_text + template) 
+		
 		
       end #it's a link in the list of showmes.
 		
-	  url = bucket + link_file
+	  url = bucket + wrapper_file
 	  template["<URL>"] = url
 	  its_html[link_text] = template
+	 
 	  
-	  #puts target_file, template if template.include? "i_help_video.png"
+	  #puts webhelp_file_to_update, template if template.include? "i_help_video.png"
 	  
 	end #@LINKS
 	
