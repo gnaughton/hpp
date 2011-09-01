@@ -69,21 +69,24 @@ class ShowmeProcessor
 	  next if this_link[0]=="#" #or !file_in_webhelp.include? webhelp_file_to_update
 	  
 	  link_text, wrapper_file, webhelp_file_to_update = this_link.split("|")
+	  puts "Are " + webhelp_file_to_update + " and " + $hSettings["showme_list"] + " equal? Ruby says:"
+	  puts webhelp_file_to_update == $hSettings["showme_list"]
+	  puts webhelp_file_to_update.class, $hSettings["showme_list"].class
 	  
+	  #Find out what kind of a link we need to add:
 	  if webhelp_file_to_update == $hSettings["showme_list"]
 	  #it's a link in the list of showmes.
-		puts "It's in the list! " + webhelp_file_to_update
-        template = String.new(@LIST_TEMPLATE)
+		
+		template = String.new(@LIST_TEMPLATE)
 		template["<LINK_TEXT>"] = link_text
-		
-      else
+	  
+	  else
 	  #it's a contextual link.
-		puts "It's contextual! " + webhelp_file_to_update
-		template = String.new(@CONTEXT_TEMPLATE)
-		template = (link_text + template) 
-		
-		
-      end #it's a link in the list of showmes.
+	  
+  	    template = String.new(@CONTEXT_TEMPLATE)
+ 		template = (link_text + template) 
+	  
+	  end 
 		
 	  url = bucket + wrapper_file
 	  template["<URL>"] = url
