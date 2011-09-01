@@ -67,29 +67,30 @@ class ShowmeProcessor
 	  next if this_showme[0]=="#" 
 	  
 	  link_text, wrapper_file, webhelp_file_that_needs_showmes = this_showme.split("\t")
-	  puts wrapper_file, @SHOWMES[3]
-	  #Find out if the file needs to have links added.
-	  if webhelp_file_in_contents_folder.include? webhelp_file_that_needs_showmes 
-	    #it does!
-	    
-		#so find out whether it's the file containing the list of showmes,
-		if webhelp_file_that_needs_showmes == $hSettings["showme_list"]
-		
-		  template = String.new(@LIST_TEMPLATE)
-		  template["<LINK_TEXT>"] = link_text
-		
-		#or a file that needs contextual links in the flow of its text.
-		else
-		
-		  template = String.new(@CONTEXT_TEMPLATE)
- 		  template = (link_text + template) 
-		
-		end #list v contextual
-		
-	  end # does the file need to have links added?
 	  
+	  #jump to the next line if the file doesn't need to have links added.
+	  next if !webhelp_file_in_contents_folder.include? webhelp_file_that_needs_showmes
+	  
+	  #if we're here, the file needs to have showme links added,
+	  #so find out whether it's the file containing the list of showmes (and set up the link text accordingly),
+	  if webhelp_file_that_needs_showmes == $hSettings["showme_list"]
+		
+		template = String.new(@LIST_TEMPLATE)
+		template["<LINK_TEXT>"] = link_text
+		
+	  #or a file that needs contextual links in the flow of its text.
+	  else
+		
+		template = String.new(@CONTEXT_TEMPLATE)
+ 		template = (link_text + template) 
+		
+      end #list v contextual
+	
+      #finish preparing the link text,	
 	  url = bucket + wrapper_file
 	  template["<URL>"] = url
+	  
+	  #then add it to the html of the webhelp file.
 	  its_html[link_text] = template
 	 
 	end #@SHOWMES.each
