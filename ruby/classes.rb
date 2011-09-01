@@ -1,5 +1,4 @@
-﻿
-class GAProcessor
+﻿class GAProcessor
 
   def initialize
   
@@ -53,49 +52,47 @@ class ShowmeProcessor
   
     @LIST_TEMPLATE = File.read("files/sm/list_link_template.txt")
 	@CONTEXT_TEMPLATE = File.read("files/sm/context_link_template.txt")
-	@LINKS = IO.readlines("files/sm/showmes.txt")
-	
+	@SHOWMES = IO.readlines("files/sm/showmes.txt")
 	
   end
 
-  def addShowmeLinks(file_in_webhelp, its_html, lang)
-  
+  def addShowmeLinks(webhelp_file_in_contents_folder, its_html, lang)
+    
     bucket=String.new($hSettings["s3_bucket"])
 	bucket["<LANG>"] = lang
 	
+	@SHOWMES.each do |this_showme|
 	
-	@LINKS.each do |this_link|
-	
-	  next if this_link[0]=="#" #or !file_in_webhelp.include? webhelp_file_to_update
+	  #jump to the next line in the showmes file if the current line is a comment.
+	  next if this_showme[0]=="#" 
 	  
-	  link_text, wrapper_file, webhelp_file_to_update = this_link.split("|")
-	  puts "Are " + webhelp_file_to_update + " and " + $hSettings["showme_list"] + " equal? Ruby says:"
-	  puts webhelp_file_to_update == $hSettings["showme_list"]
-	  puts webhelp_file_to_update.class, $hSettings["showme_list"].class
-	  
-	  #Find out what kind of a link we need to add:
-	  if webhelp_file_to_update == $hSettings["showme_list"]
-	  #it's a link in the list of showmes.
+	  link_text, wrapper_file, webhelp_file_that_needs_showmes = this_showme.split("\t")
+	  puts wrapper_file, @SHOWMES[3]
+	  #Find out if the file needs to have links added.
+	  if webhelp_file_in_contents_folder.include? webhelp_file_that_needs_showmes 
+	    #it does!
+	    
+		#so find out whether it's the file containing the list of showmes,
+		if webhelp_file_that_needs_showmes == $hSettings["showme_list"]
 		
-		template = String.new(@LIST_TEMPLATE)
-		template["<LINK_TEXT>"] = link_text
-	  
-	  else
-	  #it's a contextual link.
-	  
-  	    template = String.new(@CONTEXT_TEMPLATE)
- 		template = (link_text + template) 
-	  
-	  end 
+		  template = String.new(@LIST_TEMPLATE)
+		  template["<LINK_TEXT>"] = link_text
 		
+		#or a file that needs contextual links in the flow of its text.
+		else
+		
+		  template = String.new(@CONTEXT_TEMPLATE)
+ 		  template = (link_text + template) 
+		
+		end #list v contextual
+		
+	  end # does the file need to have links added?
+	  
 	  url = bucket + wrapper_file
 	  template["<URL>"] = url
 	  its_html[link_text] = template
 	 
-	  
-	  #puts webhelp_file_to_update, template if template.include? "i_help_video.png"
-	  
-	end #@LINKS
+	end #@SHOWMES.each
 	
   end #addShowmeLinks
   
