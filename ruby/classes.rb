@@ -62,25 +62,28 @@ class ShowmeProcessor
     s3_bucket = String.new($hSettings["s3_bucket"])
 	s3_bucket["<LANG>"] = lang
     
-	puts "\r\n"
-	puts puts s3_bucket, webhelp_file_in_contents_folder
+	#puts "\r\n"
+	#puts puts s3_bucket, webhelp_file_in_contents_folder
 	
 	@SHOWMES.each do |row_in_showmes_file|
 	 
+      #get rid of the newline character that IO.readlines adds to the end of every line.	 
 	  row_in_showmes_file.chomp!
 	  
+	  #get all the bits from the current line.
 	  text_where_link_goes, wrapper_file_for_showme, page_where_link_goes = row_in_showmes_file.split("\t")
 	  
 	  #skip to the next line in the list of showmes if the current line doesn't match the webhelp file we're looking at.
 	  next if !(webhelp_file_in_contents_folder == page_where_link_goes)
 	  
-	  puts "**"
-	  puts text_where_link_goes, wrapper_file_for_showme, page_where_link_goes
+	  #puts "**"
+	  #puts text_where_link_goes, wrapper_file_for_showme, page_where_link_goes
 	  
+	  #build the URL to put into the link text.
 	  url_in_link = s3_bucket + wrapper_file_for_showme
 	  
 	  #check whether the file we're looking at is the file that contains the list of showmes, or a file
-	  #that will contain a contextual link from within its text.
+	  #that contains contextual links from within its text.
 	  #the text we use to build the link is different in these cases.
 	  if webhelp_file_in_contents_folder == $hSettings["showme_list"]
 	    
@@ -89,7 +92,7 @@ class ShowmeProcessor
 		
 		link_text_to_add = String.new(@LIST_TEMPLATE)
 		link_text_to_add["<LINK_TEXT>"] = text_where_link_goes
-		puts "This is the list file!"
+	#	puts "This is the list file!"
 		
 	  else
 	    
@@ -98,16 +101,16 @@ class ShowmeProcessor
 	    
 		link_text_to_add = String.new(@CONTEXT_TEMPLATE)
 		link_text_to_add = text_where_link_goes + link_text_to_add
-		puts "This is a contextual file."
+	#	puts "This is a contextual file."
 	  
 	  end  # is it the showme list or a contextual file?
 	  
-	 
+	  #finish building the link text by adding the URL of the wrapper file.
 	  link_text_to_add["<URL>"] = url_in_link
-	  puts link_text_to_add
+	 # puts link_text_to_add
 	  
 	  html_of_webhelp_file_in_contents_folder[text_where_link_goes] = link_text_to_add
-	  puts html_of_webhelp_file_in_contents_folder
+	  #puts html_of_webhelp_file_in_contents_folder
 	  
 	  
 	  
@@ -115,6 +118,8 @@ class ShowmeProcessor
   
   end  #addShowmeLinks
   
+  #I could never get this working so abandoned it to start again.
+  #At some point I need to understand why: 
   
   def OldaddShowmeLinks(webhelp_file_in_contents_folder, its_html, lang)
     
