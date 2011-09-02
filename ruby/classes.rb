@@ -73,6 +73,9 @@ class ShowmeProcessor
 	  #get all the bits from the current line.
 	  text_where_link_goes, wrapper_file_for_showme, page_where_link_goes = row_in_showmes_file.split("\t")
 	  
+	  #skip to the next line if the current line is a comment.
+	  next if row_in_showmes_file[0] == "#"
+	  
 	  #skip to the next line in the list of showmes if the current line doesn't match the webhelp file we're looking at.
 	  next if !(webhelp_file_in_contents_folder == page_where_link_goes)
 	  
