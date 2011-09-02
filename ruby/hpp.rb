@@ -27,8 +27,8 @@ aLangs.each do |lang|
   
   #find all the HTML files in all the folders and subfolders. 
   aFiles = Dir[webhelp_path + "/**/*.htm"]
-  puts "File: " + webhelp
-  print "Working"
+  puts "File: " + webhelp if $hSettings["show_onscreen_progress"]
+  print "Working" if $hSettings["show_onscreen_progress"]
   
   #loop around them.
   aFiles.each do |file_in_webhelp|
@@ -43,10 +43,10 @@ aLangs.each do |lang|
       its_html = openFile(file_in_webhelp)
 	  
 	  begin
-        print "."
+        print "."  if $hSettings["show_onscreen_progress"]
         ga.addTrackingCode (its_html) if $hSettings["do_analytics"]
 		ff.addFeedbackForm (its_html) if $hSettings["do_feedbackforms"]
-		sm.addShowmeLinks(file_in_webhelp, its_html, lang) if $hSettings["do_showmes"]
+		sm.addShowmeLinks(getFile(file_in_webhelp), its_html, lang) if $hSettings["do_showmes"]
 		writeFile(file_in_webhelp, its_html)
       rescue
   
@@ -65,7 +65,7 @@ aLangs.each do |lang|
 	      its_html = openFile(file_in_webhelp) 
 	      
 	      begin
-	        print "."
+	        print "."  if $hSettings["show_onscreen_progress"]
 	        ga.addTrackingCode (its_html) if $hSettings["do_analytics"]
 			writeFile(file_in_webhelp, its_html)
 	        
@@ -82,7 +82,7 @@ aLangs.each do |lang|
 	
   end #outer do loop
   
-  print "Done!\r\n"
+  print "Done!\r\n" if $hSettings["show_onscreen_progress"]
 
 end #language loop
 

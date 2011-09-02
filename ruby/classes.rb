@@ -56,42 +56,108 @@ class ShowmeProcessor
 	
   end
 
-  def addShowmeLinks(webhelp_file_in_contents_folder, its_html, lang)
+  
+  def addShowmeLinks (webhelp_file_in_contents_folder, its_html, lang)
+  
+    s3_bucket = String.new($hSettings["s3_bucket"])
+	s3_bucket["<LANG>"] = lang
+    
+	puts "\r\n"
+	puts puts s3_bucket, webhelp_file_in_contents_folder
+	
+	@SHOWMES.each do |row_in_showmes_file|
+	 
+	  row_in_showmes_file.chomp!
+	  
+	  text_where_link_goes, wrapper_file_for_showme, page_where_link_goes = row_in_showmes_file.split("\t")
+	  
+	  #skip to the next line in the list of showmes if the current line doesn't match the webhelp file we're looking at.
+	  next if !(webhelp_file_in_contents_folder == page_where_link_goes)
+	  
+	  puts "**"
+	  puts text_where_link_goes, wrapper_file_for_showme, page_where_link_goes
+	  
+	  
+	  
+	  #check whether the file we're looking at is the file that contains the list of showmes, or a file
+	  #that will contain a contextual link from within its text.
+	  #the text we use to build the link is different in these cases.
+	  if webhelp_file_in_contents_folder == $hSettings["showme_list"]
+	    
+		#it's the file that contains the list of showmes;
+		#we wrap the link around the text_where_link_goes
+		
+		link_text_to_add = String.new(@LIST_TEMPLATE)
+		link_text_to_add["<LINK_TEXT>"] = text_where_link_goes
+		puts "This is the list file!"
+		
+	  else
+	    
+		#it's a file that contains contextual links;
+	    #the link comes immediately after the text_where_link_goes
+	    
+		link_text_to_add = String.new(@CONTEXT_TEMPLATE)
+		link_text_to_add = text_where_link_goes + link_text_to_add
+		puts "This is a contextual file."
+	  
+	  end  # is it the showme list or a contextual file?
+	  
+	 
+	  puts link_text_to_add
+	  
+	  
+	  
+	end  #@SHOWMES.each
+  
+  end  #addShowmeLinks
+  
+  
+  def OldaddShowmeLinks(webhelp_file_in_contents_folder, its_html, lang)
     
     bucket=String.new($hSettings["s3_bucket"])
 	bucket["<LANG>"] = lang
 	
-	@SHOWMES.each do |this_showme|
 	
+	puts webhelp_file_in_contents_folder
+	
+ 	@SHOWMES.each do |this_showme|
+ 
+     
+      	
+	  #get rid of the newline character that IO.readlines adds to each line.
+	  this_showme.chomp!
+	   
 	  #jump to the next line in the showmes file if the current line is a comment.
-	  next if this_showme[0]=="#" 
+	  #next if this_showme[0]=="#" 
 	  
 	  link_text, wrapper_file, webhelp_file_that_needs_showmes = this_showme.split("\t")
 	  
+	  puts webhelp_file_that_needs_showmes, webhelp_file_in_contents_folder
+	  puts "MATCH " if webhelp_file_in_contents_folder == webhelp_file_that_needs_showmes
 	  #jump to the next line if the file doesn't need to have links added.
-	  next if !webhelp_file_in_contents_folder.include? webhelp_file_that_needs_showmes
+	  next if !webhelp_file_in_contents_folder == webhelp_file_that_needs_showmes   
 	  
 	  #if we're here, the file needs to have showme links added,
 	  #so find out whether it's the file containing the list of showmes (and set up the link text accordingly),
-	  if webhelp_file_that_needs_showmes == $hSettings["showme_list"]
-		
-		template = String.new(@LIST_TEMPLATE)
-		template["<LINK_TEXT>"] = link_text
+	  if webhelp_file_in_contents_folder == $hSettings["showme_list"]
+		puts "SHOWME_LIST!"
+		link_to_add = String.new(@LIST_TEMPLATE)
+		link_to_add["<LINK_TEXT>"] = link_text
 		
 	  #or a file that needs contextual links in the flow of its text.
 	  else
 		
-		template = String.new(@CONTEXT_TEMPLATE)
- 		template = (link_text + template) 
+		link_to_add = String.new(@CONTEXT_TEMPLATE)
+ 		link_to_add = (link_text + link_template) 
 		
       end #list v contextual
 	
       #finish preparing the link text,	
 	  url = bucket + wrapper_file
-	  template["<URL>"] = url
+	  link_to_add["<URL>"] = url
 	  
 	  #then add it to the html of the webhelp file.
-	  its_html[link_text] = template
+	  its_html[link_text] = link_to_add
 	 
 	end #@SHOWMES.each
 	
@@ -112,7 +178,7 @@ def openFile(fileInWebHelp)
   begin
     return File.read(fileInWebHelp)
   rescue
-    puts "Couldn't open " + fileInWebHelp
+    puts "Couldn't open " + fileInWebHelp if $hSettings["show_onscreen_progress"]
   end
 
 end
@@ -149,6 +215,19 @@ def splitPathAndFile (strWebHelp)
     strPath = aWebHelp.join("/")
   
     return strPath, strFile
+  
+end
+
+def getFile (strWebHelp)
+
+    #get the file name from the end of the string, by:
+    #putting the string into an array,
+    aWebHelp = strWebHelp.split("/")
+  
+    #then getting the last element (i.e. the file name).
+    strFile = aWebHelp[aWebHelp.length-1]
+  
+    return strFile
   
 end
 
