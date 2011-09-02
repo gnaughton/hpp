@@ -40,3 +40,8 @@ make changes to the design.					editLiveDesign.htm				Editing_a_Live_Study_Desig
 a simulation setup is not locked.			settingUpASimulation.htm		Creating_a_New_Simulation_Setup.htm
 runs that were out of balance.				simulationAnalysisPage.htm		Viewing_Analysis_Tables.htm
 statistical results for each analysis.		meansStandardDeviations.htm		Viewing_Analysis_Tables.htm
+for each study arm.							minima.htm						Viewing_Analysis_Tables.htm
+balance for the simulation.					runsOutOfBalance.htm			Viewing_Analysis_Tables.htm
+pacemaker.									managingArticleTypes			Article_Types.htm
+on each list page.							searchFilter.htm				Filtering_Search_Criteria.htm
+shipping from that depot.					inventoryBatchListPage.htm		Manage_Batches.htm

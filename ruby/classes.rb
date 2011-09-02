@@ -55,16 +55,13 @@ class ShowmeProcessor
     @CONTEXT_TEMPLATE = File.read("files/sm/context_link_template_" + lang + ".txt")
 	@SHOWMES = IO.readlines("files/sm/showmes_" + lang + ".txt")
   
-   end
+  end
 
   
   def addShowmeLinks (webhelp_file_in_contents_folder, html_of_webhelp_file_in_contents_folder, lang)
   
     s3_bucket = String.new($hSettings["s3_bucket"])
 	s3_bucket["<LANG>"] = lang
-    
-	#puts "\r\n"
-	#puts puts s3_bucket, webhelp_file_in_contents_folder
 	
 	@SHOWMES.each do |row_in_showmes_file|
 	 
@@ -75,13 +72,11 @@ class ShowmeProcessor
 	  next if row_in_showmes_file[0] == "#"
 	  
 	  #get all the bits from the current line.
+	  #there can be an abritrary number of tabs between the bits.
 	  text_where_link_goes, wrapper_file_for_showme, page_where_link_goes = row_in_showmes_file.split(/\t+/)
 	  
 	  #skip to the next line in the list of showmes if the current line doesn't match the webhelp file we're looking at.
 	  next if !(webhelp_file_in_contents_folder == page_where_link_goes)
-	  
-	  #puts "**"
-	  #puts text_where_link_goes, wrapper_file_for_showme, page_where_link_goes
 	  
 	  #build the URL to put into the link text.
 	  url_in_link = s3_bucket + wrapper_file_for_showme
@@ -96,7 +91,6 @@ class ShowmeProcessor
 		
 		link_text_to_add = String.new(@LIST_TEMPLATE)
 		link_text_to_add["<LINK_TEXT>"] = text_where_link_goes
-	#	puts "This is the list file!"
 		
 	  else
 	    
@@ -105,22 +99,19 @@ class ShowmeProcessor
 	    
 		link_text_to_add = String.new(@CONTEXT_TEMPLATE)
 		link_text_to_add = text_where_link_goes + link_text_to_add
-	#	puts "This is a contextual file."
 	  
 	  end  # is it the showme list or a contextual file?
 	  
 	  #finish building the link text by adding the URL of the wrapper file.
 	  link_text_to_add["<URL>"] = url_in_link
-	 # puts link_text_to_add
 	  
+	  #update the HTML of the webhelp file with the link.
 	  html_of_webhelp_file_in_contents_folder[text_where_link_goes] = link_text_to_add
-	  #puts html_of_webhelp_file_in_contents_folder
-	  
-	  
 	  
 	end  #@SHOWMES.each
   
   end  #addShowmeLinks
+  
   
   #I could never get this working so abandoned it to start again.
   #At some point I need to understand why: 
