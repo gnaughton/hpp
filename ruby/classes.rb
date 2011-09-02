@@ -48,13 +48,6 @@ end
 
 class ShowmeProcessor
 
-  def initialize
-  
-    @LIST_TEMPLATE = File.read("files/sm/list_link_template.txt")
-	@CONTEXT_TEMPLATE = File.read("files/sm/context_link_template.txt")
-	@SHOWMES = IO.readlines("files/sm/showmes.txt")
-	
-  end
   
   def loadFiles (lang)
   
@@ -78,11 +71,11 @@ class ShowmeProcessor
       #get rid of the newline character that IO.readlines adds to the end of every line.	 
 	  row_in_showmes_file.chomp!
 	  
-	  #get all the bits from the current line.
-	  text_where_link_goes, wrapper_file_for_showme, page_where_link_goes = row_in_showmes_file.split("\t")
-	  
 	  #skip to the next line if the current line is a comment.
 	  next if row_in_showmes_file[0] == "#"
+	  
+	  #get all the bits from the current line.
+	  text_where_link_goes, wrapper_file_for_showme, page_where_link_goes = row_in_showmes_file.split(/\t+/)
 	  
 	  #skip to the next line in the list of showmes if the current line doesn't match the webhelp file we're looking at.
 	  next if !(webhelp_file_in_contents_folder == page_where_link_goes)
