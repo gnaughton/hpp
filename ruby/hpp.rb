@@ -25,6 +25,9 @@ aLangs.each do |lang|
   #copy the star graphic for the feedback form to the WebHelp systems
   ff.copyFormGraphics (webhelp_images_folder) if $hSettings["do_feedbackforms"]
   
+  #load the files for the showme links.
+  sm.loadFiles (lang) if $hSettings["do_showmes"]
+  
   #find all the HTML files in all the folders and subfolders. 
   aFiles = Dir[webhelp_path + "/**/*.htm"]
   puts "File: " + webhelp if $hSettings["show_onscreen_progress"]

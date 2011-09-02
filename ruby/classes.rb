@@ -55,6 +55,14 @@ class ShowmeProcessor
 	@SHOWMES = IO.readlines("files/sm/showmes.txt")
 	
   end
+  
+  def loadFiles (lang)
+  
+    @LIST_TEMPLATE = File.read("files/sm/list_link_template_" + lang + ".txt")
+    @CONTEXT_TEMPLATE = File.read("files/sm/context_link_template_" + lang + ".txt")
+	@SHOWMES = IO.readlines("files/sm/showmes_" + lang + ".txt")
+  
+   end
 
   
   def addShowmeLinks (webhelp_file_in_contents_folder, html_of_webhelp_file_in_contents_folder, lang)
