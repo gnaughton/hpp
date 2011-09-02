@@ -1,1 +1,0 @@
-<a href="" onclick="javascript:window.open('<URL>','','width=825,height=625');return false" title="Show me"><img src="../../Images/i_help_video.png" style="border: none;" width="16" height="16" border="0" /></a>
