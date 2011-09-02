@@ -57,7 +57,7 @@ class ShowmeProcessor
   end
 
   
-  def addShowmeLinks (webhelp_file_in_contents_folder, its_html, lang)
+  def addShowmeLinks (webhelp_file_in_contents_folder, html_of_webhelp_file_in_contents_folder, lang)
   
     s3_bucket = String.new($hSettings["s3_bucket"])
 	s3_bucket["<LANG>"] = lang
@@ -77,7 +77,7 @@ class ShowmeProcessor
 	  puts "**"
 	  puts text_where_link_goes, wrapper_file_for_showme, page_where_link_goes
 	  
-	  
+	  url_in_link = s3_bucket + wrapper_file_for_showme
 	  
 	  #check whether the file we're looking at is the file that contains the list of showmes, or a file
 	  #that will contain a contextual link from within its text.
@@ -103,7 +103,11 @@ class ShowmeProcessor
 	  end  # is it the showme list or a contextual file?
 	  
 	 
+	  link_text_to_add["<URL>"] = url_in_link
 	  puts link_text_to_add
+	  
+	  html_of_webhelp_file_in_contents_folder[text_where_link_goes] = link_text_to_add
+	  puts html_of_webhelp_file_in_contents_folder
 	  
 	  
 	  
