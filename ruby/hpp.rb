@@ -1,4 +1,4 @@
-﻿load 'classes.rb'
+load 'classes.rb'
 require 'fileutils.rb'
 
 $hSettings = Hash[*File.read("hpp.ini").scan(/^(.*)=(.*)$/).flatten]
@@ -20,13 +20,13 @@ aLangs.each do |lang|
   webhelp_path, webhelp_file, webhelp_contents_folder, webhelp_images_folder = parseWebHelpFile(webhelp, lang)
   
   #tell the feedback form processor to build the text of the form.
-  ff.setFeedbackForm (lang) if $hSettings["do_feedbackforms"]
+  ff.setFeedbackForm(lang) if $hSettings["do_feedbackforms"]
   
   #copy the star graphic for the feedback form to the WebHelp systems
-  ff.copyFormGraphics (webhelp_images_folder) if $hSettings["do_feedbackforms"]
+  ff.copyFormGraphics(webhelp_images_folder) if $hSettings["do_feedbackforms"]
   
   #load the files for the showme links.
-  sm.loadFiles (lang) if $hSettings["do_showmes"]
+  sm.loadFiles(lang) if $hSettings["do_showmes"]
   
   #find all the HTML files in all the folders and subfolders. 
   aFiles = Dir[webhelp_path + "/**/*.htm"]
@@ -47,8 +47,8 @@ aLangs.each do |lang|
 	  
 	  begin
         print "."  if $hSettings["show_onscreen_progress"]
-        ga.addTrackingCode (its_html) if $hSettings["do_analytics"]
-		ff.addFeedbackForm (its_html) if $hSettings["do_feedbackforms"]
+        ga.addTrackingCode(its_html) if $hSettings["do_analytics"]
+		ff.addFeedbackForm(its_html) if $hSettings["do_feedbackforms"]
 		sm.addShowmeLinks(getFile(file_in_webhelp), its_html, lang) if $hSettings["do_showmes"]
 		writeFile(file_in_webhelp, its_html)
       rescue
@@ -69,7 +69,7 @@ aLangs.each do |lang|
 	      
 	      begin
 	        print "."  if $hSettings["show_onscreen_progress"]
-	        ga.addTrackingCode (its_html) if $hSettings["do_analytics"]
+	        ga.addTrackingCode(its_html) if $hSettings["do_analytics"]
 			writeFile(file_in_webhelp, its_html)
 	        
           rescue

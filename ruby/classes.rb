@@ -1,4 +1,4 @@
-﻿class GAProcessor
+class GAProcessor
 
   def initialize
   
@@ -84,7 +84,7 @@ class ShowmeProcessor
 	  #check whether the file we're looking at is the file that contains the list of showmes, or a file
 	  #that contains contextual links from within its text.
 	  #the text we use to build the link is different in these cases.
-	  if webhelp_file_in_contents_folder == $hSettings["showme_list"]
+	  if webhelp_file_in_contents_folder == $hSettings["showme_list_" + lang]
 	    
 		#it's the file that contains the list of showmes;
 		#we wrap the link around the text_where_link_goes
@@ -172,7 +172,7 @@ end #ShowmeProcessor
 def writeFile(fileInWebHelp, strHTMLFile)
 
     fTaggedFile = File.open(fileInWebHelp, 'w')
-    fTaggedFile.write (strHTMLFile)
+    fTaggedFile.write(strHTMLFile)
     fTaggedFile.close
 
 end
@@ -193,7 +193,7 @@ def parseWebHelpFile (strWebHelp, lang)
     strWebHelp["<LANG>"] = lang
   end
   
-  strPath, strFile = splitPathAndFile (strWebHelp)
+  strPath, strFile = splitPathAndFile(strWebHelp)
   strWebHelpContentsFolder = strPath + "/" + File.basename(strFile, '.htm') + "/"
   strWebHelpImagesFolder = strPath + "/Images/"
   
