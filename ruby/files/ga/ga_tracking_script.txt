@@ -1,4 +1,4 @@
-﻿<!-- Google Analytics tracking script -->
+<!-- Google Analytics tracking script -->
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
