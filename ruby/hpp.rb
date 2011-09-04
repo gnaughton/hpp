@@ -7,14 +7,14 @@ $hSettings = Hash[*File.read("hpp.ini").scan(/^(.*)=(.*)$/).flatten]
 #if everything's OK the array will contain all the languages we're processing.
 aLangs = checkLanguage()
 
-#get the WebHelp path/file.
-webhelp = String.new($hSettings["webhelp"])
-
 ga = GAProcessor.new
 ff = FeedbackFormProcessor.new
 sm = ShowmeProcessor.new
 
 aLangs.each do |lang|
+
+  #get the WebHelp path/file.
+  webhelp = String.new($hSettings["webhelp"])
 
   #extract all the various bits we need from the WebHelp path/file.
   webhelp_path, webhelp_file, webhelp_contents_folder, webhelp_images_folder = parseWebHelpFile(webhelp, lang)
