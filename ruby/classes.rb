@@ -192,7 +192,7 @@ def parseWebHelpFile (strWebHelp, lang)
   if $hSettings["webhelp"].include? "<LANG>"
     strWebHelp["<LANG>"] = lang
   end
-  
+ 
   strPath, strFile = splitPathAndFile(strWebHelp)
   strWebHelpContentsFolder = strPath + "/" + File.basename(strFile, '.htm') + "/"
   strWebHelpImagesFolder = strPath + "/Images/"
