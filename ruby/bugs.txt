@@ -1,0 +1,5 @@
+Can't process <WebHelp System Root File>.htm as scaffolding file.
+
+GA tracking code adds space to top of topics.
+
+Can't process JPN files under Windows.
