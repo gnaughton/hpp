@@ -36,41 +36,49 @@ aLangs.each do |lang|
   #loop around them.
   aFiles.each do |file_in_webhelp|
   
-    #are we in the contents directory tree? if so:
-	# - tag everything with the GA code,
-    # - add the help feedback form, 
-	# - add the showme links,
-	# - write the modified file to disk.
-	if file_in_webhelp.include? webhelp_contents_folder
-      
-      its_html = openFile(file_in_webhelp)
+  #are we in the contents directory tree? if so:
+  # - tag everything with the GA code,
+  # - add the help feedback form, 
+  # - add the showme links,
+  # - write the modified file to disk.
+  if file_in_webhelp.include? webhelp_contents_folder
+    
+    its_html = openFile(file_in_webhelp)
+    its_original_html = String.new(its_html)
 	  
-	  begin
-        print "."  if $hSettings["show_onscreen_progress"]
-        ga.addTrackingCode(its_html) if $hSettings["do_analytics"]
-		ff.addFeedbackForm(its_html) if $hSettings["do_feedbackforms"]
-		sm.addShowmeLinks(getFile(file_in_webhelp), its_html, lang) if $hSettings["do_showmes"]
-		writeFile(file_in_webhelp, its_html)
-      rescue
+    begin
+
+      print "."  if $hSettings["show_onscreen_progress"]
+      ga.addTrackingCode(its_html) if $hSettings["do_analytics"]
+      ff.addFeedbackForm(its_html) if $hSettings["do_feedbackforms"]
+      sm.addShowmeLinks(getFile(file_in_webhelp), its_html, lang) if $hSettings["do_showmes"]
+      writeFile(file_in_webhelp, its_html) if its_html != its_original_html
+
+    rescue
   
-      end
+    end
   
-    else  #we're not in the contents folder, so tag the scaffolding files with GA code.
-  
+    else  
+
+      #we're not in the contents folder, so tag the scaffolding files with GA code.
       its_html = openFile(file_in_webhelp)
 	  
       aScaffoldingFiles = $hSettings["tracked_scaffolding_files"].split(",")
-      #loop through the scaffolding files
-	  aScaffoldingFiles.each do |sf|
       
-	    if file_in_webhelp.include? sf
+      #loop through the scaffolding files
+      aScaffoldingFiles.each do |sf|
+      
+        #is the current file a scaffolding file?
+        if file_in_webhelp.include? sf
+	  #yes, so tag it with the GA code.
 	  
-	      its_html = openFile(file_in_webhelp) 
+          its_html = openFile(file_in_webhelp) 
 	      
-	      begin
-	        print "."  if $hSettings["show_onscreen_progress"]
-	        ga.addTrackingCode(its_html) if $hSettings["do_analytics"]
-			writeFile(file_in_webhelp, its_html)
+	  begin
+	        
+            print "."  if $hSettings["show_onscreen_progress"]
+	    ga.addTrackingCode(its_html) if $hSettings["do_analytics"]
+	    writeFile(file_in_webhelp, its_html)
 	        
           rescue
   
@@ -78,9 +86,8 @@ aLangs.each do |lang|
 	 
         end #is the current file a scaffolding file?
     
-	  end #scaffolding files do loop
+      end #scaffolding files do loop
  
-  
     end  #contents folder/scaffolding files folder if check
 	
   end #outer do loop
