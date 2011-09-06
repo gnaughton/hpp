@@ -77,7 +77,7 @@ class ShowmeProcessor
       #get all the bits from the current line.
       #there can be an abritrary number of tabs between the bits.
       text_where_link_goes, wrapper_file_for_showme, page_where_link_goes = row_in_showmes_file.split(/\t+/)
-      puts text_where_link_goes, text_where_link_goes[0,1], text_where_link_goes[0]
+      
       #skip to the next line in the list of showmes if the current line doesn't match the webhelp file we're looking at.
       next if !(webhelp_file_in_contents_folder == page_where_link_goes)
 	  
