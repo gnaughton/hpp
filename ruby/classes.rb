@@ -70,15 +70,14 @@ class ShowmeProcessor
 	 
       #get rid of the newline character that IO.readlines adds to the end of every line.	 
       row_in_showmes_file.chomp!
-	  
+	 
       #skip to the next line if the current line is a comment.
       next if row_in_showmes_file[0] == "#"
 	  
       #get all the bits from the current line.
       #there can be an abritrary number of tabs between the bits.
-      #text_where_link_goes, wrapper_file_for_showme, page_where_link_goes = row_in_showmes_file.split(/\t+/)
-      text_where_link_goes, wrapper_file_for_showme, page_where_link_goes = row_in_showmes_file.split('!')
-	  
+      text_where_link_goes, wrapper_file_for_showme, page_where_link_goes = row_in_showmes_file.split(/\t+/)
+      
       #skip to the next line in the list of showmes if the current line doesn't match the webhelp file we're looking at.
       next if !(webhelp_file_in_contents_folder == page_where_link_goes)
 	  
@@ -94,7 +93,7 @@ class ShowmeProcessor
         #we wrap the link around the text_where_link_goes
         link_text_to_add = String.new(@LIST_TEMPLATE)
         link_text_to_add["<LINK_TEXT>"] = text_where_link_goes
-                
+             
       else
         #it's a file that contains contextual links;
         #the link comes immediately after the text_where_link_goes
@@ -107,8 +106,12 @@ class ShowmeProcessor
       link_text_to_add["<URL>"] = url_in_link
 	  
       #update the HTML of the webhelp file with the link.
-      html_of_webhelp_file_in_contents_folder[text_where_link_goes] = link_text_to_add
-      	  
+      begin
+        html_of_webhelp_file_in_contents_folder[text_where_link_goes] = link_text_to_add
+      rescue Exception => e
+        #puts e.message
+      end
+
     end  #@SHOWMES.each
   
   end  #addShowmeLinks
@@ -121,7 +124,7 @@ def writeFile(file_in_webhelp, its_html)
     f = File.open(file_in_webhelp, 'w')
     f.write(its_html)
     f.close
-  rescue
+  rescue Exception
     puts ("Problem reading/writing " + file_in_webhelp) if $hSettings["show_onscreen_progress"]
   end
 

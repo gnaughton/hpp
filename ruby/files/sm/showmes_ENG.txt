@@ -3,7 +3,7 @@ Accessing Medidata Balance			accessingBalance.htm			List_of_Show_Me_Videos.htm
 Adding a Study Arm				addingStudyArms.htm			List_of_Show_Me_Videos.htm
 Adding Randomization Factors			addingRandomizationFactors.htm		List_of_Show_Me_Videos.htm
 #Assigning Sites to a Supply Plan		assigningSites.htm			List_of_Show_Me_Videos.htm
-#Simulation Execution List			simulationExecutionList.htm		List_of_Show_Me_Videos.htmt
+#Simulation Execution List			simulationExecutionList.htm		List_of_Show_Me_Videos.htm
 Balancing Randomization				balancingRandomization.htm		List_of_Show_Me_Videos.htm
 Second Best Probability				secondBestProbability.htm		List_of_Show_Me_Videos.htm
 Editing a Live Study				editLiveDesign.htm			List_of_Show_Me_Videos.htm
@@ -56,4 +56,4 @@ to the trial is available on site.		inventoryListPage.htm			Manage_Items.htm
 and then shipped to sites.			shipmentListPage.htm			Manage_Shipments.htm
 site list with iMedidata.			manageSites.htm				Manage_Sites.htm
 a drug not intended for them.			subjectUnblinding.htm			Unblinding_a_Subject.htm
-as "Wasted".					unblindingInventoryItems.htm		Unblinding_an_Inventory_Item.htm
+item being marked as "Wasted".			unblindingInventoryItems.htm		Unblinding_an_Inventory_Item.htm
