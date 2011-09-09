@@ -75,8 +75,11 @@ class ShowmeProcessor
       next if row_in_showmes_file[0,1] == "#"
 	  
       #get all the bits from the current line.
-      #there can be an abritrary number of tabs between the bits.
-      text_where_link_goes, wrapper_file_for_showme, page_where_link_goes = row_in_showmes_file.split(/\t+/)
+      #there can be an abitrary number of tabs between the bits.
+      text_where_link_goes, wrapper_file_for_showme, page_where_link_goes, showme_width, showme_height = row_in_showmes_file.split(/\t+/)
+
+      showme_width = showme_width.nil? ? $hSettings["default_showme_width"] : showme_width
+      showme_height = showme_height.nil? ? $hSettings["default_showme_height"] : showme_height
       
       #skip to the next line in the list of showmes if the current line doesn't match the webhelp file we're looking at.
       next if !(webhelp_file_in_contents_folder == page_where_link_goes)
@@ -101,6 +104,10 @@ class ShowmeProcessor
         link_text_to_add = text_where_link_goes + link_text_to_add
 	  
       end  # is it the showme list or a contextual file?
+      
+      #set the height and width of the showme popup.
+      link_text_to_add["<WIDTH>"] = showme_width
+      link_text_to_add["<HEIGHT>"] = showme_height
 	 
       #finish building the link text by adding the URL of the wrapper file.
       link_text_to_add["<URL>"] = url_in_link
@@ -113,8 +120,10 @@ class ShowmeProcessor
       end
 
     end  #@SHOWMES.each
-  
+    
   end  #addShowmeLinks
+
+  
   
 end #ShowmeProcessor
 

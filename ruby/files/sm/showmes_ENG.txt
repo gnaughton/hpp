@@ -1,5 +1,5 @@
 #LIST
-What’s New in Balance 2011.3.1			whatsNew.htm				List_of_Show_Me_Videos.htm
+What’s New in Balance 2011.3.1			whatsNew.htm				List_of_Show_Me_Videos.htm	1000	600
 Accessing Medidata Balance			accessingBalance.htm			List_of_Show_Me_Videos.htm
 Adding a Study Arm				addingStudyArms.htm			List_of_Show_Me_Videos.htm
 Adding Randomization Factors			addingRandomizationFactors.htm		List_of_Show_Me_Videos.htm
@@ -57,7 +57,7 @@ and then shipped to sites.			shipmentListPage.htm			Manage_Shipments.htm
 site list with iMedidata.			manageSites.htm				Manage_Sites.htm
 a drug not intended for them.			subjectUnblinding.htm			Unblinding_a_Subject.htm
 item being marked as "Wasted".			unblindingInventoryItems.htm		Unblinding_an_Inventory_Item.htm
-following new features:				whatsNew.htm				What’s_New.htm
+following new features:				whatsNew.htm				What’s_New.htm				1000	600
 at-site inventory,				bufferOnly.htm				What’s_New.htm
 predicted demand				predictiveOnly.htm			What’s_New.htm
 or a combination of both			predictiveBuffer.htm			What’s_New.htm

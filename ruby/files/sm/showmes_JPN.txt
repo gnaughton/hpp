@@ -1,6 +1,6 @@
 #LIST -----------------------------------------------------------------------------------------------
 #BLOCK
-Medidata Balance 2011.3.1の新機能	whatsNew.htm				使い方説明ビデオの一覧.htm
+Medidata Balance 2011.3.1の新機能	whatsNew.htm				使い方説明ビデオの一覧.htm	1000	600
 Medidata Balanceへのアクセス		accessingBalance.htm			使い方説明ビデオの一覧.htm
 Medidata Balanceへのユーザ招待		invitingUsers.htm			使い方説明ビデオの一覧.htm
 #BLOCK 1 - DESIGN 

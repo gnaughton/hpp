@@ -1,1 +1,1 @@
-<a href="" onclick="javascript:window.open('<URL>','','width=825,height=625');return false" title="Show me"><LINK_TEXT></a>
+<a href="" onclick="javascript:window.open('<URL>','','width=<WIDTH>,height=<HEIGHT>');return false" title="Show me"><LINK_TEXT></a>
