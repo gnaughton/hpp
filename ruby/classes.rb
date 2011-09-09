@@ -101,7 +101,7 @@ class ShowmeProcessor
         link_text_to_add = text_where_link_goes + link_text_to_add
 	  
       end  # is it the showme list or a contextual file?
-	  
+	 
       #finish building the link text by adding the URL of the wrapper file.
       link_text_to_add["<URL>"] = url_in_link
 	  
@@ -252,7 +252,7 @@ end
 	  else
 		
 		link_to_add = String.new(@CONTEXT_TEMPLATE)
- 		link_to_add = (link_text + link_template) 
+ 		link_to_add = (link_text + link_template + " ") 
 		
       end #list v contextual
 	

@@ -1,9 +1,10 @@
 #LIST
+What’s New in Balance 2011.3.1			whatsNew.htm				List_of_Show_Me_Videos.htm
 Accessing Medidata Balance			accessingBalance.htm			List_of_Show_Me_Videos.htm
 Adding a Study Arm				addingStudyArms.htm			List_of_Show_Me_Videos.htm
 Adding Randomization Factors			addingRandomizationFactors.htm		List_of_Show_Me_Videos.htm
-#Assigning Sites to a Supply Plan		assigningSites.htm			List_of_Show_Me_Videos.htm
-#Simulation Execution List			simulationExecutionList.htm		List_of_Show_Me_Videos.htm
+Assigning Sites to a Supply Plan		assignSites.htm				List_of_Show_Me_Videos.htm
+Simulation Execution List			simulationExecutingList.htm		List_of_Show_Me_Videos.htm
 Balancing Randomization				balancingRandomization.htm		List_of_Show_Me_Videos.htm
 Second Best Probability				secondBestProbability.htm		List_of_Show_Me_Videos.htm
 Editing a Live Study				editLiveDesign.htm			List_of_Show_Me_Videos.htm
@@ -15,7 +16,6 @@ Minima						minima.htm				List_of_Show_Me_Videos.htm
 Runs Out of Balance				runsOutOfBalance.htm			List_of_Show_Me_Videos.htm
 Viewing Simulation Analysis			simulationAnalysisPage.htm		List_of_Show_Me_Videos.htm
 Treatment Design				treatmentDesign.htm			List_of_Show_Me_Videos.htm
-Treatment Schedule				treatmentSchedule.htm			List_of_Show_Me_Videos.htm
 Site List					siteListPage.htm			List_of_Show_Me_Videos.htm
 Unblinding a Subject				subjectUnblinding.htm			List_of_Show_Me_Videos.htm
 Inventory Item List				inventoryListPage.htm			List_of_Show_Me_Videos.htm
@@ -28,7 +28,7 @@ Managing a Treatment				managingTreatments.htm			List_of_Show_Me_Videos.htm
 Create and Manage a Supply Plan			supplyPlan.htm				List_of_Show_Me_Videos.htm
 Buffer-Only Supply Plans			bufferOnly.htm				List_of_Show_Me_Videos.htm
 Predictive-Only Supply Plans			predictiveOnly.htm			List_of_Show_Me_Videos.htm
-Predictive-And-Buffer Supply Plans		predictiveAndBuffer.htm			List_of_Show_Me_Videos.htm
+Predictive-And-Buffer Supply Plans		predictiveBuffer.htm			List_of_Show_Me_Videos.htm
 Properties					propertiesPage.htm			List_of_Show_Me_Videos.htm
 Using the Search Filter				searchFilter.htm			List_of_Show_Me_Videos.htm
 #CONTEXTUAL
@@ -57,3 +57,10 @@ and then shipped to sites.			shipmentListPage.htm			Manage_Shipments.htm
 site list with iMedidata.			manageSites.htm				Manage_Sites.htm
 a drug not intended for them.			subjectUnblinding.htm			Unblinding_a_Subject.htm
 item being marked as "Wasted".			unblindingInventoryItems.htm		Unblinding_an_Inventory_Item.htm
+following new features:				whatsNew.htm				What’s_New.htm
+at-site inventory,				bufferOnly.htm				What’s_New.htm
+predicted demand				predictiveOnly.htm			What’s_New.htm
+or a combination of both			predictiveBuffer.htm			What’s_New.htm
+and how many items to supply.			predictiveOnly.htm			Predictive-only_Supply_Plans.htm
+and how many items to supply.			bufferOnly.htm				Buffer-only_Supply_Plans.htm
+how many inventory items to supply.		predictiveBuffer.htm			Predictive-and-Buffer_Supply_Plans.htm
