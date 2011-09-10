@@ -33,11 +33,11 @@ class FeedbackFormProcessor
     #add the Images folder if it's not already there.
     Dir::mkdir(webhelp_images_folder.chomp("/")) if !File.directory? webhelp_images_folder.chomp("/")
     
-    FileUtils.cp "files/ff/star_on.jpg", webhelp_images_folder + "star_on.jpg"
-    FileUtils.cp "files/ff/star_on_almost.jpg", webhelp_images_folder + "star_on_almost.jpg"
-    FileUtils.cp "files/ff/star_off.jpg", webhelp_images_folder + "star_off.jpg"
-    FileUtils.cp "files/ff/star_hover.jpg", webhelp_images_folder + "star_hover.jpg"
-    FileUtils.cp "files/ff/star_hover_almost.jpg", webhelp_images_folder + "star_hover_almost.jpg"
+    FileUtils.cp "files/ff/star_on.jpg", webhelp_images_folder 
+    FileUtils.cp "files/ff/star_on_almost.jpg", webhelp_images_folder
+    FileUtils.cp "files/ff/star_off.jpg", webhelp_images_folder
+    FileUtils.cp "files/ff/star_hover.jpg", webhelp_images_folder
+    FileUtils.cp "files/ff/star_hover_almost.jpg", webhelp_images_folder
   
   end
   
@@ -156,6 +156,39 @@ class AboutboxProcessor
   end #updateAboutBox
 
 end #Aboutbox processor
+
+
+class TableIconProcessor
+
+  def copyIcons(webhelp_images_folder)
+
+    FileUtils.cp "files/ti/lightbulb_d.png", webhelp_images_folder  
+    FileUtils.cp "files/ti/pushpin_d.png", webhelp_images_folder 
+    FileUtils.cp "files/ti/triangle_d.png", webhelp_images_folder 
+  
+  end #copyIcons
+
+
+  def addIcons(html_of_webhelp_page)
+
+    note_icon_text = '<p class="IconNote">'
+    note_icon_image = "<img src='../../Images/pushpin_d.png'/>" 
+    
+    important_icon_text = '<p class="IconImportant">'
+    important_icon_image = "<img src='../../Images/triangle_d.png'/>"
+ 
+    tip_icon_text = '<p class="IconTip">' 
+    tip_icon_image = "<img src='../../Images/lightbulb_d.png'/>"
+
+    html_of_webhelp_page.gsub!(note_icon_text, note_icon_text + note_icon_image)
+    html_of_webhelp_page.gsub!(important_icon_text, important_icon_text + important_icon_image)
+    html_of_webhelp_page.gsub!(tip_icon_text, tip_icon_text + tip_icon_image)
+
+  end  #add Icons
+
+
+
+end # TableIconProcessor
 
 
 def writeFile(file_in_webhelp, its_html)

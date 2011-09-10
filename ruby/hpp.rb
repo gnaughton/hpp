@@ -11,6 +11,7 @@ ga = GAProcessor.new
 ff = FeedbackFormProcessor.new
 sm = ShowmeProcessor.new
 ab = AboutboxProcessor.new
+ti = TableIconProcessor.new
 
 aLangs.each do |lang|
 
@@ -22,6 +23,9 @@ aLangs.each do |lang|
   
   #update the About box.
   ab.UpdateAboutBox(webhelp_path, lang) if $hSettings["do_aboutbox"]
+
+  #copy the table icons to the WebHelp system.
+  ti.copyIcons(webhelp_images_folder) if $hSettings["do_tableicons"]
   
   #tell the feedback form processor to build the text of the form.
   ff.setFeedbackForm(lang) if $hSettings["do_feedbackforms"]
@@ -44,6 +48,7 @@ aLangs.each do |lang|
   # - tag everything with the GA code,
   # - add the help feedback form, 
   # - add the showme links,
+  # - add the icons to the Note, Warning and Tip tables,
   # - write the modified file to disk.
   if file_in_webhelp.include? webhelp_contents_folder
     
@@ -56,6 +61,7 @@ aLangs.each do |lang|
       ga.addTrackingCode(its_html) if $hSettings["do_analytics"]
       ff.addFeedbackForm(its_html) if $hSettings["do_feedbackforms"]
       sm.addShowmeLinks(getFile(file_in_webhelp), its_html, lang) if $hSettings["do_showmes"]
+      ti.addIcons(its_html) if $hSettings["do_tableicons"]
       writeFile(file_in_webhelp, its_html) if its_html != its_original_html
 
     rescue
