@@ -78,12 +78,13 @@ class ShowmeProcessor
       #there can be an abitrary number of tabs between the bits.
       text_where_link_goes, wrapper_file_for_showme, page_where_link_goes, showme_width, showme_height = row_in_showmes_file.split(/\t+/)
 
-      showme_width = showme_width.nil? ? $hSettings["default_showme_width"] : showme_width
-      showme_height = showme_height.nil? ? $hSettings["default_showme_height"] : showme_height
-      
       #skip to the next line in the list of showmes if the current line doesn't match the webhelp file we're looking at.
       next if !(webhelp_file_in_contents_folder == page_where_link_goes)
 	  
+      #use the default height and width if there are no height and width specified in the showme list.
+      showme_width = showme_width.nil? ? $hSettings["default_showme_width"] : showme_width
+      showme_height = showme_height.nil? ? $hSettings["default_showme_height"] : showme_height
+      
       #build the URL to put into the link text.
       url_in_link = s3_bucket + wrapper_file_for_showme
 	  
@@ -98,6 +99,7 @@ class ShowmeProcessor
         link_text_to_add["<LINK_TEXT>"] = text_where_link_goes
              
       else
+
         #it's a file that contains contextual links;
         #the link comes immediately after the text_where_link_goes
         link_text_to_add = String.new(@CONTEXT_TEMPLATE)
@@ -123,9 +125,8 @@ class ShowmeProcessor
     
   end  #addShowmeLinks
 
-  
-  
 end #ShowmeProcessor
+
 
 def writeFile(file_in_webhelp, its_html)
 
@@ -139,6 +140,7 @@ def writeFile(file_in_webhelp, its_html)
 
 end
 
+
 def openFile(fileInWebHelp)
 
   begin
@@ -148,6 +150,7 @@ def openFile(fileInWebHelp)
   end
 
 end
+
 
 def parseWebHelpFile (strWebHelp, lang)
 
