@@ -10,6 +10,7 @@ aLangs = checkLanguage()
 ga = GAProcessor.new
 ff = FeedbackFormProcessor.new
 sm = ShowmeProcessor.new
+ab = AboutboxProcessor.new
 
 aLangs.each do |lang|
 
@@ -18,6 +19,9 @@ aLangs.each do |lang|
   
   #extract all the various bits we need from the WebHelp path/file.
   webhelp_path, webhelp_file, webhelp_contents_folder, webhelp_images_folder = parseWebHelpFile(webhelp, lang)
+  
+  #update the About box.
+  ab.UpdateAboutBox(webhelp_path, lang) if $hSettings["do_aboutbox"]
   
   #tell the feedback form processor to build the text of the form.
   ff.setFeedbackForm(lang) if $hSettings["do_feedbackforms"]

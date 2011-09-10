@@ -128,6 +128,36 @@ class ShowmeProcessor
 end #ShowmeProcessor
 
 
+class AboutboxProcessor
+
+
+  def UpdateAboutBox (webhelp_path, lang)
+
+    files_root = "files/ab/"
+    html_root = "whskin_banner"
+    javascript = "whtbar.js"
+    image = $hSettings["link_image"]
+    
+    begin
+
+      #copy 'whskin_banner_<LANG>.htm' to the WebHelp system as 'whskin_banner.htm'.
+      FileUtils.cp files_root + html_root + "_" + lang + ".htm", webhelp_path + "/" + html_root + ".htm"
+      #copy the JavaScript file.
+      FileUtils.cp files_root + javascript, webhelp_path + "/" + javascript 
+      #copy the image.
+      FileUtils.cp files_root + image, webhelp_path + "/" + image
+
+    rescue Exception => e
+
+      puts e.message
+
+    end
+
+  end #updateAboutBox
+
+end #Aboutbox processor
+
+
 def writeFile(file_in_webhelp, its_html)
 
   begin
