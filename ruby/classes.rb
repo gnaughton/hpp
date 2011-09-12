@@ -29,15 +29,22 @@ class FeedbackFormProcessor
   
   def copyFormGraphics (webhelp_images_folder)
   
+    begin
     
-    #add the Images folder if it's not already there.
-    Dir::mkdir(webhelp_images_folder.chomp("/")) if !File.directory? webhelp_images_folder.chomp("/")
-    
-    FileUtils.cp "files/ff/star_on.jpg", webhelp_images_folder 
-    FileUtils.cp "files/ff/star_on_almost.jpg", webhelp_images_folder
-    FileUtils.cp "files/ff/star_off.jpg", webhelp_images_folder
-    FileUtils.cp "files/ff/star_hover.jpg", webhelp_images_folder
-    FileUtils.cp "files/ff/star_hover_almost.jpg", webhelp_images_folder
+      #add the Images folder if it's not already there.
+      Dir::mkdir(webhelp_images_folder.chomp("/")) if !(File.directory? webhelp_images_folder.chomp("/"))
+      
+      FileUtils.cp "files/ff/star_on.jpg", webhelp_images_folder +  "star_on.jpg"
+      FileUtils.cp "files/ff/star_on_almost.jpg", webhelp_images_folder + "star_on_almost.jpg"
+      FileUtils.cp "files/ff/star_off.jpg", webhelp_images_folder + "star_off.png"
+      FileUtils.cp "files/ff/star_hover.jpg", webhelp_images_folder + "star_hover.jpg"
+      FileUtils.cp "files/ff/star_hover_almost.jpg", webhelp_images_folder + "star_hover_almost.png"
+
+    rescue Exception => e
+
+      puts e.to_s
+
+    end
   
   end
   
@@ -161,11 +168,24 @@ end #Aboutbox processor
 class TableIconProcessor
 
   def copyIcons(webhelp_images_folder)
+    
+    begin
 
-    FileUtils.cp "files/ti/lightbulb_d.png", webhelp_images_folder  
-    FileUtils.cp "files/ti/pushpin_d.png", webhelp_images_folder 
-    FileUtils.cp "files/ti/triangle_d.png", webhelp_images_folder 
-  
+      #create the Images folder if it's not already there.
+      Dir::mkdir(webhelp_images_folder.chomp("/")) if !File.directory? webhelp_images_folder.chomp("/")
+      
+      
+      
+      FileUtils.cp "files/ti/lightbulb_d.png", webhelp_images_folder + "lightbulb_d.png" 
+      FileUtils.cp "files/ti/pushpin_d.png", webhelp_images_folder + "pushpin_d.png"
+      FileUtils.cp "files/ti/triangle_d.png", webhelp_images_folder + "triangle_d.png"
+    
+    rescue Exception => e
+
+      puts e.to_s 
+
+    end  
+
   end #copyIcons
 
 
