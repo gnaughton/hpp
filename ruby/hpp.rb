@@ -51,9 +51,10 @@ aLangs.each do |lang|
   # - add the icons to the Note, Warning and Tip tables,
   # - write the modified file to disk.
   if file_in_webhelp.include? webhelp_contents_folder
-    
+   
     its_html = openFile(file_in_webhelp)
-    its_original_html = String.new(its_html)
+    next if its_html.nil?
+	its_original_html = String.new(its_html)
 	  
     begin
 
