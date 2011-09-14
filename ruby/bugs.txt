@@ -1,0 +1,6 @@
+1 Can't process <WebHelp System Root File>.htm as scaffolding file.
+
+2 GA tracking code adds space to top of topics.
+  FIXED - Was being caused by BOM.
+
+3 Can't process JPN files under Windows.
