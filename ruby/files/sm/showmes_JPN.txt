@@ -32,9 +32,9 @@ Medidata Balanceへのユーザ招待		invitingUsers.htm			使い方説明ビデ
 #BLOCK 4 - LOGISTICS
 供給計画の作成と管理			supplyPlan.htm				使い方説明ビデオの一覧.htm
 供給計画の施設への割当			assigningSites.htm			使い方説明ビデオの一覧.htm
-バッファのみ供給計画			whatsNew.htm				使い方説明ビデオの一覧.htm
-予測のみ供給計画				whatsNew.htm				使い方説明ビデオの一覧.htm
-予測とバッファ供給計画			whatsNew.htm				使い方説明ビデオの一覧.htm
+バッファのみ供給計画			bufferOnly.htm				使い方説明ビデオの一覧.htm
+予測のみ供給計画				predictiveOnly.htm			使い方説明ビデオの一覧.htm
+予測とバッファ供給計画			predictiveBuffer.htm			使い方説明ビデオの一覧.htm
 #BLOCK
 プロパティ				propertiesPage.htm			使い方説明ビデオの一覧.htm
 検索フィルタの使用				searchFilter.htm			使い方説明ビデオの一覧.htm
