@@ -13,13 +13,15 @@ sm = ShowmeProcessor.new
 ab = AboutboxProcessor.new
 ti = TableIconProcessor.new
 
-#get the WebHelp path/file.
-webhelp = String.new($hSettings["webhelp"])
+
 
 aLangs.each do |lang|
 
+  #get the WebHelp path/file.
+  webhelp = String.new($hSettings["webhelp"])
+
   #extract all the various bits we need from the WebHelp path/file.
-  webhelp_path, webhelp_file, webhelp_contents_folder, webhelp_images_folder = parseWebHelpFile(webhelp, lang)
+  webhelp_path, webhelp_file, webhelp_contents_folder = parseWebHelpFile(webhelp, lang)
   
   #update the About box.
   ab.UpdateAboutBox(webhelp_path, lang) if $hSettings["do_aboutbox"]

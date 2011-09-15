@@ -234,17 +234,14 @@ def openFile(fileInWebHelp)
 end
 
 
-def parseWebHelpFile (strWebHelp, lang)
+def parseWebHelpFile (webhelp_path_and_file, lang)
 
-  if $hSettings["webhelp"].include? "<LANG>"
-    strWebHelp["<LANG>"] = lang
-  end
- 
-  strPath, strFile = splitPathAndFile(strWebHelp)
-  strWebHelpContentsFolder = strPath + "/" + File.basename(strFile, '.htm') + "/"
-  strWebHelpImagesFolder = strPath + "/Images/"
+  webhelp_path_and_file["<LANG>"] = lang if webhelp_path_and_file.include? "<LANG>"
+
+  webhelp_path, webhelp_file_only = splitPathAndFile(webhelp_path_and_file)
+  webhelp_contents_folder = webhelp_path + "/" + File.basename(webhelp_file_only, '.htm') + "/"
   
-  return strPath, strFile, strWebHelpContentsFolder, strWebHelpImagesFolder
+  return webhelp_path, webhelp_file_only, webhelp_contents_folder
 
 end  
 
