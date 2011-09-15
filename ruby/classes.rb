@@ -167,18 +167,13 @@ end #Aboutbox processor
 
 class TableIconProcessor
 
-  def copyIcons(webhelp_images_folder)
+  def copyIcons(webhelp_path)
     
     begin
 
-      #create the Images folder if it's not already there.
-      Dir::mkdir(webhelp_images_folder.chomp("/")) if !File.directory? webhelp_images_folder.chomp("/")
-      
-      
-      
-      FileUtils.cp "files/ti/lightbulb_d.png", webhelp_images_folder + "lightbulb_d.png" 
-      FileUtils.cp "files/ti/pushpin_d.png", webhelp_images_folder + "pushpin_d.png"
-      FileUtils.cp "files/ti/triangle_d.png", webhelp_images_folder + "triangle_d.png"
+      FileUtils.cp "files/ti/lightbulb_d.png", webhelp_path + "/lightbulb_d.png" 
+      FileUtils.cp "files/ti/pushpin_d.png", webhelp_path + "/pushpin_d.png"
+      FileUtils.cp "files/ti/triangle_d.png", webhelp_path + "/triangle_d.png"
     
     rescue Exception => e
 
@@ -192,13 +187,13 @@ class TableIconProcessor
   def addIcons(html_of_webhelp_page)
 
     note_icon_text = '<p class="IconNote">'
-    note_icon_image = "<img src='../../Images/pushpin_d.png'/>" 
+    note_icon_image = "<img src='../../pushpin_d.png'/>" 
     
     important_icon_text = '<p class="IconImportant">'
-    important_icon_image = "<img src='../../Images/triangle_d.png'/>"
+    important_icon_image = "<img src='../../triangle_d.png'/>"
  
     tip_icon_text = '<p class="IconTip">' 
-    tip_icon_image = "<img src='../../Images/lightbulb_d.png'/>"
+    tip_icon_image = "<img src='../../lightbulb_d.png'/>"
 
     html_of_webhelp_page.gsub!(note_icon_text, note_icon_text + note_icon_image)
     html_of_webhelp_page.gsub!(important_icon_text, important_icon_text + important_icon_image)

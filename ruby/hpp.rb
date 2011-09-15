@@ -25,7 +25,7 @@ aLangs.each do |lang|
   ab.UpdateAboutBox(webhelp_path, lang) if $hSettings["do_aboutbox"]
 
   #copy the table icons to the WebHelp system.
-  ti.copyIcons(webhelp_images_folder) if $hSettings["do_tableicons"]
+  ti.copyIcons(webhelp_path) if $hSettings["do_tableicons"]
   
   #tell the feedback form processor to build the text of the form.
   ff.setFeedbackForm(lang) if $hSettings["do_feedbackforms"]
