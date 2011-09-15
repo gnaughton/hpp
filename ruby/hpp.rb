@@ -13,11 +13,11 @@ sm = ShowmeProcessor.new
 ab = AboutboxProcessor.new
 ti = TableIconProcessor.new
 
+#get the WebHelp path/file.
+webhelp = String.new($hSettings["webhelp"])
+
 aLangs.each do |lang|
 
-  #get the WebHelp path/file.
-  webhelp = String.new($hSettings["webhelp"])
-  
   #extract all the various bits we need from the WebHelp path/file.
   webhelp_path, webhelp_file, webhelp_contents_folder, webhelp_images_folder = parseWebHelpFile(webhelp, lang)
   
@@ -54,8 +54,8 @@ aLangs.each do |lang|
    
     its_html = openFile(file_in_webhelp)
     next if its_html.nil?
-	its_original_html = String.new(its_html)
-	  
+    its_original_html = String.new(its_html)
+  
     begin
 
       print "."  if $hSettings["show_onscreen_progress"]
@@ -73,24 +73,25 @@ aLangs.each do |lang|
 
       #we're not in the contents folder, so tag the scaffolding files with GA code.
       its_html = openFile(file_in_webhelp)
-	  
-      aScaffoldingFiles = $hSettings["tracked_scaffolding_files"].split(",")
+  
+      scaffolding_list = $hSettings["tracked_scaffolding_files"] + "," + webhelp_file
+      scaffolding_array = scaffolding_list.split(",")
       
       #loop through the scaffolding files
-      aScaffoldingFiles.each do |sf|
+      scaffolding_array.each do |sf|
       
         #is the current file a scaffolding file?
         if file_in_webhelp.include? sf
-	  #yes, so tag it with the GA code.
-	  
+        
+          #yes, so tag it with the GA code.
           its_html = openFile(file_in_webhelp) 
-	      
-	  begin
-	        
+      
+          begin
+        
             print "."  if $hSettings["show_onscreen_progress"]
-	    ga.addTrackingCode(its_html) if $hSettings["do_analytics"]
-	    writeFile(file_in_webhelp, its_html)
-	        
+            ga.addTrackingCode(its_html) if $hSettings["do_analytics"]
+            writeFile(file_in_webhelp, its_html)
+        
           rescue
   
           end 
