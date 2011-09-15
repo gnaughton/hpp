@@ -67,7 +67,15 @@ class ShowmeProcessor
   
   def copyContextualIcon(webhelp_path)
   
+    begin
+    
     FileUtils.cp "files/sm/i_help_video.png", webhelp_path + "/i_help_video.png"
+  
+    rescue Exception => e
+
+      #puts e.to_s
+
+    end
   
   end
 
