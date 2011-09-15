@@ -36,6 +36,9 @@ aLangs.each do |lang|
   #load the files for the showme links.
   sm.loadFiles(lang) if $hSettings["do_showmes"]
   
+  #copy the icon for the contextual links.
+  sm.copyContextualIcon(webhelp_path) if $hSettings["do_showmes"]
+  
   #find all the HTML files in all the folders and subfolders. 
   aFiles = Dir[webhelp_path + "/**/*.htm"]
   puts "File: " + webhelp if $hSettings["show_onscreen_progress"]

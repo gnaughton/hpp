@@ -64,7 +64,14 @@ class ShowmeProcessor
     
   
   end
+  
+  def copyContextualIcon(webhelp_path)
+  
+    FileUtils.cp "files/sm/i_help_video.png", webhelp_path + "/i_help_video.png"
+  
+  end
 
+  
   def addShowmeLinks (webhelp_file_in_contents_folder, html_of_webhelp_file_in_contents_folder, lang)
   
     s3_bucket = String.new($hSettings["s3_bucket"])
