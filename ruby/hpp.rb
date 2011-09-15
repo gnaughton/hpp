@@ -74,6 +74,8 @@ aLangs.each do |lang|
       #we're not in the contents folder, so tag the scaffolding files with GA code.
       its_html = openFile(file_in_webhelp)
   
+      #get the list of scaffolding files from the ini file.
+      #add the root file to the list.
       scaffolding_list = $hSettings["tracked_scaffolding_files"] + "," + webhelp_file
       scaffolding_array = scaffolding_list.split(",")
       
