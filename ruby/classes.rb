@@ -9,13 +9,22 @@ class GAProcessor
     end
   
   
-  def addTrackingCode (htmlFile)
+  def addTrackingCode (file_in_webhelp, its_html)
   
-    htmlFile['</head>'] = @TRACKING_SCRIPT
+    begin
+    
+      its_html.gsub!(/<\/head>/i, @TRACKING_SCRIPT) 
 
-  end
+    rescue Exception => e
 
-end
+      puts "Couldn't add GA script. File: " + file_in_webhelp
+      puts "Exception: " + e.to_s
+ 
+    end  
+
+  end #addTrackingCode
+
+end  #GAProcessor
 
 class FeedbackFormProcessor
 
@@ -45,10 +54,20 @@ class FeedbackFormProcessor
   
   end
   
-  def addFeedbackForm (strHTMLFile)
-  
-    strHTMLFile['</body>'] = @FEEDBACK_FORM
-  
+  def addFeedbackForm (file_in_webhelp, its_html)
+    
+    begin
+
+      its_html.gsub!(/<\/body>/i, @FEEDBACK_FORM)  
+
+    rescue Exception=> e
+
+      puts "Couldn't add feedback form. File: " + file_in_webhelp
+      puts "Exception: " + e.to_s
+
+    end  
+
+
   end
 
 end
@@ -245,11 +264,21 @@ end
 def parseWebHelpFile (webhelp_path_and_file, lang)
 
   webhelp_path_and_file["<LANG>"] = lang if webhelp_path_and_file.include? "<LANG>"
-
   webhelp_path, webhelp_file_only = splitPathAndFile(webhelp_path_and_file)
-  webhelp_contents_folder = webhelp_path + "/" + File.basename(webhelp_file_only, '.htm') + "/"
   
-  return webhelp_path, webhelp_file_only, webhelp_contents_folder
+  webhelp_content_folder = $hSettings["webhelp_content_folder"]
+
+  if webhelp_content_folder.nil?
+    
+    webhelp_content_folder = webhelp_path + "/" + File.basename(webhelp_file_only, '.htm') + "/"
+  
+  else
+
+    webhelp_content_folder.gsub!("<LANG>", lang) 
+  
+  end  
+
+  return webhelp_path, webhelp_file_only, webhelp_content_folder
 
 end  
 
