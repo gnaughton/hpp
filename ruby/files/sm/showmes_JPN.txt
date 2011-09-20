@@ -13,7 +13,7 @@ Medidata Balanceへのユーザ招待		invitingUsers.htm			使い方説明ビデ
 シミュレーション実行				executingASimulation.htm		使い方説明ビデオの一覧.htm
 シミュレーション実行リスト			simulationExecutingList.htm		使い方説明ビデオの一覧.htm
 詳細結果の表示				detailedResultsPage.htm			使い方説明ビデオの一覧.htm
-平均と標準偏差				meansStandardDeviation.htm		使い方説明ビデオの一覧.htm
+平均と標準偏差				meansStandardDeviations.htm		使い方説明ビデオの一覧.htm
 最小値					minima.htm				使い方説明ビデオの一覧.htm
 不均等割付				runsOutOfBalance.htm			使い方説明ビデオの一覧.htm
 シミュレーション分析の表示			simulationAnalysisPage.htm		使い方説明ビデオの一覧.htm
@@ -31,7 +31,7 @@ Medidata Balanceへのユーザ招待		invitingUsers.htm			使い方説明ビデ
 治療内容の管理				managingTreatments.htm			使い方説明ビデオの一覧.htm
 #BLOCK 4 - LOGISTICS
 供給計画の作成と管理			supplyPlan.htm				使い方説明ビデオの一覧.htm
-供給計画の施設への割当			assigningSites.htm			使い方説明ビデオの一覧.htm
+供給計画の施設への割当			assignSites.htm			使い方説明ビデオの一覧.htm
 バッファのみ供給計画			bufferOnly.htm				使い方説明ビデオの一覧.htm
 予測のみ供給計画				predictiveOnly.htm			使い方説明ビデオの一覧.htm
 予測とバッファ供給計画			predictiveBuffer.htm			使い方説明ビデオの一覧.htm
