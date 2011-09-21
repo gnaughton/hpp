@@ -32,9 +32,6 @@ aLangs.each do |lang|
   #tell the feedback form processor to build the text of the form.
   ff.setFeedbackForm(lang) if $hSettings["do_feedbackforms"]
   
-  #copy the star graphic for the feedback form to the WebHelp systems
-  ff.copyFormGraphics(webhelp_path) if $hSettings["do_feedbackforms"]
-  
   #load the files for the showme links.
   sm.loadFiles(lang) if $hSettings["do_showmes"]
   
