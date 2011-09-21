@@ -36,23 +36,6 @@ class FeedbackFormProcessor
   
   end
   
-  def copyFormGraphics (webhelp_path)
-  
-    begin
-    
-      FileUtils.cp "files/ff/star_on.jpg", webhelp_path + "/star_on.jpg"
-      FileUtils.cp "files/ff/star_on_almost.jpg", webhelp_path + "/star_on_almost.jpg"
-      FileUtils.cp "files/ff/star_off.jpg", webhelp_path + "/star_off.jpg"
-      FileUtils.cp "files/ff/star_hover.jpg", webhelp_path + "/star_hover.jpg"
-      FileUtils.cp "files/ff/star_hover_almost.jpg", webhelp_path + "/star_hover_almost.jpg"
-
-    rescue Exception => e
-
-      puts e.to_s
-
-    end
-  
-  end
   
   def addFeedbackForm (file_in_webhelp, its_html)
     
@@ -263,10 +246,10 @@ end
 
 def parseWebHelpFile (webhelp_path_and_file, lang)
 
-  webhelp_path_and_file["<LANG>"] = lang if webhelp_path_and_file.include? "<LANG>"
+  webhelp_path_and_file.gsub!("<LANG>", lang)
   webhelp_path, webhelp_file_only = splitPathAndFile(webhelp_path_and_file)
   
-  webhelp_content_folder = $hSettings["webhelp_content_folder"]
+  webhelp_content_folder = String.new($hSettings["webhelp_content_folder"])
 
   if webhelp_content_folder.nil?
     
