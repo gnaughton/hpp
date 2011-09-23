@@ -2,13 +2,13 @@
 
 #Examples:
 #  product: Balance
-#  product:       Balance
+#  webhelp:       C:/Balance/Balance.htm
 #
 
 #Bad Example:
-#  product:Balance
+#  language:ENG
 
-#Specify a product by pasting a name from the following list:
+#In the "product" key, specify a product by pasting a name from the following list:
 
 #  Balance
 #  Rave Safety Gateway Mapping
@@ -20,7 +20,7 @@
 
 product: [PRODUCT_NAME]
 
-#Specify the fully-qualified WebHelp root file.
+#In the "webhelp" key, specify the fully-qualified WebHelp root file.
 #Always use forward slashes in paths.
 #You can use <LANG> multiple times (or not at all).
 
@@ -31,7 +31,7 @@ product: [PRODUCT_NAME]
 
 webhelp: [WEBHELP]
 
-#Specify the WebHelp content folder if it isn't the same as the name of the root file minus the .htm extension.
+#In the "webhelp_content_folder" key, specify the WebHelp content folder if it isn't the same as the name of the root file minus the .htm extension.
 #If it is, use 'default'.
 #You can use <LANG> multiple times (or not at all).
 
@@ -43,7 +43,7 @@ webhelp: [WEBHELP]
 
 webhelp_content_folder: default
 
-#Always specify a language even when you're not using <LANG> above.
+#Always specify a language in the "language" key even when you're not using <LANG> above.
 #Language options are ENG | JPN | ENG,JPN.
 #Example:
 #  language: ENG
