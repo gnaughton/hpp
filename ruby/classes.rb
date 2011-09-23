@@ -88,32 +88,32 @@ class ShowmeProcessor
     s3_bucket.gsub!("<LANG>", lang)
 
     @SHOWMES.each do |row_in_showmes_file|
-	 
+ 
       #get rid of the newline character that IO.readlines adds to the end of every line.	 
       row_in_showmes_file.chomp!
-      	 
+       
       #skip to the next line if the current line is a comment.
       next if row_in_showmes_file[0,1] == "#"
-	  
+  
       #get all the bits from the current line.
       #there can be an abitrary number of tabs between the bits.
       text_where_link_goes, wrapper_file_for_showme, page_where_link_goes, showme_width, showme_height = row_in_showmes_file.split(/\t+/)
-
+      
       #skip to the next line in the list of showmes if the current line doesn't match the webhelp file we're looking at.
       next if !(webhelp_file_in_contents_folder == page_where_link_goes)
-	  
+
       #use the default height and width if there are no height and width specified in the showme list.
       showme_width = showme_width.nil? ? $hSettings["default_showme_width"] : showme_width
       showme_height = showme_height.nil? ? $hSettings["default_showme_height"] : showme_height
       
       #build the URL to put into the link text.
       url_in_link = s3_bucket + wrapper_file_for_showme
-	  
+  
       #check whether the file we're looking at is the file that contains the list of showmes, or a file
       #that contains contextual links from within its text.
       #the text we use to build the link is different in these cases.
       if webhelp_file_in_contents_folder == $hSettings["showme_list_" + lang]
-	    
+    
         #it's the file that contains the list of showmes;
         #we wrap the link around the text_where_link_goes
         link_text_to_add = String.new(@LIST_TEMPLATE)

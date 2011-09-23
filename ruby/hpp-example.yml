@@ -32,7 +32,7 @@ product: [PRODUCT_NAME]
 webhelp: [WEBHELP]
 
 #In the "webhelp_content_folder" key, specify the WebHelp content folder if it isn't the same as the name of the root file minus the .htm extension.
-#If it is, use 'default'.
+#If it the same, specify 'default'.
 #You can use <LANG> multiple times (or not at all).
 
 #Examples:
@@ -44,7 +44,7 @@ webhelp: [WEBHELP]
 webhelp_content_folder: default
 
 #Always specify a language in the "language" key even when you're not using <LANG> above.
-#Language options are ENG | JPN | ENG,JPN.
+#Language options are ENG | JPN | ENG,JPN
 #Example:
 #  language: ENG
 
