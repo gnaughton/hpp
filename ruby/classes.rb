@@ -85,8 +85,8 @@ class ShowmeProcessor
   def addShowmeLinks (webhelp_file_in_contents_folder, html_of_webhelp_file_in_contents_folder, lang)
   
     s3_bucket = String.new($hSettings["s3_bucket"])
-    s3_bucket["<LANG>"] = lang
-	
+    s3_bucket.gsub!("<LANG>", lang)
+
     @SHOWMES.each do |row_in_showmes_file|
 	 
       #get rid of the newline character that IO.readlines adds to the end of every line.	 
@@ -127,10 +127,11 @@ class ShowmeProcessor
         link_text_to_add = text_where_link_goes + link_text_to_add
 	  
       end  # is it the showme list or a contextual file?
-      
+     
       #set the height and width of the showme popup.
-      link_text_to_add["<WIDTH>"] = showme_width
-      link_text_to_add["<HEIGHT>"] = showme_height
+	  
+      link_text_to_add["<WIDTH>"] = showme_width.to_s
+      link_text_to_add["<HEIGHT>"] = showme_height.to_s
 	 
       #finish building the link text by adding the URL of the wrapper file.
       link_text_to_add["<URL>"] = url_in_link
@@ -250,7 +251,7 @@ def parseWebHelpFile (webhelp_path_and_file, lang)
   webhelp_path, webhelp_file_only = splitPathAndFile(webhelp_path_and_file)
   
   
-  if $hSettings["webhelp_content_folder"].nil?
+  if $hSettings["webhelp_content_folder"] == "default"
     
     webhelp_content_folder = webhelp_path + "/" + File.basename(webhelp_file_only, '.htm') + "/"
   

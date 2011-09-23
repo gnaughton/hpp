@@ -1,7 +1,8 @@
 load 'classes.rb'
 require 'fileutils.rb'
+require 'yaml'
 
-$hSettings = Hash[*File.read("hpp.ini").scan(/^(.*)=(.*)$/).flatten]
+$hSettings = YAML.load_file 'hpp.yml'
 
 #check the language and filespec keys in the ini file.
 #if everything's OK the array will contain all the languages we're processing.
@@ -12,8 +13,6 @@ ff = FeedbackFormProcessor.new
 sm = ShowmeProcessor.new
 ab = AboutboxProcessor.new
 ti = TableIconProcessor.new
-
-
 
 aLangs.each do |lang|
 
@@ -106,6 +105,3 @@ aLangs.each do |lang|
   print "Done!\r\n" if $hSettings["show_onscreen_progress"]
 
 end #language loop
-
-
-
