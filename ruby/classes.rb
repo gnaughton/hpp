@@ -249,14 +249,14 @@ def parseWebHelpFile (webhelp_path_and_file, lang)
   webhelp_path_and_file.gsub!("<LANG>", lang)
   webhelp_path, webhelp_file_only = splitPathAndFile(webhelp_path_and_file)
   
-  webhelp_content_folder = String.new($hSettings["webhelp_content_folder"])
-
-  if webhelp_content_folder.nil?
+  
+  if $hSettings["webhelp_content_folder"].nil?
     
     webhelp_content_folder = webhelp_path + "/" + File.basename(webhelp_file_only, '.htm') + "/"
   
   else
 
+    webhelp_content_folder = String.new($hSettings["webhelp_content_folder"])
     webhelp_content_folder.gsub!("<LANG>", lang) 
   
   end  
