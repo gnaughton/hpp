@@ -2,10 +2,10 @@
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-23248868-4']);
+  _gaq.push(['_setAccount', 'WEB_PROPERTY_ID']);
   _gaq.push(['_setDomainName', '.amazonaws.com']);
-  _gaq.push(['_setCustomVar', 1, 'HelpSystemName', 'Balance', 3]);
-  _gaq.push(['_setCustomVar', 2, 'HelpSystemLanguage', 'ENG', 3]);
+  _gaq.push(['_setCustomVar', 1, 'Help System Name', 'HELP_SYSTEM_NAME', 3]);
+  _gaq.push(['_setCustomVar', 2, 'Help System Page Type', 'HELP_SYSTEM_PAGE_TYPE', 3]);
   _gaq.push(['_trackPageview']);
 
   (function() {

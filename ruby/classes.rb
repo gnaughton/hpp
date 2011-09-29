@@ -8,12 +8,17 @@ class GAProcessor
       abort
     end
   
-  
-  def addTrackingCode (file_in_webhelp, its_html)
+  def addTrackingCode (file_in_webhelp, its_html, webhelp_file_type)
   
     begin
     
-      its_html.gsub!(/<\/head>/i, @TRACKING_SCRIPT) 
+      tracking_script = String.new(@TRACKING_SCRIPT)
+     
+      tracking_script.sub!("HELP_SYSTEM_NAME", $hSettings["product"])
+      tracking_script.sub!("WEB_PROPERTY_ID", $hSettings["web_property_id"])
+      tracking_script.sub!("HELP_SYSTEM_PAGE_TYPE", webhelp_file_type) 
+      
+      its_html.gsub!(/<\/head>/i, tracking_script) 
 
     rescue Exception => e
 
@@ -322,6 +327,16 @@ def checkLanguage()
   
   return aLangs
   
+end
+
+def getScaffoldingFiles (tracked_scaffolding_files)
+
+    s = Array.new() 
+    tracked_scaffolding_files.split(",").each {|kv| s << kv.split("=")}
+    
+    return Hash[*s.flatten]
+
+
 end
 
 ###########################################################################
