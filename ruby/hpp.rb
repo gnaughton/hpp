@@ -65,17 +65,20 @@ aLangs.each do |lang|
 
       if $hSettings["do_analytics"]
 
-        #To tag a group of showme wrappers, we can put them in a folder and move them into the 'contents' folder tree.
-        #If we identify this folder using the 'showme_wrappers_folder' key in the settings file, the script attaches the
+        #to tag a group of showme wrappers, we can put them in a folder and move them into the 'contents' folder tree.
+        #if we identify this folder using the 'showme_wrappers_folder' key in the settings file, the script attaches the
         #value 'ShowMe' to the 'Help System Page Type' custom GA variable.
         #
-        #Otherwise, this variable has the value 'Content'.
+        #otherwise, this variable has the value 'Content'.
         #
-        #You would probably only use this feature once, to mass-tag a bunch of showme wrapper files when you first set up 
+        #you would probably only use this feature once, to mass-tag a bunch of showme wrapper files when you first set up 
         #your showmes. For individual showmes added later, it's just as easy to copy the GA code in manually.
 
-        showme_wrappers_folder = String.new($hSettings["showme_wrappers_folder"])
-        webhelp_file_type = (file_in_webhelp.include? showme_wrappers_folder.gsub!("<LANG>", lang)) ? "ShowMe" : "Content"
+        #showme_wrappers_folder = String.new($hSettings["showme_wrappers_folder"])
+        
+        #set the wrappers folder to 'path_that_will_never_exist' if it isn't specified in the settings file.
+        showme_wrappers_folder = String.new(($hSettings["showme_wrappers_folder"].nil?) ? "path_that_will_never_exist" : $hSettings["showme_wrappers_folder"])
+        webhelp_file_type = (file_in_webhelp.include? showme_wrappers_folder.gsub("<LANG>", lang)) ? "ShowMe" : "Content"
         ga.addTrackingCode(file_in_webhelp, its_html, webhelp_file_type)
       
       end
