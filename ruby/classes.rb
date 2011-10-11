@@ -339,6 +339,20 @@ def getScaffoldingFiles (tracked_scaffolding_files)
 
 end
 
+def showVersionInformation (stop_after_this)
+
+  puts " "
+  puts "**********************"
+  puts "Help processing script"
+  puts "Version: 1.0"
+  puts "Date:    <date>"
+  puts "**********************"
+  puts " "
+
+  abort if stop_after_this
+
+end
+
 ###########################################################################
   #I could never get this working so abandoned it to start again.
   #At some point I need to understand why: 

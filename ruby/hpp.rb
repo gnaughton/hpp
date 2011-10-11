@@ -1,6 +1,24 @@
 load 'classes.rb'
 require 'fileutils.rb'
 require 'yaml'
+require 'optparse'
+
+options = {}
+optparse = OptionParser.new do |opts|
+
+  options[:version] = false
+  opts.on('-v', '--version', 'Show version information') do
+
+   options[:version] = true
+
+  end
+
+end
+
+optparse.parse!
+
+showVersionInformation (options[:version]) 
+
 
 $hSettings = YAML.load_file 'hpp.yml'
 $hScaffolding = getScaffoldingFiles($hSettings["tracked_scaffolding_files"])
