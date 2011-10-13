@@ -33,7 +33,6 @@ sm = ShowmeProcessor.new
 ab = AboutboxProcessor.new
 ti = TableIconProcessor.new
 
-
 aLangs.each do |lang|
 
   #get the WebHelp path/file and the contents folder if specified.
