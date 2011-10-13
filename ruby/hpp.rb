@@ -97,8 +97,6 @@ aLangs.each do |lang|
         #you would probably only use this feature once, to mass-tag a bunch of showme wrapper files when you first set up 
         #your showmes. For individual showmes added later, it's just as easy to copy the GA code in manually.
 
-        #showme_wrappers_folder = String.new($hSettings["showme_wrappers_folder"])
-        
         #set the wrappers folder to 'path_that_will_never_exist' if it isn't specified in the settings file.
         showme_wrappers_folder = String.new(($hSettings["showme_wrappers_folder"].nil?) ? "path_that_will_never_exist" : $hSettings["showme_wrappers_folder"])
         webhelp_file_type = (file_in_webhelp.include? showme_wrappers_folder.gsub("<LANG>", lang)) ? "ShowMe" : "Content"
