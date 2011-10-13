@@ -53,7 +53,7 @@ p.formQuestion {
 <input type="text" class="rating_almost" id="ratingText"/>
 </div>
 <input type="hidden" name="entry.3.single" id="entry_3"></input>
-<textarea name="entry.4.single" disabled="disabled" rows="2" cols="30" id="entry_4">ご自由にご意見をお寄せください</textarea> 
+<textarea name="entry.4.single" disabled="disabled" rows="3" cols="30" id="entry_4">どのくらい役に立ったか、星をクリックしてお知らせください。また、ご自由にご意見をお寄せください</textarea> 
 <input type="hidden" name="entry.1.single" value="Autopopulate with page URL" id="entry_1">
 <input type="hidden" name="entry.0.single" value="<medidata-product-name>" id="entry_0"/>
 <br/>
@@ -82,7 +82,7 @@ function postSubmit()
     alert('フィードバックありがとうございました');
 	
 	//Reset to default comments text.
-	document.getElementById('entry_4').value="ご自由にご意見をお寄せください";
+	document.getElementById('entry_4').value="どのくらい役に立ったか、星をクリックしてお知らせください。また、ご自由にご意見をお寄せください";
 	
 	//Clear the rating text.
 	document.getElementById('ratingText').value="";

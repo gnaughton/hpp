@@ -53,7 +53,7 @@ p.formQuestion {
 <input type="text" class="rating_almost" id="ratingText"/>
 </div>
 <input type="hidden" name="entry.3.single" id="entry_3"></input>
-<textarea name="entry.4.single" disabled="disabled" rows="2" cols="30" id="entry_4">Additional feedback/comments.</textarea> 
+<textarea name="entry.4.single" disabled="disabled" rows="3" cols="30" id="entry_4">Rate this topic by clicking a star. You can also add optional comments here.</textarea> 
 <input type="hidden" name="entry.1.single" value="Autopopulate with page URL" id="entry_1">
 <input type="hidden" name="entry.0.single" value="<medidata-product-name>" id="entry_0"/>
 <br/>
@@ -82,7 +82,7 @@ function postSubmit()
     alert('Thank you for your feedback.');
 	
 	//Reset to default comments text.
-	document.getElementById('entry_4').value="Additional feedback/comments.";
+	document.getElementById('entry_4').value="Rate this topic by clicking a star. You can also add optional comments here.";
 	
 	//Clear the rating text.
 	document.getElementById('ratingText').value="";

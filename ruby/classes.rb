@@ -8,12 +8,17 @@ class GAProcessor
       abort
     end
   
-  
-  def addTrackingCode (file_in_webhelp, its_html)
+  def addTrackingCode (file_in_webhelp, its_html, webhelp_file_type)
   
     begin
     
-      its_html.gsub!(/<\/head>/i, @TRACKING_SCRIPT) 
+      tracking_script = String.new(@TRACKING_SCRIPT)
+     
+      tracking_script.sub!("HELP_SYSTEM_NAME", $hSettings["product"])
+      tracking_script.sub!("WEB_PROPERTY_ID", $hSettings["web_property_id"])
+      tracking_script.sub!("HELP_SYSTEM_PAGE_TYPE", webhelp_file_type) 
+      
+      its_html.gsub!(/<\/head>/i, tracking_script) 
 
     rescue Exception => e
 
@@ -85,35 +90,35 @@ class ShowmeProcessor
   def addShowmeLinks (webhelp_file_in_contents_folder, html_of_webhelp_file_in_contents_folder, lang)
   
     s3_bucket = String.new($hSettings["s3_bucket"])
-    s3_bucket["<LANG>"] = lang
-	
+    s3_bucket.gsub!("<LANG>", lang)
+
     @SHOWMES.each do |row_in_showmes_file|
-	 
+ 
       #get rid of the newline character that IO.readlines adds to the end of every line.	 
       row_in_showmes_file.chomp!
-      	 
+       
       #skip to the next line if the current line is a comment.
       next if row_in_showmes_file[0,1] == "#"
-	  
+  
       #get all the bits from the current line.
       #there can be an abitrary number of tabs between the bits.
       text_where_link_goes, wrapper_file_for_showme, page_where_link_goes, showme_width, showme_height = row_in_showmes_file.split(/\t+/)
-
+      
       #skip to the next line in the list of showmes if the current line doesn't match the webhelp file we're looking at.
       next if !(webhelp_file_in_contents_folder == page_where_link_goes)
-	  
+
       #use the default height and width if there are no height and width specified in the showme list.
       showme_width = showme_width.nil? ? $hSettings["default_showme_width"] : showme_width
       showme_height = showme_height.nil? ? $hSettings["default_showme_height"] : showme_height
       
       #build the URL to put into the link text.
       url_in_link = s3_bucket + wrapper_file_for_showme
-	  
+  
       #check whether the file we're looking at is the file that contains the list of showmes, or a file
       #that contains contextual links from within its text.
       #the text we use to build the link is different in these cases.
       if webhelp_file_in_contents_folder == $hSettings["showme_list_" + lang]
-	    
+    
         #it's the file that contains the list of showmes;
         #we wrap the link around the text_where_link_goes
         link_text_to_add = String.new(@LIST_TEMPLATE)
@@ -127,10 +132,11 @@ class ShowmeProcessor
         link_text_to_add = text_where_link_goes + link_text_to_add
 	  
       end  # is it the showme list or a contextual file?
-      
+     
       #set the height and width of the showme popup.
-      link_text_to_add["<WIDTH>"] = showme_width
-      link_text_to_add["<HEIGHT>"] = showme_height
+	  
+      link_text_to_add["<WIDTH>"] = showme_width.to_s
+      link_text_to_add["<HEIGHT>"] = showme_height.to_s
 	 
       #finish building the link text by adding the URL of the wrapper file.
       link_text_to_add["<URL>"] = url_in_link
@@ -250,7 +256,7 @@ def parseWebHelpFile (webhelp_path_and_file, lang)
   webhelp_path, webhelp_file_only = splitPathAndFile(webhelp_path_and_file)
   
   
-  if $hSettings["webhelp_content_folder"].nil?
+  if $hSettings["webhelp_content_folder"] == "default"
     
     webhelp_content_folder = webhelp_path + "/" + File.basename(webhelp_file_only, '.htm') + "/"
   
@@ -321,6 +327,30 @@ def checkLanguage()
   
   return aLangs
   
+end
+
+def getScaffoldingFiles (tracked_scaffolding_files)
+
+    s = Array.new() 
+    tracked_scaffolding_files.split(",").each {|kv| s << kv.split("=")}
+    
+    return Hash[*s.flatten]
+
+
+end
+
+def showVersionInformation (stop_after_this)
+
+  puts " "
+  puts "**********************"
+  puts "Help processing script"
+  puts "Version: 1.0"
+  puts "Date:    <date>"
+  puts "**********************"
+  puts " "
+
+  abort if stop_after_this
+
 end
 
 ###########################################################################
