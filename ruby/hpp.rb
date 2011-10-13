@@ -21,7 +21,6 @@ showVersionInformation (options[:version])
 
 
 $hSettings = YAML.load_file 'hpp.yml'
-$hScaffolding = getScaffoldingFiles($hSettings["tracked_scaffolding_files"])
 
 #check the language and filespec keys in the ini file.
 #if everything's OK the array will contain all the languages we're processing.
@@ -41,8 +40,14 @@ aLangs.each do |lang|
   #extract all the various bits we need from the WebHelp path/file.
   webhelp_path, webhelp_file, webhelp_content_folder = parseWebHelpFile(webhelp, lang)
 
-  hScaffolding = getScaffoldingFiles($hSettings["tracked_scaffolding_files"] + "," + webhelp_file + "=Root")
-  
+  #build the scaffolding files array.
+  #first, get the string from the settings file.
+  scaffolding_string = String.new($hSettings["tracked_scaffolding_files"])
+  #are we tracking the root file? check 'track_root_file' in the settings file to see.
+  scaffolding_string += ($hSettings["track_root_file"] ? "," + webhelp_file + "=Root" : "" )
+  #build the array.
+  hScaffolding = getScaffoldingFiles(scaffolding_string)
+
   #update the About box.
   ab.UpdateAboutBox(webhelp_path, lang) if $hSettings["do_aboutbox"]
 
@@ -113,10 +118,10 @@ aLangs.each do |lang|
 
       #loop through the scaffolding files
       hScaffolding.each do |sf, sf_type|
-      
+        
         #is the current file a scaffolding file?
         if file_in_webhelp.include? sf
-        
+       
           #yes, so tag it with the GA code.
           its_html = openFile(file_in_webhelp) 
       

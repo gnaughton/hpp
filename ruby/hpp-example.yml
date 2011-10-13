@@ -53,10 +53,13 @@ language: [LANGUAGE]
 
 #You're done! Please don't touch anything below this line.
 
-do_feedbackforms:           yes
-do_analytics:               yes
 show_onscreen_progress:     yes
+
+do_feedbackforms:           yes
+
+do_analytics:               yes
 tracked_scaffolding_files:  whtdhtml.htm=TOC,whibody.htm=Index,whfbody.htm=Search,whgbody.htm=Glossary
+track_root_file:            true
 web_property_id:            UA-23248868-9
 
 do_showmes:    no
