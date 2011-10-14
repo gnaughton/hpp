@@ -19,8 +19,10 @@ optparse.parse!
 
 showVersionInformation (options[:version]) 
 
+#get the settings file from the command line; if none was specified, use 'hpp.yml'
+settings_file_root = (ARGV[0].nil? ? "hpp" : ARGV[0])
+$hSettings = YAML.load_file 'settings/' + settings_file_root + '.yml'
 
-$hSettings = YAML.load_file 'hpp.yml'
 
 #check the language and filespec keys in the ini file.
 #if everything's OK the array will contain all the languages we're processing.
@@ -47,10 +49,9 @@ aLangs.each do |lang|
   scaffolding_string += ($hSettings["track_root_file"] ? "," + webhelp_file + "=Root" : "" )
   #build the array.
   hScaffolding = getScaffoldingFiles(scaffolding_string)
-
   #update the About box.
-  ab.UpdateAboutBox(webhelp_path, lang) if $hSettings["do_aboutbox"]
-
+  ab.UpdateAboutBox(webhelp_path, lang, settings_file_root) if $hSettings["do_aboutbox"]
+  
   #copy the table icons to the WebHelp system.
   ti.copyIcons(webhelp_path) if $hSettings["do_tableicons"]
   
@@ -58,7 +59,7 @@ aLangs.each do |lang|
   ff.setFeedbackForm(lang) if $hSettings["do_feedbackforms"]
   
   #load the files for the showme links.
-  sm.loadFiles(lang) if $hSettings["do_showmes"]
+  sm.loadFiles(lang, settings_file_root) if $hSettings["do_showmes"]
   
   #copy the icon for the contextual links.
   sm.copyContextualIcon(webhelp_path) if $hSettings["do_showmes"]

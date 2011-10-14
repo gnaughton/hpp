@@ -63,11 +63,11 @@ end
 class ShowmeProcessor
 
   
-  def loadFiles (lang)
+  def loadFiles (lang, settings_file_root)
   
     @LIST_TEMPLATE = File.read("files/sm/list_link_template_" + lang + ".txt")
     @CONTEXT_TEMPLATE = File.read("files/sm/context_link_template_" + lang + ".txt")
-    @SHOWMES = IO.readlines("files/sm/showmes_" + lang + ".txt")
+    @SHOWMES = IO.readlines("files/sm/" + settings_file_root + "_showmes_" + lang + ".txt")
     
   
   end
@@ -158,19 +158,21 @@ end #ShowmeProcessor
 class AboutboxProcessor
 
 
-  def UpdateAboutBox (webhelp_path, lang)
+  def UpdateAboutBox (webhelp_path, lang, settings_file_root)
 
     files_root = "files/ab/"
-    html_root = "whskin_banner"
-    javascript = "whtbar.js"
+    source_banner = settings_file_root + "_whskin_banner_" + lang + ".htm"
+    target_banner = "whskin_banner.htm"
+    source_javascript = settings_file_root + "_whtbar_" + lang + ".js"
+    target_javascript = "whtbar.js"
     image = $hSettings["link_image"]
     
     begin
 
       #copy 'whskin_banner_<LANG>.htm' to the WebHelp system as 'whskin_banner.htm'.
-      FileUtils.cp files_root + html_root + "_" + lang + ".htm", webhelp_path + "/" + html_root + ".htm"
+      FileUtils.cp files_root + source_banner, webhelp_path + "/" + target_banner 
       #copy the JavaScript file.
-      FileUtils.cp files_root + javascript, webhelp_path + "/" + javascript 
+      FileUtils.cp files_root + source_javascript, webhelp_path + "/" + target_javascript 
       #copy the image.
       FileUtils.cp files_root + image, webhelp_path + "/" + image
 

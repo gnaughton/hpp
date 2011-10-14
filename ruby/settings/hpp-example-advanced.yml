@@ -1,4 +1,11 @@
-﻿#For all settings, leave at least one space between the key and value. Don't include the square brackets.
+﻿#######################################################################
+#Don't use this file as a template for your help metrics settings file.
+#
+#Use 'hpp-example.yml' instead.
+#######################################################################
+
+
+#For all settings, leave at least one space between the key and value. Don't include the square brackets.
 
 #Examples:
 #  product: Balance
@@ -61,7 +68,16 @@ do_analytics:               yes
 tracked_scaffolding_files:  whtdhtml.htm=TOC,whibody.htm=Index,whfbody.htm=Search,whgbody.htm=Glossary
 track_root_file:            true
 web_property_id:            UA-23248868-9
+#showme_wrappers_folder:    foo
 
-do_showmes:    no
+do_showmes:            no
+showme_list_ENG:       <name-of-html-page-containing-showme-list>.htm 
+showme_list_JPN:       <name-of-html-page-containing-showme-list>.htm
+s3_bucket:             <path-including-final-backslash>
+default_showme_width:  1000
+default_showme_height: 600
+
 do_aboutbox:   no
+link_image:    foo.png
+
 do_tableicons: no
