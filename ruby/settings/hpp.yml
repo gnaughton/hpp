@@ -29,7 +29,7 @@ product: Balance
 #  webhelp: C:/WebHelp/HelpSystemRootFile.htm
 #  webhelp: C:/Webhelp/<LANG>/RootFile_<LANG>.htm
 
-webhelp: /home/glynn/WebHelp_Parsing/Balance/<LANG>/Balance.htm
+webhelp: C:/Data/NoBackup/WebHelp_Parsing/Balance/<LANG>/Balance.htm
 
 #In the "webhelp_content_folder" key, specify the WebHelp content folder if it isn't the same as the name of the root file minus the .htm extension.
 #If it the same, specify 'default'.

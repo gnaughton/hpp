@@ -36,7 +36,7 @@ product: Rave Safety Gateway - Mapping Tool
 #  webhelp: C:/WebHelp/HelpSystemRootFile.htm
 #  webhelp: C:/Webhelp/<LANG>/RootFile_<LANG>.htm
 
-webhelp:  C:/Data/RegularBackup/Rave_Safety_Gateway/Documentation/v1_2/Mapping/Deliverables/WebHelp/ENG/Mapping_Tool.htm
+webhelp:  C:/Data/NoBackup/WebHelp_Parsing/Mapping/ENG/Mapping_Tool.htm
 
 #In the "webhelp_content_folder" key, specify the WebHelp content folder if it isn't the same as the name of the root file minus the .htm extension.
 #If it the same, specify 'default'.
@@ -48,7 +48,7 @@ webhelp:  C:/Data/RegularBackup/Rave_Safety_Gateway/Documentation/v1_2/Mapping/D
 #  webhelp_content_folder: C:/Webhelp/HelpSystemContentFolder
 #  webhelp_content_folder: default
 
-webhelp_content_folder: C:/Data/RegularBackup/Rave_Safety_Gateway/Documentation/v1_2/Mapping/Deliverables/WebHelp/ENG/MappingTool
+webhelp_content_folder: C:/Data/NoBackup/WebHelp_Parsing/Mapping/ENG/MappingTool
 
 #Always specify a language in the "language" key even when you're not using <LANG> above.
 #Language options are ENG | JPN | ENG,JPN
@@ -78,6 +78,6 @@ default_showme_width:  1000
 default_showme_height: 600
 
 do_aboutbox:   yes 
-link_image:    balance140x50.png
+link_image:    rave114x50.png
 
 do_tableicons: no

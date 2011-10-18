@@ -91,12 +91,12 @@ class ShowmeProcessor
   
     s3_bucket = String.new($hSettings["s3_bucket"])
     s3_bucket.gsub!("<LANG>", lang)
-
+    
     @SHOWMES.each do |row_in_showmes_file|
- 
+      
       #get rid of the newline character that IO.readlines adds to the end of every line.	 
       row_in_showmes_file.chomp!
-       
+      
       #skip to the next line if the current line is a comment.
       next if row_in_showmes_file[0,1] == "#"
   
@@ -169,7 +169,7 @@ class AboutboxProcessor
     
     begin
 
-      #copy 'whskin_banner_<LANG>.htm' to the WebHelp system as 'whskin_banner.htm'.
+      #copy the banner file to the WebHelp system as 'whskin_banner.htm'.
       FileUtils.cp files_root + source_banner, webhelp_path + "/" + target_banner 
       #copy the JavaScript file.
       FileUtils.cp files_root + source_javascript, webhelp_path + "/" + target_javascript 
@@ -346,66 +346,11 @@ def showVersionInformation (stop_after_this)
   puts " "
   puts "**********************"
   puts "Help processing script"
-  puts "Version: 1.0"
-  puts "Date:    <date>"
+  puts "Version: 0.9"
+  puts "Date:    18-Oct-2011"
   puts "**********************"
   puts " "
 
   abort if stop_after_this
 
 end
-
-###########################################################################
-  #I could never get this working so abandoned it to start again.
-  #At some point I need to understand why: 
-  
-  def OldaddShowmeLinks(webhelp_file_in_contents_folder, its_html, lang)
-    
-    bucket=String.new($hSettings["s3_bucket"])
-	bucket["<LANG>"] = lang
-	
-	
-	puts webhelp_file_in_contents_folder
-	
- 	@SHOWMES.each do |this_showme|
- 
-     
-      	
-	  #get rid of the newline character that IO.readlines adds to each line.
-	  this_showme.chomp!
-	   
-	  #jump to the next line in the showmes file if the current line is a comment.
-	  #next if this_showme[0]=="#" 
-	  
-	  link_text, wrapper_file, webhelp_file_that_needs_showmes = this_showme.split("\t")
-	  
-	  puts webhelp_file_that_needs_showmes, webhelp_file_in_contents_folder
-	  puts "MATCH " if webhelp_file_in_contents_folder == webhelp_file_that_needs_showmes
-	  #jump to the next line if the file doesn't need to have links added.
-	  next if !webhelp_file_in_contents_folder == webhelp_file_that_needs_showmes   
-	  
-	  #if we're here, the file needs to have showme links added,
-	  #so find out whether it's the file containing the list of showmes (and set up the link text accordingly),
-	  if webhelp_file_in_contents_folder == $hSettings["showme_list"]
-		puts "SHOWME_LIST!"
-		link_to_add = String.new(@LIST_TEMPLATE)
-		link_to_add["<LINK_TEXT>"] = link_text
-		
-	  #or a file that needs contextual links in the flow of its text.
-	  else
-		
-		link_to_add = String.new(@CONTEXT_TEMPLATE)
- 		link_to_add = (link_text + link_template + " ") 
-		
-      end #list v contextual
-	
-      #finish preparing the link text,	
-	  url = bucket + wrapper_file
-	  link_to_add["<URL>"] = url
-	  
-	  #then add it to the html of the webhelp file.
-	  its_html[link_text] = link_to_add
-	 
-	end #@SHOWMES.each
-	
-  end #addShowmeLinks
