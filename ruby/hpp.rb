@@ -78,7 +78,8 @@ aLangs.each do |lang|
   aFiles.each do |file_in_webhelp|
 
     #the list of ignored files in the contents folder will be relevant only if we're dealing with a legacy system.
-    ignored_files = (is_legacy_webhelp ? String.new($hSettings["ignored_files"] + "," + webhelp_file) : "")
+    add_to_ignored_files = "," + webhelp_file + "," + removeFileExtension(webhelp_file) + "_csh.htm," + removeFileExtension(webhelp_file) + "_rhc.htm"
+    ignored_files = (is_legacy_webhelp ? String.new($hSettings["ignored_files"] + add_to_ignored_files) : "")
 
     #are we in the contents directory tree? if so:
     # - tag everything with the GA code,

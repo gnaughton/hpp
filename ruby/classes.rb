@@ -317,7 +317,7 @@ end
 
 def removeFileExtension (strFile)
 
-    return File.basename(strFile)
+    return File.basename(strFile, '.*')
 
 end
 
