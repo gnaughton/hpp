@@ -23,7 +23,6 @@ showVersionInformation (options[:version])
 settings_file_root = (ARGV[0].nil? ? "hpp" : ARGV[0])
 $hSettings = YAML.load_file 'settings/' + settings_file_root + '.yml'
 
-
 #check the language and filespec keys in the ini file.
 #if everything's OK the array will contain all the languages we're processing.
 aLangs = checkLanguage()
@@ -40,15 +39,18 @@ aLangs.each do |lang|
   webhelp = String.new($hSettings["webhelp"])
 
   #extract all the various bits we need from the WebHelp path/file.
-  webhelp_path, webhelp_file, webhelp_content_folder = parseWebHelpFile(webhelp, lang)
-
+  webhelp_path, webhelp_file, webhelp_content_folder, is_legacy_webhelp = parseWebHelpFile(webhelp, lang)
+  
   #build the scaffolding files array.
   #first, get the string from the settings file.
   scaffolding_string = String.new($hSettings["tracked_scaffolding_files"])
+  
   #are we tracking the root file? check 'track_root_file' in the settings file to see.
   scaffolding_string += ($hSettings["track_root_file"] ? "," + webhelp_file + "=Root" : "" )
+  
   #build the array.
   hScaffolding = getScaffoldingFiles(scaffolding_string)
+  
   #update the About box.
   ab.UpdateAboutBox(webhelp_path, lang, settings_file_root) if $hSettings["do_aboutbox"]
   
@@ -65,12 +67,18 @@ aLangs.each do |lang|
   sm.copyContextualIcon(webhelp_path) if $hSettings["do_showmes"]
   
   #find all the HTML files in all the folders and subfolders. 
-  aFiles = Dir[webhelp_path + "/**/*.htm"]
+  #if this is a legacy help system we're only interested in the current folder.
+  search = ($hSettings["webhelp_content_folder"] == "legacy" ? "/*.htm" : "/**/*.htm")
+  aFiles = Dir[webhelp_path + search]
+
   puts "File: " + webhelp if $hSettings["show_onscreen_progress"]
   print "Working" if $hSettings["show_onscreen_progress"]
   
   #loop around them.
   aFiles.each do |file_in_webhelp|
+
+    #the list of ignored files in the contents folder will be relevant only if we're dealing with a legacy system.
+    ignored_files = (is_legacy_webhelp ? String.new($hSettings["ignored_files"] + "," + webhelp_file) : "")
 
     #are we in the contents directory tree? if so:
     # - tag everything with the GA code,
@@ -78,7 +86,12 @@ aLangs.each do |lang|
     # - add the showme links,
     # - add the icons to the Note, Warning and Tip tables,
     # - write the modified file to disk.
+
+
     if file_in_webhelp.include? webhelp_content_folder
+ 
+      #this rule will only fire for legacy systems:
+      next if ignored_files.include? getFile(file_in_webhelp)
     
       its_html = openFile(file_in_webhelp)
       next if its_html.nil?
