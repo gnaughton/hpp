@@ -609,7 +609,7 @@ function addBanner(sImage)
 	if(sImage)
 	{
 		var nBtn=gaButtons.length;
-		gaButtons[nBtn]="<td NOWRAP align=\"center\" valign=\"middle\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"javascript:void(0);\" onclick=\"showBanner();return false;\"><img alt=\"Medidata Balance 2011.3.1\"src=\""+sImage+"\" border=0 align=\"absmiddle\"></a></td>";
+		gaButtons[nBtn]="<td NOWRAP align=\"center\" valign=\"middle\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"javascript:void(0);\" onclick=\"showBanner();return false;\"><img alt=\"Medidata Balance 2011.4.0\"src=\""+sImage+"\" border=0 align=\"absmiddle\"></a></td>";
 		gaTypes[nBtn]="banner";
 	}
 }

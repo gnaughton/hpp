@@ -1,0 +1,66 @@
+#LIST
+What’s New in Balance 2011.3.1			whatsNew.htm				List_of_Show_Me_Videos.htm	1000	600
+Accessing Medidata Balance			accessingBalance.htm			List_of_Show_Me_Videos.htm
+Adding a Study Arm				addingStudyArms.htm			List_of_Show_Me_Videos.htm
+Adding Randomization Factors			addingRandomizationFactors.htm		List_of_Show_Me_Videos.htm
+Assigning Sites to a Supply Plan		assignSites.htm				List_of_Show_Me_Videos.htm
+Simulation Execution List			simulationExecutingList.htm		List_of_Show_Me_Videos.htm
+Balancing Randomization				balancingRandomization.htm		List_of_Show_Me_Videos.htm
+Second Best Probability				secondBestProbability.htm		List_of_Show_Me_Videos.htm
+Editing a Live Study				editLiveDesign.htm			List_of_Show_Me_Videos.htm
+Setting Up a Simulation				settingUpASimulation.htm		List_of_Show_Me_Videos.htm
+Executing a Simulation				executingASimulation.htm		List_of_Show_Me_Videos.htm
+Viewing the Detailed Results			detailedResultsPage.htm			List_of_Show_Me_Videos.htm
+Means and Standard Deviations			meansStandardDeviation.htm		List_of_Show_Me_Videos.htm
+Minima						minima.htm				List_of_Show_Me_Videos.htm
+Runs Out of Balance				runsOutOfBalance.htm			List_of_Show_Me_Videos.htm
+Viewing Simulation Analysis			simulationAnalysisPage.htm		List_of_Show_Me_Videos.htm
+Treatment Design				treatmentDesign.htm			List_of_Show_Me_Videos.htm
+Site List					siteListPage.htm			List_of_Show_Me_Videos.htm
+Unblinding a Subject				subjectUnblinding.htm			List_of_Show_Me_Videos.htm
+Inventory Item List				inventoryListPage.htm			List_of_Show_Me_Videos.htm
+Inviting Users to Medidata Balance		invitingUsers.htm			List_of_Show_Me_Videos.htm
+Unblinding an Inventory Item			unblindingInventoryItems.htm		List_of_Show_Me_Videos.htm
+Shipment List					shipmentListPage.htm			List_of_Show_Me_Videos.htm
+Inventory Batch List				inventoryBatchListPage.htm		List_of_Show_Me_Videos.htm
+Managing an Article Type			managingArticleTypes.htm		List_of_Show_Me_Videos.htm
+Managing a Treatment				managingTreatments.htm			List_of_Show_Me_Videos.htm
+Create and Manage a Supply Plan			supplyPlan.htm				List_of_Show_Me_Videos.htm
+Buffer-Only Supply Plans			bufferOnly.htm				List_of_Show_Me_Videos.htm
+Predictive-Only Supply Plans			predictiveOnly.htm			List_of_Show_Me_Videos.htm
+Predictive-And-Buffer Supply Plans		predictiveBuffer.htm			List_of_Show_Me_Videos.htm
+Properties					propertiesPage.htm			List_of_Show_Me_Videos.htm
+Using the Search Filter				searchFilter.htm			List_of_Show_Me_Videos.htm
+#CONTEXTUAL
+design and management services.			accessingBalance.htm			Working_in_Medidata_Balance.htm
+have access through iMedidata, as well.		invitingUsers.htm			Creating_a_New_Balance_Study.htm
+population assigned to each arm.		addingStudyArms.htm			Study_Arms.htm
+need to be defined for a factor.		addingRandomizationFactors.htm		Randomization_Factors.htm
+the default is 15%.				secondBestProbability.htm		Setting_the_Second_Best_Probability.htm
+make changes to the design.			editLiveDesign.htm			Editing_a_Live_Study_Design.htm
+a simulation setup is not locked.		settingUpASimulation.htm		Creating_a_New_Simulation_Setup.htm
+runs that were out of balance.			simulationAnalysisPage.htm		Viewing_Analysis_Tables.htm
+statistical results for each analysis.		meansStandardDeviations.htm		Viewing_Analysis_Tables.htm
+for each study arm.				minima.htm				Viewing_Analysis_Tables.htm
+balance for the simulation.			runsOutOfBalance.htm			Viewing_Analysis_Tables.htm
+pacemaker.					managingArticleTypes			Article_Types.htm
+on each list page.				searchFilter.htm			Filtering_Search_Criteria.htm
+shipping from that depot.			inventoryBatchListPage.htm		Manage_Batches.htm
+the conditions that trigger the shipments.	supplyPlan.htm				Supply_Plans.htm
+global actions on your study.			studyProperties.htm			Study_Properties.htm
+for the randomization.				balancingRandomization.htm		Randomization_Design.htm
+shipment can be viewed.				confirmingShipmentReceived.htm		Confirming_a_Shipment.htm
+number of subjects out of balance.		detailedResultsPage.htm			Viewing_Simulation_Results.htm
+at a time.					executingASimulation.htm		Running_Simulation_Results.htm
+to the trial is available on site.		inventoryListPage.htm			Manage_Items.htm
+and then shipped to sites.			shipmentListPage.htm			Manage_Shipments.htm
+site list with iMedidata.			manageSites.htm				Manage_Sites.htm
+a drug not intended for them.			subjectUnblinding.htm			Unblinding_a_Subject.htm
+item being marked as "Wasted".			unblindingInventoryItems.htm		Unblinding_an_Inventory_Item.htm
+following new features:				whatsNew.htm				What’s_New.htm				1000	600
+at-site inventory,				bufferOnly.htm				What’s_New.htm
+predicted demand				predictiveOnly.htm			What’s_New.htm
+or a combination of both			predictiveBuffer.htm			What’s_New.htm
+and how many items to supply.			predictiveOnly.htm			Predictive-only_Supply_Plans.htm
+and how many items to supply.			bufferOnly.htm				Buffer-only_Supply_Plans.htm
+how many inventory items to supply.		predictiveBuffer.htm			Predictive-and-Buffer_Supply_Plans.htm
