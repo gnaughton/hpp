@@ -46,7 +46,7 @@
 #Example:
 #  product: Balance
 
-product: [PRODUCT_NAME]
+product: PRODUCT_NAME
 
 #In the "webhelp" key, specify the fully-qualified WebHelp root file.
 #Always use forward slashes in paths.
@@ -57,7 +57,7 @@ product: [PRODUCT_NAME]
 #  webhelp: C:/WebHelp/HelpSystemRootFile.htm
 #  webhelp: C:/Webhelp/<LANG>/RootFile_<LANG>.htm
 
-webhelp: [WEBHELP]
+webhelp: WEBHELP
 
 #In the "webhelp_content_folder" key, specify the WebHelp content folder if it isn't the same as the name of the root file minus the .htm extension.
 #If it the same, specify 'default'.
@@ -76,7 +76,7 @@ webhelp_content_folder: default
 #Example:
 #  language: ENG
 
-language: [LANGUAGE]
+language: LANGUAGE
 
 #Uncomment the 'ignored_files' key if you are processing a legacy WebHelp system
 #(a system that was produced directly from RoboHelp rather than single-sourced from FrameMaker).
@@ -95,6 +95,10 @@ language: [LANGUAGE]
 
 #showme_wrappers_folder:    foo
 
+#Uncommment the ignored_files setting if you're processing a legacy WebHelp system
+#(a system produced directly from RoboHelp rather than single-sourced from FrameMaker).
+
+#ignored_files:           whcsh_home.htm,whcshdata.htm,whfbody.htm,whfdhtml.htm,whfform.htm,whgbody.htm,whidhtml.htm,whiform.htm,whnjs.htm,whproj.htm,whskin_banner.htm,whskin_blank.htm,whskin_frmset01.htm,whskin_frmset010.htm,whskin_homepage.htm,whskin_info.htm,whskin_mbars.htm,whskin_papplet.htm,whskin_pdhtml.htm,whskin_pickup.htm,whskin_plist.htm,whskin_tbars.htm,whskin_tw.htm,whtdhtml.htm
 
 #Please don't touch the following settings unless you're using the showme_wrappers_folder setting above.
 do_feedbackforms:           yes

@@ -256,20 +256,28 @@ def parseWebHelpFile (webhelp_path_and_file, lang)
 
   webhelp_path_and_file.gsub!("<LANG>", lang)
   webhelp_path, webhelp_file_only = splitPathAndFile(webhelp_path_and_file)
-  
-  
+
+  is_legacy_webhelp = false
+
   if $hSettings["webhelp_content_folder"] == "default"
     
+    #assume the contents folder is the name of the root file minus the extension.
     webhelp_content_folder = webhelp_path + "/" + File.basename(webhelp_file_only, '.htm') + "/"
   
+  elsif $hSettings["webhelp_content_folder"] == "legacy"
+ 
+    #set the contents folder to the folder containing the root file if we're dealing with a legacy system.
+    webhelp_content_folder = webhelp_path
+    is_legacy_webhelp = true
+
   else
 
     webhelp_content_folder = String.new($hSettings["webhelp_content_folder"])
     webhelp_content_folder.gsub!("<LANG>", lang) 
   
   end  
-
-  return webhelp_path, webhelp_file_only, webhelp_content_folder
+  
+  return webhelp_path, webhelp_file_only, webhelp_content_folder, is_legacy_webhelp
 
 end  
 
@@ -309,7 +317,7 @@ end
 
 def removeFileExtension (strFile)
 
-    return File.basename(strFile)
+    return File.basename(strFile, '.*')
 
 end
 

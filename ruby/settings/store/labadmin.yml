@@ -69,4 +69,5 @@ showme_list_JPN: List_of_Show_Me_Videos.htm
 do_aboutbox:   no
 link_image:    balance140x50.png
 
-do_tableicons: no
+do_tableicons: yes
+
