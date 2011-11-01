@@ -78,6 +78,11 @@ webhelp_content_folder: default
 
 language: [LANGUAGE]
 
+#Uncomment the 'ignored_files' key if you are processing a legacy WebHelp system
+#(a system that was produced directly from RoboHelp rather than single-sourced from FrameMaker).
+
+#ignored_files:           whcsh_home.htm,whcshdata.htm,whfbody.htm,whfdhtml.htm,whfform.htm,whgbody.htm,whidhtml.htm,whiform.htm,whnjs.htm,whproj.htm,whskin_banner.htm,whskin_blank.htm,whskin_frmset01.htm,whskin_frmset010.htm,whskin_homepage.htm,whskin_info.htm,whskin_mbars.htm,whskin_papplet.htm,whskin_pdhtml.htm,whskin_pickup.htm,whskin_plist.htm,whskin_tbars.htm,whskin_tw.htm,whtdhtml.htm
+
 
 #You're done! Please don't touch anything below this line.
 
