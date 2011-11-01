@@ -83,18 +83,39 @@ language: [LANGUAGE]
 
 #ignored_files:           whcsh_home.htm,whcshdata.htm,whfbody.htm,whfdhtml.htm,whfform.htm,whgbody.htm,whidhtml.htm,whiform.htm,whnjs.htm,whproj.htm,whskin_banner.htm,whskin_blank.htm,whskin_frmset01.htm,whskin_frmset010.htm,whskin_homepage.htm,whskin_info.htm,whskin_mbars.htm,whskin_papplet.htm,whskin_pdhtml.htm,whskin_pickup.htm,whskin_plist.htm,whskin_tbars.htm,whskin_tw.htm,whtdhtml.htm
 
+#Uncomment the 'showme_wrappers_folder' key and specify the folder to bulk-tag a group of showme wrappers with GA code.
+#You need to copy this folder manually into the 'contents' folder tree of your WebHelp system.
+#Remove the folder once you're done.
+#You will probably only do this once, to tag a group of showme wrappers when you set up your showmes.
+#Afterwards, it's just as easy to add GA code to each new wrapper manually.
 
-#You're done! Please don't touch anything below this line.
+#IMPORTANT: if you use this feature, set do_feedbackforms to 'no', or you will add feedback forms to the showme wrappers.
+#           Then set do_feedbackforms back to 'yes', set do_analytics to 'no', and rerun the script.
+#           Remember to set do_analytics back to 'yes' once you've finished.   
 
+#showme_wrappers_folder:    foo
+
+
+#Please don't touch the following settings unless you're using the showme_wrappers_folder setting above.
+do_feedbackforms:           yes
+do_analytics:               yes
+
+#You're done! Please don't touch the following settings at all.
 show_onscreen_progress:     yes
 
-do_feedbackforms:           yes
-
-do_analytics:               yes
+#GA settings.
 tracked_scaffolding_files:  whtdhtml.htm=TOC,whibody.htm=Index,whfbody.htm=Search,whgbody.htm=Glossary
 track_root_file:            true
 web_property_id:            UA-23248868-9
 
-do_showmes:    no
+do_showmes:            no
+s3_bucket:             [s3 bucket]
+showme_list_ENG:       [showme list file]
+showme_list_JPN:       [showme list file]
+default_showme_width:  1000
+default_showme_height: 600
+
 do_aboutbox:   no
+link_image:    foo.png
+
 do_tableicons: no
