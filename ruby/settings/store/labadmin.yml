@@ -1,0 +1,72 @@
+﻿#For all settings, leave at least one space between the key and value. Don't include the square brackets.
+
+#Examples:
+#  product: Balance
+#  webhelp:       C:/Balance/Balance.htm
+#
+
+#Bad Example:
+#  language:ENG
+
+#In the "product" key, specify a product by pasting a name from the following list:
+
+#  Balance
+#  Rave Safety Gateway Mapping
+#  Rave Safety Gateway Management
+#  ...
+
+#Example:
+#  product: Balance
+
+product: Rave - Lab Admin
+
+#In the "webhelp" key, specify the fully-qualified WebHelp root file.
+#Always use forward slashes in paths.
+#You can use <LANG> multiple times (or not at all).
+
+#Examples:
+#  webhelp: C:/Webhelp/<LANG>/HelpSystemRootFile.htm
+#  webhelp: C:/WebHelp/HelpSystemRootFile.htm
+#  webhelp: C:/Webhelp/<LANG>/RootFile_<LANG>.htm
+
+webhelp: C:/Data/NoBackup/WebHelp_Parsing/RaveLabAdmin/<LANG>/LabAdmin.htm
+
+#In the "webhelp_content_folder" key, specify the WebHelp content folder if it isn't the same as the name of the root file minus the .htm extension.
+#If it the same, specify 'default'.
+#You can use <LANG> multiple times (or not at all).
+
+#Examples:
+#  webhelp_content_folder: C:/Webhelp/<LANG>/HelpSystemContentFolder
+#  webhelp_content_folder: C:/Webhelp/<LANG>/HelpSystemContentFolder_<LANG>
+#  webhelp_content_folder: C:/Webhelp/HelpSystemContentFolder
+#  webhelp_content_folder: default
+
+webhelp_content_folder: legacy
+
+#Always specify a language in the "language" key even when you're not using <LANG> above.
+#Language options are ENG | JPN | ENG,JPN
+#Example:
+#  language: ENG
+
+language: ENG
+
+
+#You're done! Please don't touch anything below this line.
+
+do_feedbackforms:           yes
+ignored_files:           whcsh_home.htm,whcshdata.htm,whfbody.htm,whfdhtml.htm,whfform.htm,whgbody.htm,whidhtml.htm,whiform.htm,whnjs.htm,whproj.htm,whskin_banner.htm,whskin_blank.htm,whskin_frmset01.htm,whskin_frmset010.htm,whskin_homepage.htm,whskin_info.htm,whskin_mbars.htm,whskin_papplet.htm,whskin_pdhtml.htm,whskin_pickup.htm,whskin_plist.htm,whskin_tbars.htm,whskin_tw.htm,whtdhtml.htm
+do_analytics:               yes
+show_onscreen_progress:     yes
+tracked_scaffolding_files:  whtdhtml.htm=TOC,whibody.htm=Index,whfbody.htm=Search,whgbody.htm=Glossary
+web_property_id:            UA-23248868-9
+track_root_file:            true
+
+do_showmes:      no
+s3_bucket:       http://balance-webhelp-staging.s3.amazon.com/Balance_WebHelpVideos_<LANG>/
+showme_list_ENG: List_of_Show_Me_Videos.htm
+showme_list_JPN: List_of_Show_Me_Videos.htm
+
+do_aboutbox:   no
+link_image:    balance140x50.png
+
+do_tableicons: no
