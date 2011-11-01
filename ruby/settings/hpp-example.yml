@@ -61,6 +61,9 @@ webhelp: [WEBHELP]
 
 #In the "webhelp_content_folder" key, specify the WebHelp content folder if it isn't the same as the name of the root file minus the .htm extension.
 #If it the same, specify 'default'.
+#If you are processing a legacy help system (a system built directly from RoboHelp rather than through single-sourcing), specify 'legacy'.
+#This tells the script to treat the root folder as the content folder, but to ignore scaffolding files.
+
 #You can use <LANG> multiple times (or not at all).
 
 #Examples:
@@ -68,6 +71,7 @@ webhelp: [WEBHELP]
 #  webhelp_content_folder: C:/Webhelp/<LANG>/HelpSystemContentFolder_<LANG>
 #  webhelp_content_folder: C:/Webhelp/HelpSystemContentFolder
 #  webhelp_content_folder: default
+#  webhlp_content_folder:  legacy
 
 webhelp_content_folder: default
 
@@ -78,10 +82,7 @@ webhelp_content_folder: default
 
 language: [LANGUAGE]
 
-#Uncomment the 'ignored_files' key if you are processing a legacy WebHelp system
-#(a system that was produced directly from RoboHelp rather than single-sourced from FrameMaker).
-
-#ignored_files:           whcsh_home.htm,whcshdata.htm,whfbody.htm,whfdhtml.htm,whfform.htm,whgbody.htm,whidhtml.htm,whiform.htm,whnjs.htm,whproj.htm,whskin_banner.htm,whskin_blank.htm,whskin_frmset01.htm,whskin_frmset010.htm,whskin_homepage.htm,whskin_info.htm,whskin_mbars.htm,whskin_papplet.htm,whskin_pdhtml.htm,whskin_pickup.htm,whskin_plist.htm,whskin_tbars.htm,whskin_tw.htm,whtdhtml.htm
+#If you don't have any showme videos, you're done.
 
 #Uncomment the 'showme_wrappers_folder' key and specify the folder to bulk-tag a group of showme wrappers with GA code.
 #You need to copy this folder manually into the 'contents' folder tree of your WebHelp system.
@@ -93,12 +94,9 @@ language: [LANGUAGE]
 #           Then set do_feedbackforms back to 'yes', set do_analytics to 'no', and rerun the script.
 #           Remember to set do_analytics back to 'yes' once you've finished.   
 
+#Example: showme_wrappers_folder: C:/WebHelp/Balance/TempFolderForShowMeWrappers
+
 #showme_wrappers_folder:    foo
-
-#Uncommment the ignored_files setting if you're processing a legacy WebHelp system
-#(a system produced directly from RoboHelp rather than single-sourced from FrameMaker).
-
-#ignored_files:           whcsh_home.htm,whcshdata.htm,whfbody.htm,whfdhtml.htm,whfform.htm,whgbody.htm,whidhtml.htm,whiform.htm,whnjs.htm,whproj.htm,whskin_banner.htm,whskin_blank.htm,whskin_frmset01.htm,whskin_frmset010.htm,whskin_homepage.htm,whskin_info.htm,whskin_mbars.htm,whskin_papplet.htm,whskin_pdhtml.htm,whskin_pickup.htm,whskin_plist.htm,whskin_tbars.htm,whskin_tw.htm,whtdhtml.htm
 
 #Please don't touch the following settings unless you're using the showme_wrappers_folder setting above.
 do_feedbackforms:           yes
@@ -107,13 +105,15 @@ do_analytics:               yes
 #You're done! Please don't touch the following settings at all.
 show_onscreen_progress:     yes
 
+ignored_files:           whcsh_home.htm,whcshdata.htm,whfbody.htm,whfdhtml.htm,whfform.htm,whgbody.htm,whidhtml.htm,whiform.htm,whnjs.htm,whproj.htm,whskin_banner.htm,whskin_blank.htm,whskin_frmset01.htm,whskin_frmset010.htm,whskin_homepage.htm,whskin_info.htm,whskin_mbars.htm,whskin_papplet.htm,whskin_pdhtml.htm,whskin_pickup.htm,whskin_plist.htm,whskin_tbars.htm,whskin_tw.htm,whtdhtml.htm
+
 #GA settings.
 tracked_scaffolding_files:  whtdhtml.htm=TOC,whibody.htm=Index,whfbody.htm=Search,whgbody.htm=Glossary
 track_root_file:            true
 web_property_id:            UA-23248868-9
 
 do_showmes:            no
-s3_bucket:             http://balance-webhelp[-staging].s3.amazonaws.com/WebHelp_Videos_<LANG>
+s3_bucket:             http://balance-webhelp[-staging].s3.amazonaws.com/WebHelp_Videos_<LANG>/
 showme_list_ENG:       [showme list file]
 showme_list_JPN:       [showme list file]
 default_showme_width:  1000
