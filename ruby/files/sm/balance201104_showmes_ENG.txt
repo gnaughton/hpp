@@ -47,7 +47,7 @@ pacemaker.					managingArticleTypes			Article_Types.htm
 on each list page.				searchFilter.htm			Filtering_Search_Criteria.htm
 shipping from that depot.			inventoryBatchListPage.htm		Manage_Batches.htm
 the conditions that trigger the shipments.	supplyPlan.htm				Supply_Plans.htm
-global actions on your study.			studyProperties.htm			Study_Properties.htm
+global actions on your study.			propertiesPage.htm			Study_Properties.htm
 for the randomization.				balancingRandomization.htm		Randomization_Design.htm
 shipment can be viewed.				confirmingShipmentReceived.htm		Confirming_a_Shipment.htm
 number of subjects out of balance.		detailedResultsPage.htm			Viewing_Simulation_Results.htm
