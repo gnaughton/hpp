@@ -6,6 +6,7 @@
   _gaq.push(['_setDomainName', '.amazonaws.com']);
   _gaq.push(['_setCustomVar', 1, 'Help System Name', 'HELP_SYSTEM_NAME', 3]);
   _gaq.push(['_setCustomVar', 2, 'Help System Page Type', 'HELP_SYSTEM_PAGE_TYPE', 3]);
+  _gaq.push(['_trackEvent', 'HELP_SYSTEM_NAME', 'HELP_SYSTEM_PAGE_TYPE']);
   _gaq.push(['_trackPageview']);
 
   (function() {

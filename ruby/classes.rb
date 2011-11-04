@@ -14,9 +14,9 @@ class GAProcessor
     
       tracking_script = String.new(@TRACKING_SCRIPT)
      
-      tracking_script.sub!("HELP_SYSTEM_NAME", $hSettings["product"])
-      tracking_script.sub!("WEB_PROPERTY_ID", $hSettings["web_property_id"])
-      tracking_script.sub!("HELP_SYSTEM_PAGE_TYPE", webhelp_file_type) 
+      tracking_script.gsub!("HELP_SYSTEM_NAME", $hSettings["product"])
+      tracking_script.gsub!("WEB_PROPERTY_ID", $hSettings["web_property_id"])
+      tracking_script.gsub!("HELP_SYSTEM_PAGE_TYPE", webhelp_file_type) 
       
       its_html.gsub!(/<\/head>/i, tracking_script) 
 
