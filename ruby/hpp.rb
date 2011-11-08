@@ -49,7 +49,7 @@ aLangs.each do |lang|
   scaffolding_string += ($hSettings["track_root_file"] ? "," + webhelp_file + "=Root" : "" )
   
   #build the array.
-  hScaffolding = getScaffoldingFiles(scaffolding_string)
+  $hScaffolding = getScaffoldingFiles(scaffolding_string)
   
   #update the About box.
   ab.UpdateAboutBox(webhelp_path, lang, settings_file_root) if $hSettings["do_aboutbox"]
@@ -78,9 +78,10 @@ aLangs.each do |lang|
   aFiles.each do |file_in_webhelp|
 
     #the list of ignored files in the contents folder will be relevant only if we're dealing with a legacy system.
-    add_to_ignored_files = "," + webhelp_file + "," + removeFileExtension(webhelp_file) + "_csh.htm," + removeFileExtension(webhelp_file) + "_rhc.htm"
+    add_to_ignored_files = removeFileExtension(webhelp_file) + "_csh.htm," + removeFileExtension(webhelp_file) + "_rhc.htm"
+    add_to_ignored_files += ("," + webhelp_file) if !$hSettings["track_root_file"]
     ignored_files = (is_legacy_webhelp ? String.new($hSettings["ignored_files"] + add_to_ignored_files) : "")
-
+    
     #are we in the contents directory tree? if so:
     # - tag everything with the GA code,
     # - add the help feedback form, 
@@ -93,6 +94,8 @@ aLangs.each do |lang|
  
       #this rule will only fire for legacy systems:
       next if ignored_files.include? getFile(file_in_webhelp)
+
+      webhelp_file_type = "Content"
     
       its_html = openFile(file_in_webhelp)
       next if its_html.nil?
@@ -102,6 +105,15 @@ aLangs.each do |lang|
       print "."  if $hSettings["show_onscreen_progress"]
 
       if $hSettings["do_analytics"]
+
+        #if we're dealing with a legacy system, the scaffolding files are in the 'contents' folder, so we need to
+        #check for them and tag them according to the type of scaffolding file.
+        if is_legacy_webhelp
+          webhelp_file_type = getScaffoldingFileType(getFile(file_in_webhelp)) if scaffolding_string.include? getFile(file_in_webhelp)
+					puts (getFile(file_in_webhelp) + " " + webhelp_file_type) if $hSettings["debug_legacy_tagging"]
+        end
+  
+        
 
         #to tag a group of showme wrappers, we can put them in a folder and move them into the 'contents' folder tree.
         #if we identify this folder using the 'showme_wrappers_folder' key in the settings file, the script attaches the
@@ -114,14 +126,19 @@ aLangs.each do |lang|
 
         #set the wrappers folder to 'path_that_will_never_exist' if it isn't specified in the settings file.
         showme_wrappers_folder = String.new(($hSettings["showme_wrappers_folder"].nil?) ? "path_that_will_never_exist" : $hSettings["showme_wrappers_folder"])
-        webhelp_file_type = (file_in_webhelp.include? showme_wrappers_folder.gsub("<LANG>", lang)) ? "ShowMe" : "Content"
+        webhelp_file_type = (file_in_webhelp.include? showme_wrappers_folder.gsub("<LANG>", lang)) ? "ShowMe" : webhelp_file_type
         ga.addTrackingCode(file_in_webhelp, its_html, webhelp_file_type)
       
       end
 
-      ff.addFeedbackForm(file_in_webhelp, its_html) if $hSettings["do_feedbackforms"]
-      sm.addShowmeLinks(getFile(file_in_webhelp), its_html, lang) if $hSettings["do_showmes"]
-      ti.addIcons(its_html) if $hSettings["do_tableicons"]
+      if !(scaffolding_string.include? getFile(file_in_webhelp))
+
+        ff.addFeedbackForm(file_in_webhelp, its_html) if $hSettings["do_feedbackforms"]
+        sm.addShowmeLinks(getFile(file_in_webhelp), its_html, lang) if $hSettings["do_showmes"]
+        ti.addIcons(its_html) if $hSettings["do_tableicons"]
+
+      end
+      
       writeFile(file_in_webhelp, its_html) if its_html != its_original_html
 
     else  
@@ -130,7 +147,7 @@ aLangs.each do |lang|
       its_html = openFile(file_in_webhelp)
 
       #loop through the scaffolding files
-      hScaffolding.each do |sf, sf_type|
+      $hScaffolding.each do |sf, sf_type|
         
         #is the current file a scaffolding file?
         if file_in_webhelp.include? sf

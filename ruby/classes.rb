@@ -349,6 +349,17 @@ def getScaffoldingFiles (tracked_scaffolding_files)
 
 end
 
+def getScaffoldingFileType (file_in_webhelp)
+
+  $hScaffolding.each do |sf, sf_type|
+        
+    #is the current file a scaffolding file?
+    return sf_type if file_in_webhelp.include? sf
+
+  end
+
+end
+
 def showVersionInformation (stop_after_this)
 
   puts " "

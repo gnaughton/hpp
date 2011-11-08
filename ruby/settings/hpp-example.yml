@@ -107,11 +107,11 @@ do_analytics:               yes
 #rolled out in a future version of this script.
 show_onscreen_progress:     yes
 
-ignored_files:           whcsh_home.htm,whcshdata.htm,whfbody.htm,whfdhtml.htm,whfform.htm,whgbody.htm,whidhtml.htm,whiform.htm,whnjs.htm,whproj.htm,whskin_banner.htm,whskin_blank.htm,whskin_frmset01.htm,whskin_frmset010.htm,whskin_homepage.htm,whskin_info.htm,whskin_mbars.htm,whskin_papplet.htm,whskin_pdhtml.htm,whskin_pickup.htm,whskin_plist.htm,whskin_tbars.htm,whskin_tw.htm,whtdhtml.htm
+ignored_files:           whcsh_home.htm,whcshdata.htm,whfdhtml.htm,whfform.htm,whidhtml.htm,whiform.htm,whnjs.htm,whproj.htm,whskin_banner.htm,whskin_blank.htm,whskin_frmset01.htm,whskin_frmset010.htm,whskin_homepage.htm,whskin_info.htm,whskin_mbars.htm,whskin_papplet.htm,whskin_pdhtml.htm,whskin_pickup.htm,whskin_plist.htm,whskin_tbars.htm,whskin_tw.htm,wghdef.htm,whgdhtml.htm,cshdat_robohelp.htm,cshdat_webhelp.htm,whgdef.htm
 
 #GA settings.
 tracked_scaffolding_files:  whtdhtml.htm=TOC,whibody.htm=Index,whfbody.htm=Search,whgbody.htm=Glossary
-track_root_file:            true
+track_root_file:            yes
 web_property_id:            UA-23248868-9
 
 do_showmes:            no
@@ -125,3 +125,6 @@ do_aboutbox:   no
 link_image:    foo.png
 
 do_tableicons: no
+
+#Debug
+debug_legacy_tagging: yes
