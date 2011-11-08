@@ -127,4 +127,4 @@ link_image:    foo.png
 do_tableicons: no
 
 #Debug
-debug_legacy_tagging: yes
+debug_legacy_tagging: no
