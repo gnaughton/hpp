@@ -103,6 +103,8 @@ do_feedbackforms:           yes
 do_analytics:               yes
 
 #You're done! Please don't touch the following settings at all.
+#Some are for features that are beyond the scope of help metrics and might be officially 
+#rolled out in a future version of this script.
 show_onscreen_progress:     yes
 
 ignored_files:           whcsh_home.htm,whcshdata.htm,whfbody.htm,whfdhtml.htm,whfform.htm,whgbody.htm,whidhtml.htm,whiform.htm,whnjs.htm,whproj.htm,whskin_banner.htm,whskin_blank.htm,whskin_frmset01.htm,whskin_frmset010.htm,whskin_homepage.htm,whskin_info.htm,whskin_mbars.htm,whskin_papplet.htm,whskin_pdhtml.htm,whskin_pickup.htm,whskin_plist.htm,whskin_tbars.htm,whskin_tw.htm,whtdhtml.htm
@@ -113,9 +115,9 @@ track_root_file:            true
 web_property_id:            UA-23248868-9
 
 do_showmes:            no
-s3_bucket:             http://balance-webhelp[-staging].s3.amazonaws.com/WebHelp_Videos_<LANG>/
-showme_list_ENG:       [showme list file]
-showme_list_JPN:       [showme list file]
+s3_bucket:             http://[foo]-webhelp[-staging].s3.amazonaws.com/WebHelp_Videos_<LANG>/
+showme_list_ENG:       [showme list file, eg. List_of_Showme_Videos.htm]
+showme_list_JPN:       [showme list file, eg. List_of_Showme_Videos.htm]
 default_showme_width:  1000
 default_showme_height: 600
 
