@@ -84,6 +84,9 @@ language: [LANGUAGE]
 
 #If you don't have any showme videos, you're done.
 
+#NOTE: The following setting is not compatible with the 'webhelp_content_folder: legacy' setting.
+#In this case the script ignores the showme_wrappers_folder setting.
+
 #Uncomment the 'showme_wrappers_folder' key and specify the folder to bulk-tag a group of showme wrappers with GA code.
 #You need to copy this folder manually into the 'contents' folder tree of your WebHelp system.
 #Remove the folder once you're done.

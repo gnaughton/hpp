@@ -110,7 +110,7 @@ aLangs.each do |lang|
         #check for them and tag them according to the type of scaffolding file.
         if is_legacy_webhelp
           webhelp_file_type = getScaffoldingFileType(getFile(file_in_webhelp)) if scaffolding_string.include? getFile(file_in_webhelp)
-					puts (getFile(file_in_webhelp) + " " + webhelp_file_type) if $hSettings["debug_legacy_tagging"]
+          puts (getFile(file_in_webhelp) + " " + webhelp_file_type) if $hSettings["debug_legacy_tagging"]
         end
   
         
