@@ -1,2 +1,2 @@
 #contextual links
-before extracting data.				whatsNew.htm		New_in_Rave_Safety_Gateway_1_1_2.htm		1000	600
+following new features:				whatsNew.htm		New_in_Rave_Safety_Gateway_1_1_2.htm		1000	600
