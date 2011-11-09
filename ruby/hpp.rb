@@ -69,7 +69,7 @@ aLangs.each do |lang|
   #find all the HTML files in all the folders and subfolders. 
   #if this is a legacy help system we're only interested in the current folder.
   search = ($hSettings["webhelp_content_folder"] == "legacy" ? "/*.htm" : "/**/*.htm")
-  aFiles = Dir[webhelp_path + search]
+  aFiles = Dir[webhelp_path + "/**/*.htm"]
 
   puts "File: " + webhelp if $hSettings["show_onscreen_progress"]
   print "Working" if $hSettings["show_onscreen_progress"]
@@ -112,8 +112,6 @@ aLangs.each do |lang|
           webhelp_file_type = getScaffoldingFileType(getFile(file_in_webhelp)) if scaffolding_string.include? getFile(file_in_webhelp)
           puts (getFile(file_in_webhelp) + " " + webhelp_file_type) if $hSettings["debug_legacy_tagging"]
         end
-  
-        
 
         #to tag a group of showme wrappers, we can put them in a folder and move them into the 'contents' folder tree.
         #if we identify this folder using the 'showme_wrappers_folder' key in the settings file, the script attaches the
@@ -126,14 +124,15 @@ aLangs.each do |lang|
 
         #set the wrappers folder to 'path_that_will_never_exist' if it isn't specified in the settings file.
         showme_wrappers_folder = String.new(($hSettings["showme_wrappers_folder"].nil?) ? "path_that_will_never_exist" : $hSettings["showme_wrappers_folder"])
-        webhelp_file_type = (file_in_webhelp.include? showme_wrappers_folder.gsub("<LANG>", lang)) ? "ShowMe" : webhelp_file_type
+        showme_wrappers_folder.gsub!("<LANG>", lang)
+        webhelp_file_type = (file_in_webhelp.include? showme_wrappers_folder) ? "ShowMe" : webhelp_file_type
         ga.addTrackingCode(file_in_webhelp, its_html, webhelp_file_type)
       
       end
 
       if !(scaffolding_string.include? getFile(file_in_webhelp))
-
-        ff.addFeedbackForm(file_in_webhelp, its_html) if $hSettings["do_feedbackforms"]
+puts file_in_webhelp + " " + showme_wrappers_folder
+        ff.addFeedbackForm(file_in_webhelp, its_html) if $hSettings["do_feedbackforms"] and !(file_in_webhelp.include? showme_wrappers_folder)
         sm.addShowmeLinks(getFile(file_in_webhelp), its_html, lang) if $hSettings["do_showmes"]
         ti.addIcons(its_html) if $hSettings["do_tableicons"]
 

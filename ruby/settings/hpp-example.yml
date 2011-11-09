@@ -90,29 +90,26 @@ language: [LANGUAGE]
 #Uncomment the 'showme_wrappers_folder' key and specify the folder to bulk-tag a group of showme wrappers with GA code.
 #You need to copy this folder manually into the 'contents' folder tree of your WebHelp system.
 #Remove the folder once you're done.
-#You will probably only do this once, to tag a group of showme wrappers when you set up your showmes.
+#You will probably only do this once, to tag a group of showme wrappers when you first set up your showmes.
 #Afterwards, it's just as easy to add GA code to each new wrapper manually.
-
-#IMPORTANT: if you use this feature, set do_feedbackforms to 'no', or you will add feedback forms to the showme wrappers.
-#           Then set do_feedbackforms back to 'yes', set do_analytics to 'no', and rerun the script.
-#           Remember to set do_analytics back to 'yes' once you've finished.   
 
 #Example: showme_wrappers_folder: C:/WebHelp/Balance/TempFolderForShowMeWrappers
 
 #showme_wrappers_folder:    foo
 
-#Please don't touch the following settings unless you're using the showme_wrappers_folder setting above.
-do_feedbackforms:           yes
-do_analytics:               yes
 
-#You're done! Please don't touch the following settings at all.
+#You're done! Please don't touch the following settings.
 #Some are for features that are beyond the scope of help metrics and might be officially 
 #rolled out in a future version of this script.
 show_onscreen_progress:     yes
 
 ignored_files:           whcsh_home.htm,whcshdata.htm,whfdhtml.htm,whfform.htm,whidhtml.htm,whiform.htm,whnjs.htm,whproj.htm,whskin_banner.htm,whskin_blank.htm,whskin_frmset01.htm,whskin_frmset010.htm,whskin_homepage.htm,whskin_info.htm,whskin_mbars.htm,whskin_papplet.htm,whskin_pdhtml.htm,whskin_pickup.htm,whskin_plist.htm,whskin_tbars.htm,whskin_tw.htm,wghdef.htm,whgdhtml.htm,cshdat_robohelp.htm,cshdat_webhelp.htm,whgdef.htm
 
+#Feedback forms settings.
+do_feedbackforms:           yes
+
 #GA settings.
+do_analytics:               yes
 tracked_scaffolding_files:  whtdhtml.htm=TOC,whibody.htm=Index,whfbody.htm=Search,whgbody.htm=Glossary
 track_root_file:            yes
 web_property_id:            UA-23248868-9
