@@ -131,7 +131,7 @@ aLangs.each do |lang|
       end
 
       if !(scaffolding_string.include? getFile(file_in_webhelp))
-puts file_in_webhelp + " " + showme_wrappers_folder
+      
         ff.addFeedbackForm(file_in_webhelp, its_html) if $hSettings["do_feedbackforms"] and !(file_in_webhelp.include? showme_wrappers_folder)
         sm.addShowmeLinks(getFile(file_in_webhelp), its_html, lang) if $hSettings["do_showmes"]
         ti.addIcons(its_html) if $hSettings["do_tableicons"]
