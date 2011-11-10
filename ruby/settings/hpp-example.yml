@@ -8,6 +8,20 @@
 #Bad Example:
 #  language:ENG
 
+
+#Specify the status of the help system.
+#Are you tracking hits for real? If so, use 'live'.
+#If you do not want the hits to appear in the live hits, use 'test'.
+
+#Live hits appear in the 'Help Tracking - Live' profile in Google Analytics.
+#Test hits appear in 'Help Tracking - Test'
+
+#Please don't pollute the live data with hits from test systems!
+
+#Example: help_system_status:  live
+
+help_system_status: [HELP_SYSTEM_STATUS] 
+
 #Specify the help system name in the 'product' key by pasting a name from the following list:
 
 #  Balance
@@ -111,7 +125,8 @@ do_feedbackforms:           yes
 do_analytics:               yes
 tracked_scaffolding_files:  whtdhtml.htm=TOC,whibody.htm=Index,whfbody.htm=Search,whgbody.htm=Glossary
 track_root_file:            yes
-web_property_id:            UA-23248868-12
+web_property_id_live:       UA-23248868-12
+web_property_id_test:       UA-23248868-13
 
 do_showmes:            no
 s3_bucket:             http://[foo]-webhelp[-staging].s3.amazonaws.com/WebHelp_Videos_<LANG>/

@@ -14,8 +14,9 @@ class GAProcessor
     
       tracking_script = String.new(@TRACKING_SCRIPT)
      
+      web_property_id = $hSettings["web_property_id_" + $hSettings["help_system_status"]]
       tracking_script.gsub!("HELP_SYSTEM_NAME", $hSettings["product"])
-      tracking_script.gsub!("WEB_PROPERTY_ID", $hSettings["web_property_id"])
+      tracking_script.gsub!("WEB_PROPERTY_ID", web_property_id)
       tracking_script.gsub!("HELP_SYSTEM_PAGE_TYPE", webhelp_file_type) 
       
       its_html.gsub!(/<\/head>/i, tracking_script) 
@@ -366,7 +367,7 @@ def showVersionInformation (stop_after_this)
   puts "**********************"
   puts "Help processing script"
   puts "Version:        1.0.0"
-  puts "Date:      09-Nov-2011"
+  puts "Date:      10-Nov-2011"
   puts "**********************"
   puts " "
 
