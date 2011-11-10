@@ -12,6 +12,7 @@
 #Specify the status of the help system.
 #Are you tracking hits for real? If so, use 'live'.
 #If you do not want the hits to appear in the live hits, use 'test'.
+#'test' is the default.
 
 #Live hits appear in the 'Help Tracking - Live' profile in Google Analytics.
 #Test hits appear in 'Help Tracking - Test'
@@ -20,7 +21,7 @@
 
 #Example: help_system_status:  live
 
-help_system_status: [HELP_SYSTEM_STATUS] 
+help_system_status: test
 
 #Specify the help system name in the 'product' key by pasting a name from the following list:
 
