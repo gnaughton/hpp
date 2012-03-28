@@ -361,6 +361,20 @@ def getScaffoldingFileType (file_in_webhelp)
 
 end
 
+def copyGoButton(webhelp_path)
+    
+    begin
+
+      FileUtils.cp "files/misc/Gray_Go.gif", webhelp_path + "/Gray_Go.gif" 
+      
+    rescue Exception => e
+
+      puts e.to_s 
+
+    end  
+
+  end #copyGoButton
+
 def showVersionInformation (stop_after_this)
 
   puts " "

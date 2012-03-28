@@ -40,6 +40,9 @@ aLangs.each do |lang|
 
   #extract all the various bits we need from the WebHelp path/file.
   webhelp_path, webhelp_file, webhelp_content_folder, is_legacy_webhelp = parseWebHelpFile(webhelp, lang)
+	
+	#copy the Japanese 'Go' button to the help system.
+	copyGoButton(webhelp_path) if lang == "JPN"
   
   #build the scaffolding files array.
   #first, get the string from the settings file.
