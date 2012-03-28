@@ -130,3 +130,6 @@ do_tableicons: no
 
 #Debug
 debug_legacy_tagging: no
+
+#Portal page.
+portal_page: kpp.htm
