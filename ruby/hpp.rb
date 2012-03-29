@@ -21,7 +21,15 @@ showVersionInformation (options[:version])
 
 #get the settings file from the command line; if none was specified, use 'hpp.yml'
 settings_file_root = (ARGV[0].nil? ? "hpp" : ARGV[0])
-$hSettings = YAML.load_file 'settings/' + settings_file_root + '.yml'
+
+#'back door' - if the settings file starts with '.' on the command line,
+#look for it in '/files/st/', otherwise 'settings/'.
+#this allows me to keep the settings folder clean except for hpp-example.yml, which
+#is how the script should be delivered.
+settings_file_folder = (settings_file_root[0] == "." ? "files/st/" : "settings/")
+settings_file_root = settings_file_root[1..-1] if settings_file_root[0] == "."
+
+$hSettings = YAML.load_file settings_file_folder + settings_file_root + '.yml'
 
 #check the language and filespec keys in the ini file.
 #if everything's OK the array will contain all the languages we're processing.

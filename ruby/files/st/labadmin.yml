@@ -1,0 +1,132 @@
+﻿#For all settings, leave at least one space between the key and value. Don't include the square brackets.
+
+#Examples:
+#  product: Balance
+#  webhelp:       C:/Balance/Balance.htm
+#
+
+#Bad Example:
+#  language:ENG
+
+
+#Specify the help system name in the 'product' key by pasting a name from the following list:
+
+#  Balance
+#  Coder
+#  Grants Manager Planning
+#  Grants Manager Planning - Quick Price
+#  Grants Manager Contracting - Sponsor
+#  Grants Manager Contracting - Site
+#  iMedidata
+#  Rave - Architect
+#  Rave - 360 Reports
+#  Rave - Configuration
+#  Rave - DCF
+#  Rave - DDE
+#  Rave - EDC
+#  Rave - Getting Started
+#  Rave - Home Page
+#  Rave - Lab Admin
+#  Rave - Patient Dashboard Builder
+#  Rave - PDF
+#  Rave - Query Management
+#  Rave - Report Admin
+#  Rave - Reporter
+#  Rave - SAS On Demand
+#  Rave - Script Utility
+#  Rave - Site Admin
+#  Rave - Status Uploader
+#  Rave - Tagging
+#  Rave - Translations
+#  Rave - Trip Monitor
+#  Rave - TSDV
+#  Rave - User Admin
+#  Rave - Welcome Message
+#  Medidata Insights
+#  RSG Mapping
+#  RSG Management
+
+#Example:
+#  product: Balance
+
+product: Rave - Lab Admin
+
+#In the "webhelp" key, specify the fully-qualified WebHelp root file.
+#Always use forward slashes in paths.
+#You can use <LANG> multiple times (or not at all).
+
+#Examples:
+#  webhelp: C:/Webhelp/<LANG>/HelpSystemRootFile.htm
+#  webhelp: C:/WebHelp/HelpSystemRootFile.htm
+#  webhelp: C:/Webhelp/<LANG>/RootFile_<LANG>.htm
+
+webhelp: C:/Data/NoBackup/WebHelp_Parsing/RaveLabAdmin/<LANG>/LabAdmin.htm
+
+#In the "webhelp_content_folder" key, specify the WebHelp content folder if it isn't the same as the name of the root file minus the .htm extension.
+#If it the same, specify 'default'.
+#If you are processing a legacy help system (a system built directly from RoboHelp rather than through single-sourcing), specify 'legacy'.
+#This tells the script to treat the root folder as the content folder, but to ignore scaffolding files.
+
+#You can use <LANG> multiple times (or not at all).
+
+#Examples:
+#  webhelp_content_folder: C:/Webhelp/<LANG>/HelpSystemContentFolder
+#  webhelp_content_folder: C:/Webhelp/<LANG>/HelpSystemContentFolder_<LANG>
+#  webhelp_content_folder: C:/Webhelp/HelpSystemContentFolder
+#  webhelp_content_folder: default
+#  webhlp_content_folder:  legacy
+
+webhelp_content_folder: legacy
+
+#Always specify a language in the "language" key even when you're not using <LANG> above.
+#Language options are ENG | JPN | ENG,JPN
+#Example:
+#  language: ENG
+
+language: ENG,JPN
+
+#If you don't have any showme videos, you're done.
+
+#Uncomment the 'showme_wrappers_folder' key and specify the folder to bulk-tag a group of showme wrappers with GA code.
+#You need to copy this folder manually into the 'contents' folder tree of your WebHelp system.
+#Remove the folder once you're done.
+#You will probably only do this once, to tag a group of showme wrappers when you first set up your showmes.
+#Afterwards, it's just as easy to add GA code to each new wrapper manually.
+
+#Example: showme_wrappers_folder: C:/WebHelp/Balance/TempFolderForShowMeWrappers
+
+#showme_wrappers_folder:    foo
+
+
+#You're done! Please don't touch the following settings.
+#Some are for features that are beyond the scope of help metrics and might be officially 
+#rolled out in a future version of this script.
+show_onscreen_progress:     yes
+
+ignored_files:           whcsh_home.htm,whcshdata.htm,whfdhtml.htm,whfform.htm,whidhtml.htm,whiform.htm,whnjs.htm,whproj.htm,whskin_banner.htm,whskin_blank.htm,whskin_frmset01.htm,whskin_frmset010.htm,whskin_homepage.htm,whskin_info.htm,whskin_mbars.htm,whskin_papplet.htm,whskin_pdhtml.htm,whskin_pickup.htm,whskin_plist.htm,whskin_tbars.htm,whskin_tw.htm,wghdef.htm,whgdhtml.htm,cshdat_robohelp.htm,cshdat_webhelp.htm,whgdef.htm
+
+#Feedback forms settings.
+do_feedbackforms:           yes
+
+#GA settings.
+do_analytics:               yes
+tracked_scaffolding_files:  whtdhtml.htm=TOC,whibody.htm=Index,whfbody.htm=Search,whgbody.htm=Glossary
+track_root_file:            yes
+web_property_id_live:       UA-23248868-12
+web_property_id_test:       UA-23248868-13
+help_system_status:         live
+
+do_showmes:            no
+s3_bucket:             http://[foo]-webhelp[-staging].s3.amazonaws.com/WebHelp_Videos_<LANG>/
+showme_list_ENG:       [showme list file, eg. List_of_Showme_Videos.htm]
+showme_list_JPN:       [showme list file, eg. List_of_Showme_Videos.htm]
+default_showme_width:  1000
+default_showme_height: 600
+
+do_aboutbox:   no
+link_image:    foo.png
+
+do_tableicons: no
+
+#Debug
+debug_legacy_tagging: no
