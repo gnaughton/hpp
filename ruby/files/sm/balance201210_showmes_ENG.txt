@@ -6,9 +6,9 @@ Assigning Sites to a Supply Plan		assignSites.htm				List_of_Show_Me_Videos.htm
 Simulation Execution List			simulationExecutingList.htm		List_of_Show_Me_Videos.htm
 Balancing Randomization				balancingRandomization.htm		List_of_Show_Me_Videos.htm
 Second Best Probability				secondBestProbability.htm		List_of_Show_Me_Videos.htm
-Selecting the Randomization Method		selectingRandomizationMethod.htm		List_of_Show_Me_Videos.htm
-Study Stratification		studyStratification.htm		List_of_Show_Me_Videos.htm
-Uploading and Mapping Randomization Lists		uploadingMappingRandomizationLists.htm		List_of_Show_Me_Videos.htm
+Selecting the Randomization Method		selectingRandomizationMethod.htm	List_of_Show_Me_Videos.htm
+Study Stratification				studyStratification.htm			List_of_Show_Me_Videos.htm
+Uploading and Mapping Randomization Lists	uploadingMappingRandomizationLists.htm	List_of_Show_Me_Videos.htm
 Viewing Randomization Lists in Balance		viewingRandomizationLists.htm		List_of_Show_Me_Videos.htm
 Editing a Live Study				editLiveDesign.htm			List_of_Show_Me_Videos.htm
 Setting Up a Simulation				settingUpASimulation.htm		List_of_Show_Me_Videos.htm
@@ -34,7 +34,7 @@ Predictive-Only Supply Plans			predictiveOnly.htm			List_of_Show_Me_Videos.htm
 Predictive-And-Buffer Supply Plans		predictiveBuffer.htm			List_of_Show_Me_Videos.htm
 Properties					propertiesPage.htm			List_of_Show_Me_Videos.htm
 Using the Search Filter				searchFilter.htm			List_of_Show_Me_Videos.htm
-Packlists				creatingPacklists.htm			List_of_Show_Me_Videos.htm
+Packlists					creatingPacklists.htm			List_of_Show_Me_Videos.htm
 #CONTEXTUAL
 design and management services.			accessingBalance.htm			Working_in_Medidata_Balance.htm
 have access through iMedidata, as well.		invitingUsers.htm			Creating_a_New_Balance_Study.htm
