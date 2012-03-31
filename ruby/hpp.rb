@@ -25,7 +25,7 @@ $CONFIG_FILES_ROOT = hInit["config_files_root"]
 #get the settings file from the command line; if none was specified, use 'hpp.yml'
 settings_file_root = (ARGV[0].nil? ? "hpp" : ARGV[0])
 
-$hSettings = YAML.load_file $CONFIG_FILES_ROOT + "/settings/" + settings_file_root + '.yml'
+$hSettings = YAML.load_file $CONFIG_FILES_ROOT + "settings/" + settings_file_root + '.yml'
 
 
 #check the language and filespec keys in the ini file.

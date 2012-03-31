@@ -2,7 +2,7 @@ class GAProcessor
 
   def initialize
   
-    @TRACKING_SCRIPT = File.read("files/ga/ga_tracking_script.txt")
+    @TRACKING_SCRIPT = File.read($CONFIG_FILES_ROOT + "files/googleanalytics/ga_tracking_script.txt")
     rescue
       puts "Couldn't open  GA tracking file."
       abort
@@ -36,7 +36,7 @@ class FeedbackFormProcessor
 
   def setFeedbackForm (lang)
   
-    @FEEDBACK_FORM = File.read("files/ff/" + lang.downcase + "_help_feedback_form.htm")
+    @FEEDBACK_FORM = File.read($CONFIG_FILES_ROOT + "files/feedbackform/" + lang.downcase + "_help_feedback_form.htm")
     #update the product name.
     @FEEDBACK_FORM["<medidata-product-name>"] = $hSettings["product"]
   
@@ -66,9 +66,9 @@ class ShowmeProcessor
   
   def loadFiles (lang, settings_file_root)
   
-    @LIST_TEMPLATE = File.read("files/sm/list_link_template_" + lang + ".txt")
-    @CONTEXT_TEMPLATE = File.read("files/sm/context_link_template_" + lang + ".txt")
-    @SHOWMES = IO.readlines("files/sm/" + settings_file_root + "_showmes_" + lang + ".txt")
+    @LIST_TEMPLATE = File.read($CONFIG_FILES_ROOT + "files/showmes/list_link_template_" + lang + ".txt")
+    @CONTEXT_TEMPLATE = File.read($CONFIG_FILES_ROOT + "files/showmes/context_link_template_" + lang + ".txt")
+    @SHOWMES = IO.readlines($CONFIG_FILES_ROOT + "files/showmes/" + settings_file_root + "_showmes_" + lang + ".txt")
     
   
   end
@@ -77,7 +77,7 @@ class ShowmeProcessor
   
     begin
     
-    FileUtils.cp "files/sm/i_help_video.png", webhelp_path + "/i_help_video.png"
+    FileUtils.cp $CONFIG_FILES_ROOT + "files/showmes/i_help_video.png", webhelp_path + "/i_help_video.png"
   
     rescue Exception => e
 
@@ -161,7 +161,7 @@ class AboutboxProcessor
 
   def UpdateAboutBox (webhelp_path, lang, settings_file_root)
 
-    files_root = "files/ab/"
+    files_root = $CONFIG_FILES_ROOT + "files/aboutbox/"
     source_banner = settings_file_root + "_whskin_banner_" + lang + ".htm"
     target_banner = "whskin_banner.htm"
     source_javascript = settings_file_root + "_whtbar_" + lang + ".js"
@@ -194,9 +194,9 @@ class TableIconProcessor
     
     begin
 
-      FileUtils.cp "files/ti/lightbulb_d.png", webhelp_path + "/lightbulb_d.png" 
-      FileUtils.cp "files/ti/pushpin_d.png", webhelp_path + "/pushpin_d.png"
-      FileUtils.cp "files/ti/triangle_d.png", webhelp_path + "/triangle_d.png"
+      FileUtils.cp $CONFIG_FILES_ROOT + "files/tableicons/lightbulb_d.png", webhelp_path + "/lightbulb_d.png" 
+      FileUtils.cp $CONFIG_FILES_ROOT + "files/tableicons/pushpin_d.png", webhelp_path + "/pushpin_d.png"
+      FileUtils.cp $CONFIG_FILES_ROOT + "files/tableicons/triangle_d.png", webhelp_path + "/triangle_d.png"
     
     rescue Exception => e
 
