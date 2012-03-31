@@ -19,6 +19,9 @@ optparse.parse!
 
 showVersionInformation (options[:version]) 
 
+hInit = YAML.load_file 'init.yml'
+$CONFIG_FILES_ROOT = hInit["config_files_root"]
+
 #get the settings file from the command line; if none was specified, use 'hpp.yml'
 settings_file_root = (ARGV[0].nil? ? "hpp" : ARGV[0])
 
