@@ -1,1 +1,2 @@
-config_files_root: ""
+#include the trailing '/' if specifiying a folder.
+config_files_root: "C:/Data/hppfiles/"
