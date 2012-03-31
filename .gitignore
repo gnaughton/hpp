@@ -1,15 +1,1 @@
-bugs.xlsx
-ruby/hpp.ini
-ruby/hpp.yml
-ruby/balance.yml
-ruby/mapping.yml
-ruby/management.yml
-ruby/settings/balance201104.yml
-ruby/settings/gmc.yml
-ruby/settings/hpp.yml
-ruby/settings/labadmin.yml
-ruby/settings/mapping.yml
-ruby/settings/balance.yml
-ruby/settings/reportadmin.yml
-ruby/settings/management.yml
-ruby/settings/balance201210.yml
+ruby/init.yml
