@@ -1,0 +1,1 @@
+This file will describe how to set up the showmes configuration files when this feature is made available to all script users.

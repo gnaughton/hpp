@@ -365,7 +365,7 @@ def copyGoButton(webhelp_path)
     
     begin
 
-      FileUtils.cp "files/misc/Gray_Go.gif", webhelp_path + "/Gray_Go.gif" 
+      FileUtils.cp "files/system/misc/Gray_Go.gif", webhelp_path + "/Gray_Go.gif" 
       
     rescue Exception => e
 
