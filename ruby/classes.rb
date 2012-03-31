@@ -194,9 +194,9 @@ class TableIconProcessor
     
     begin
 
-      FileUtils.cp $CONFIG_FILES_ROOT + "files/system/tableicons/lightbulb_d.png", webhelp_path + "/lightbulb_d.png" 
-      FileUtils.cp $CONFIG_FILES_ROOT + "files/system/tableicons/pushpin_d.png", webhelp_path + "/pushpin_d.png"
-      FileUtils.cp $CONFIG_FILES_ROOT + "files/system/tableicons/triangle_d.png", webhelp_path + "/triangle_d.png"
+      FileUtils.cp "files/system/tableicons/lightbulb_d.png", webhelp_path + "/lightbulb_d.png" 
+      FileUtils.cp "files/system/tableicons/pushpin_d.png", webhelp_path + "/pushpin_d.png"
+      FileUtils.cp "files/system/tableicons/triangle_d.png", webhelp_path + "/triangle_d.png"
     
     rescue Exception => e
 
