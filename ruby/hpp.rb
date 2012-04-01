@@ -19,8 +19,24 @@ optparse.parse!
 
 showVersionInformation (options[:version]) 
 
-hInit = YAML.load_file 'init.yml'
-$CONFIG_FILES_ROOT = hInit["config_files_root"]
+#to get the script to search in other the default locations (/settings/..., /files/user/...)
+#for user-maintained configuration files, add a 'init.yml' file with the following key-value:
+#config_files_root: <path-root>.
+#the script will search in <path-root>/settings/... and <path-root>/files/user/... 
+#for the files.
+begin
+
+  hInit = YAML.load_file 'init.yml'
+	$CONFIG_FILES_ROOT = hInit["config_files_root"]
+
+rescue Errno::ENOENT
+  
+	#there is no 'init.yml', so search in the default locations.
+	$CONFIG_FILES_ROOT = ""
+
+end
+
+
 
 #get the settings file from the command line; if none was specified, use 'hpp.yml'
 settings_file_root = (ARGV[0].nil? ? "hpp" : ARGV[0])

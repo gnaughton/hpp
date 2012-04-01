@@ -1,2 +1,0 @@
-#include the trailing '/' if specifiying a folder.
-config_files_root: ""
