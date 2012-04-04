@@ -39,7 +39,10 @@ class FeedbackFormProcessor
     @FEEDBACK_FORM = File.read("files/system/feedbackform/" + lang.downcase + "_help_feedback_form.htm")
     #update the product name.
     @FEEDBACK_FORM["<medidata-product-name>"] = $hSettings["product"]
-  
+		
+		@FEEDBACK_LINK = File.read("files/system/feedbackform/" + lang.downcase + "_feedback_link.txt")
+		
+		
   end
   
   
@@ -55,6 +58,18 @@ class FeedbackFormProcessor
       puts "Exception: " + e.to_s
 
     end  
+		
+		headings = $hSettings["pagination"].split(",")
+		
+		headings.each do |heading|
+		
+		  its_html.gsub!("</" + heading + ">", @FEEDBACK_LINK + "</" + heading + ">")
+	  
+		end
+  
+
+		
+		
 
 
   end

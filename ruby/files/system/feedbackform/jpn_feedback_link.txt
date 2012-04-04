@@ -1,1 +1,1 @@
-<span style="font-size:8pt;font-weight:normal;font-family:sans-serif"><a href="#HelpFeedbackForm">Give feedback</a> on this help topic</span><br>/
+<span style="font-size:8pt;font-weight:normal;font-family:sans-serif"><a href="#HelpFeedbackForm">Give feedback</a> on this help topic</span>
