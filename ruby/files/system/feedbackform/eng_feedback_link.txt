@@ -1,1 +1,1 @@
-<br/><span style="word-spacing:normal;font-size:8pt;font-weight:normal;font-family:sans-serif">(<a href="#HelpFeedbackForm" onClick="_gaq.push(['_trackEvent', 'Balance', 'Feedback link clicked', document.title]);">Give feedback</a> on this help topic.)</span>
+<br/><span style="word-spacing:normal;font-size:8pt;font-weight:normal;font-family:sans-serif">(<a href="#ss-form" onClick="_gaq.push(['_trackEvent', 'Balance', 'Feedback link clicked', document.title]);">Rate</a> this topic.)</span>
