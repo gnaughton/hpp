@@ -88,14 +88,14 @@ language: [LANGUAGE]
 #The headings in the 'pagination' key must correspond to the pagination setting in RoboHelp.
 #For example, if RoboHelp paginates (creates a separate HTML file) for every topic down to a <h3> topic,
 #the value must be 'h1,h2,h3'.
-#if there is no 'pagination' key in a settings file, the script defaults to 'h1,h2,h3'.
-#the script needs to know which headings are paginated to add "Rate this topic" links beneath the topic titles.
+#If there is no 'pagination' key in a settings file, the script defaults to 'h1,h2,h3'.
+#The script needs to know which headings are paginated to add "Rate this topic" links beneath the topic titles.
 pagination: h1,h2,h3
 
 #the name of the knowledge portal page in the help system.
-#if there is no 'portal_page' key in a settings file, the script defaults to 'kpp.htm'.
-#no problem if the help system doesn't include the specified file. 
-#the script needs to know about the portal page (if there is one) in order not to add a feedback form to it.
+#If there is no 'portal_page' key in a settings file, the script defaults to 'kpp.htm'.
+#No problem if the help system doesn't include the specified file. 
+#The script needs to know about the portal page (if there is one) in order not to add a feedback form to it.
 portal_page: kpp.htm
 
 #If you don't have any showme videos, you're done.
