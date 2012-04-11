@@ -59,18 +59,23 @@ class FeedbackFormProcessor
 
     end  
 		
-		headings = $hSettings["pagination"].split(",")
+		#add the 'Rate this topic' link to the top of the page.
+		#when the user clicks this link it moves focus to the feedback form,
+		#e.g: "<h3>Topic title</h3>" becomes "<h3>Topic title [link]</h3>"
+		
+		#the link is added to all topics whose top-level headings appear in the 'pagination' key in the settings file.
+		#the headers in this key must correspond to the 'pagination' setting in RoboHelp,
+		#i.e. if RoboHelp creates a separate page for all topics down to heading 3, the script should
+		#add the link to all topics down to level 3.
+		#if there is no 'pagination' key in the settings file, the default value is "h1,h2,h3"
+		
+		headings = $hSettings["pagination"].nil? ? "h1,h2,h3".split(",") : $hSettings["pagination"].split(",")
 		
 		headings.each do |heading|
 		
 		  its_html.gsub!("</" + heading + ">", @FEEDBACK_LINK + "</" + heading + ">")
 	  
 		end
-  
-
-		
-		
-
 
   end
 
