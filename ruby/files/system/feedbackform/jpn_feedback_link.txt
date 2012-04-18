@@ -1,1 +1,1 @@
-<br/><span style="word-spacing:normal;font-size:8pt;font-weight:normal;font-family:sans-serif;">このトピックを<a href="#ss-form">評価</a></span>
+<br/><span style="word-spacing:normal;font-size:8pt;font-weight:normal;font-family:sans-serif;">[<a href="#ss-form">このトピックを評価</a>]</span>
