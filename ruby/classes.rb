@@ -86,8 +86,8 @@ class ShowmeProcessor
   
   def loadFiles (lang, settings_file_root)
   
-    @LIST_TEMPLATE = File.read($CONFIG_FILES_ROOT + "files/system/showmes/list_link_template_" + lang + ".txt")
-    @CONTEXT_TEMPLATE = File.read($CONFIG_FILES_ROOT + "files/system/showmes/context_link_template_" + lang + ".txt")
+    @LIST_TEMPLATE = File.read("files/system/showmes/list_link_template_" + lang + ".txt")
+    @CONTEXT_TEMPLATE = File.read("files/system/showmes/context_link_template_" + lang + ".txt")
     @SHOWMES = IO.readlines($CONFIG_FILES_ROOT + "files/user/showmes/" + settings_file_root + "_showmes_" + lang + ".txt")
     
   
@@ -97,7 +97,7 @@ class ShowmeProcessor
   
     begin
     
-    FileUtils.cp $CONFIG_FILES_ROOT + "files/system/showmes/i_help_video.png", webhelp_path + "/i_help_video.png"
+    FileUtils.cp "files/system/showmes/i_help_video.png", webhelp_path + "/i_help_video.png"
   
     rescue Exception => e
 
