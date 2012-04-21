@@ -48,7 +48,9 @@ $hSettings = YAML.load_file $CONFIG_FILES_ROOT + "settings/" + settings_file_roo
 #if everything's OK the array will contain all the languages we're processing.
 aLangs = checkLanguage()
 
-ga = GAProcessor.new
+#GAProcessor needs to be global because it's also accessed in classes.rb
+#in fact all these vars should probably be global
+$GA = GAProcessor.new
 ff = FeedbackFormProcessor.new
 sm = ShowmeProcessor.new
 ab = AboutboxProcessor.new
@@ -151,7 +153,7 @@ aLangs.each do |lang|
         showme_wrappers_folder = String.new(($hSettings["showme_wrappers_folder"].nil?) ? "path_that_will_never_exist" : $hSettings["showme_wrappers_folder"])
         showme_wrappers_folder.gsub!("<LANG>", lang)
         webhelp_file_type = (file_in_webhelp.include? showme_wrappers_folder) ? "ShowMe" : webhelp_file_type
-        ga.addTrackingCode(file_in_webhelp, its_html, webhelp_file_type)
+        $GA.addTrackingCode(file_in_webhelp, its_html, webhelp_file_type)
       
       end
 
@@ -182,7 +184,7 @@ aLangs.each do |lang|
           begin
         
             print "."  if $hSettings["show_onscreen_progress"]
-            ga.addTrackingCode(file_in_webhelp, its_html, sf_type) if $hSettings["do_analytics"]
+            $GA.addTrackingCode(file_in_webhelp, its_html, sf_type) if $hSettings["do_analytics"]
             writeFile(file_in_webhelp, its_html)
         
           rescue

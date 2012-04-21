@@ -137,6 +137,7 @@ showme_list_ENG:       [showme list file, eg. List_of_Showme_Videos.htm]
 showme_list_JPN:       [showme list file, eg. List_of_Showme_Videos.htm]
 default_showme_width:  970
 default_showme_height: 560
+generate_wrappers:     no
 video_width:           950          
 video_height:          546
 

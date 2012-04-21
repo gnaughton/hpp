@@ -144,6 +144,9 @@ class ShowmeProcessor
         #we wrap the link around the text_where_link_goes
         link_text_to_add = String.new(@LIST_TEMPLATE)
         link_text_to_add["<LINK_TEXT>"] = text_where_link_goes
+				
+				#generate the showme wrapper.
+				generateWrapper(wrapper_file_for_showme, text_where_link_goes) if $hSettings["generate_wrappers"] 
              
       else
 
@@ -172,6 +175,21 @@ class ShowmeProcessor
     end  #@SHOWMES.each
     
   end  #addShowmeLinks
+	
+	def generateWrapper (wrapper_file_for_showme, text_where_link_goes)
+	
+	  wrapper_template = File.read("files/system/showmes/wrapper_template.txt")
+    wrapper_template.sub!("SHOWME-TITLE", text_where_link_goes)	 
+		wrapper_template.sub!("SWF-NAME", removeFileExtension(wrapper_file_for_showme) + ".swf")
+		wrapper_template.sub!("VIDEO-WIDTH", $hSettings["video_width"].to_s)
+		wrapper_template.sub!("VIDEO-HEIGHT", $hSettings["video_height"].to_s)
+		
+		$GA.addTrackingCode(wrapper_file_for_showme, wrapper_template, "Show Me")
+		
+		wrapper_to_save =  $CONFIG_FILES_ROOT + "files/user/showmes/wrappers/" + wrapper_file_for_showme
+		writeFile(wrapper_to_save, wrapper_template)
+	
+	end
 
 end #ShowmeProcessor
 
