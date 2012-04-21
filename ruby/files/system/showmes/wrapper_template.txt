@@ -18,7 +18,7 @@
 	<div id="CaptivateContent">&nbsp;
 	</div>
 	<script type="text/javascript">
-	   var so = new SWFObject("SWF-NAME", "Captivate", "VIDEO-HEIGHT-IN-WRAPPER", "VIDEO-WIDTH-IN-WRAPPER", "8", "#CCCCCC");
+	   var so = new SWFObject("SWF-NAME", "Captivate", "VIDEO-HEIGHT", "VIDEO-WIDTH", "8", "#CCCCCC");
 		so.addParam("quality", "high");
 		so.addParam("name", "Captivate");
 		so.addParam("id", "Captivate");
