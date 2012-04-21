@@ -135,8 +135,10 @@ do_showmes:            no
 s3_bucket:             http://[foo]-webhelp[-staging].s3.amazonaws.com/WebHelp_Videos_<LANG>/
 showme_list_ENG:       [showme list file, eg. List_of_Showme_Videos.htm]
 showme_list_JPN:       [showme list file, eg. List_of_Showme_Videos.htm]
-default_showme_width:  1000
-default_showme_height: 600
+default_showme_width:  970
+default_showme_height: 560
+video_width:           950          
+video_height:          546
 
 do_aboutbox:   no
 link_image:    foo.png
