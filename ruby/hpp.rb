@@ -115,9 +115,7 @@ aLangs.each do |lang|
     # - add the icons to the Note, Warning and Tip tables,
     # - write the modified file to disk.
 
-    #also process the portal page, which is not in the contents folder in a single-source system.
-		#get its name from the settings file or default to 'kpp.htm'
-    if (file_in_webhelp.include? webhelp_content_folder) || (file_in_webhelp.include? ($hSettings["portal_page"].nil? ? "kpp.htm" : $hSettings["portal_page"]))
+    if (file_in_webhelp.include? webhelp_content_folder) 
  
       #this rule will only fire for legacy systems:
       next if ignored_files.include? getFile(file_in_webhelp)
