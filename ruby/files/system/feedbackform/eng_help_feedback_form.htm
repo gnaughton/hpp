@@ -54,7 +54,14 @@ p.formQuestion {
 <input type="text" class="rating_almost" id="ratingText" readonly="readonly"/>
 </div>
 <input type="hidden" name="entry.3.single" id="entry_3"></input>
-<textarea name="entry.4.single" disabled="disabled" rows="3" cols="30" id="entry_4">Rate this topic by clicking a star. You can also add optional comments here.</textarea> 
+<textarea name="entry.4.single" disabled="disabled" rows="3" cols="30" id="entry_4">Click a star and add optional comments here. Include your email address* and Medidata will reply to your comments.</textarea>
+<br/>
+<style type="text/css">
+    #disclaimer{float:left; clear:both; width:100%; height:auto; padding:0px;font-size:9px;font-family:sans-serif;margin-top:2px;margin-bottom:4px;border:0;}
+</style>
+<div id="disclaimer"> 
+<input type="text" class="disclaimer" id="disclaimer" value="*Your information will only be used to improve our content." readonly="readonly"/>
+</div>
 <input type="hidden" name="entry.1.single" value="Autopopulate with page URL" id="entry_1">
 <input type="hidden" name="entry.0.single" value="<medidata-product-name>" id="entry_0"/>
 <br/>
@@ -83,7 +90,7 @@ function postSubmit()
     alert('Thank you for your feedback.');
 	
 	//Reset to default comments text.
-	document.getElementById('entry_4').value="Rate this topic by clicking a star. You can also add optional comments here.";
+	document.getElementById('entry_4').value=">Click a star and add optional comments here. Include your email address* and Medidata will reply to your comments.";
 	
 	//Clear the rating text.
 	document.getElementById('ratingText').value="";

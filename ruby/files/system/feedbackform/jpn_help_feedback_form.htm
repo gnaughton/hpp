@@ -54,7 +54,14 @@ p.formQuestion {
 <input type="text" class="rating_almost" id="ratingText" readonly="readonly"/>
 </div>
 <input type="hidden" name="entry.3.single" id="entry_3"></input>
-<textarea name="entry.4.single" disabled="disabled" rows="3" cols="30" id="entry_4">どのくらい役に立ったか、星をクリックしてお知らせください。また、ご自由にご意見をお寄せください</textarea> 
+<textarea name="entry.4.single" disabled="disabled" rows="3" cols="30" id="entry_4">星をクリックして評価にご協力ください。任意でコメントも入力できます。お客様の電子メールアドレスを含めていただくと、メディデータより後日回答いたします</textarea> 
+<br/>
+<style type="text/css">
+    #disclaimer{float:left; clear:both; width:100%; height:auto; padding:0px;font-size:9px;font-family:sans-serif;margin-top:2px;margin-bottom:4px;border:0;}
+</style>
+<div id="disclaimer"> 
+<input type="text" class="disclaimer" id="disclaimer" value="お客様の情報は、コンテンツの品質向上の目的に限って使用いたします" readonly="readonly"/>
+</div>
 <input type="hidden" name="entry.1.single" value="Autopopulate with page URL" id="entry_1">
 <input type="hidden" name="entry.0.single" value="<medidata-product-name>" id="entry_0"/>
 <br/>
@@ -83,7 +90,7 @@ function postSubmit()
     alert('フィードバックありがとうございました');
 	
 	//Reset to default comments text.
-	document.getElementById('entry_4').value="どのくらい役に立ったか、星をクリックしてお知らせください。また、ご自由にご意見をお寄せください";
+	document.getElementById('entry_4').value="星をクリックして評価にご協力ください。任意でコメントも入力できます。お客様の電子メールアドレスを含めていただくと、メディデータより後日回答いたします";
 	
 	//Clear the rating text.
 	document.getElementById('ratingText').value="";
