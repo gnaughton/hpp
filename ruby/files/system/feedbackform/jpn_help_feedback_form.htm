@@ -107,6 +107,10 @@ function postSubmit()
 	//Re-disable the textarea.
 	document.getElementById("entry_4").disabled="disabled";
 	
+	//For cross-referencing with pageviews in Google Analytics. 
+	 _gaq.push(['_setCustomVar', 3, 'Feedback Submitted', 'Yes', 3]);
+	 _gaq.push(['_trackPageview']);
+	
   }
 }
 
