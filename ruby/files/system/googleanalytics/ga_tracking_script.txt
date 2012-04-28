@@ -7,7 +7,7 @@
   _gaq.push(['_setCustomVar', 1, 'Help System Name', 'HELP_SYSTEM_NAME', 3]);
   _gaq.push(['_setCustomVar', 2, 'Help System Page Type', 'HELP_SYSTEM_PAGE_TYPE', 3]);
   _gaq.push(['_trackEvent', 'HELP_SYSTEM_NAME', 'HELP_SYSTEM_PAGE_TYPE', document.title]);
-  _gaq.push(['_trackPageview']);
+  HELP_SYSTEM_PAGEVIEW
 
   (function() {
     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;

@@ -18,7 +18,12 @@ class GAProcessor
       tracking_script.gsub!("HELP_SYSTEM_NAME", $hSettings["product"])
       tracking_script.gsub!("WEB_PROPERTY_ID", web_property_id)
       tracking_script.gsub!("HELP_SYSTEM_PAGE_TYPE", webhelp_file_type) 
-      
+			
+			#track the pageview only if it's the root file or a content file.
+			#we don't track the pageviews of scaffolding files, just the event.
+			pageview = (webhelp_file_type == "Content" || webhelp_file_type == "Root" ? "_gaq.push(['_trackPageview']);" : "")
+			tracking_script.gsub!("HELP_SYSTEM_PAGEVIEW", pageview) 
+			
       its_html.gsub!(/<\/head>/i, tracking_script) 
 
     rescue Exception => e
