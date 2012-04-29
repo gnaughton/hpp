@@ -52,37 +52,17 @@ class FeedbackFormProcessor
   
   
   def addFeedbackForm (file_in_webhelp, its_html)
+	
+	    
+			#add the 'Rate this topic' link before the first closing <h> element.
+			position_of_first_closing_heading_element = its_html.index(/<\/h\d>/)
+			its_html.insert(position_of_first_closing_heading_element, @FEEDBACK_LINK) if !position_of_first_closing_heading_element.nil?
+
+      #add the feedback form.			
+	    its_html.gsub!(/<\/body>/i, @FEEDBACK_FORM) 
+      
     
-    begin
-
-      its_html.gsub!(/<\/body>/i, @FEEDBACK_FORM)  
-
-    rescue Exception=> e
-
-      puts "Couldn't add feedback form. File: " + file_in_webhelp
-      puts "Exception: " + e.to_s
-
-    end  
-		
-		#add the 'Rate this topic' link to the top of the page.
-		#when the user clicks this link it moves focus to the feedback form,
-		#e.g: "<h3>Topic title</h3>" becomes "<h3>Topic title [link]</h3>"
-		
-		#the link is added to all topics whose top-level headings appear in the 'pagination' key in the settings file.
-		#the headers in this key must correspond to the 'pagination' setting in RoboHelp,
-		#i.e. if RoboHelp creates a separate page for all topics down to heading 3, the script should
-		#add the link to all topics down to level 3.
-		#if there is no 'pagination' key in the settings file, the default value is "h1,h2,h3"
-		
-		headings = $hSettings["pagination"].nil? ? "h1,h2,h3".split(",") : $hSettings["pagination"].split(",")
-		
-		headings.each do |heading|
-		
-		  its_html.gsub!("</" + heading + ">", @FEEDBACK_LINK + "</" + heading + ">")
-	  
-		end
-
-  end
+  end  
 
 end
 
