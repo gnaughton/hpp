@@ -414,12 +414,11 @@ def copyGoButton(webhelp_path)
 def showVersionInformation (stop_after_this)
 
   puts " "
-  puts "*****************************"
+  puts "**********************"
   puts "Help processing script"
-  puts ""
-  puts "Version: 2012.1.0 DEVELOPMENT"
-  puts "Date   : Apr-2011"
-  puts "*****************************"
+  puts "Version:      2012.1.0"
+  puts "Date:      02 May 2012"
+  puts "**********************"
   puts " "
 
   abort if stop_after_this
