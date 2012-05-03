@@ -95,7 +95,7 @@ aLangs.each do |lang|
   #find all the HTML files in all the folders and subfolders. 
   #if this is a legacy help system we're only interested in the current folder.
   search = ($hSettings["webhelp_content_folder"] == "legacy" ? "/*.htm" : "/**/*.htm")
-  aFiles = Dir[webhelp_path + "/**/*.htm"]
+  aFiles = Dir[webhelp_path + search]
 
   puts "File: " + webhelp if $hSettings["show_onscreen_progress"]
   print "Working" if $hSettings["show_onscreen_progress"]
