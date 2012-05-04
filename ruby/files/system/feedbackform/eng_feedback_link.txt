@@ -1,1 +1,1 @@
-<br/><span style="word-spacing:normal;font-size:8pt;font-weight:normal;font-family:sans-serif;">[<a href="#ss-form">Rate this topic</a>]</span>
+<br/><span style="font-size:8pt;font-weight:normal;">[<a style="word-spacing:normal;font-size:8pt;font-weight:normal;font-family:sans-serif;" href="#ss-form">Rate this topic</a>]</span>
