@@ -58,11 +58,29 @@ p.formQuestion {
 <textarea name="entry.4.single" disabled="disabled" rows="3" cols="30" id="entry_4">星をクリックして評価にご協力ください。任意でコメントも入力できます。お客様の電子メールアドレスを含めていただくと、メディデータより後日回答いたします。</textarea> 
 <br/>
 <style type="text/css">
-    #disclaimer{float:left; clear:both; width:100%; height:auto; padding:0px;font-size:9px;font-family:sans-serif;margin-top:2px;margin-bottom:4px;border:0;}
+    /* font-size is 8px here, 9px in the ENG version.
+		   for some reason, after we added the Chrome/MSIE code below to change the number of rows,
+			 9px shows up way too big in IE, but 8px is fine.
+		*/
+    #disclaimer{float:left; clear:both; width:100%; height:auto; padding:0px;font-size:8px;font-family:sans-serif;margin-top:2px;margin-bottom:4px;border:0;}
 </style>
 <div id="disclaimer"> 
 <input type="text" class="disclaimer" id="disclaimer" value="お客様の情報は、コンテンツの品質向上の目的に限って使用いたします。" readonly="readonly"/>
 </div>
+<script type="text/javascript">
+
+  <!-- The default text does not fit in the box in IE or Chrome, so we need to check which browser we're in, and adjust accordingly -->
+	<!-- We adjust differently for ENG and JPN -->
+  
+	if ((/Chrome/).test(navigator.userAgent) || (/MSIE/).test(navigator.userAgent))
+	{
+	  text_area = document.getElementById("entry_4");
+	  text_area.rows = "5";
+		
+	
+  }	
+	
+</script>
 <input type="hidden" name="entry.1.single" value="Autopopulate with page URL" id="entry_1">
 <input type="hidden" name="entry.0.single" value="<medidata-product-name>" id="entry_0"/>
 <br/>

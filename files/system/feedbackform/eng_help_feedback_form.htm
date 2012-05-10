@@ -63,6 +63,21 @@ p.formQuestion {
 <div id="disclaimer"> 
 <input type="text" class="disclaimer" id="disclaimer" value="*Your information will only be used to improve our content." readonly="readonly"/>
 </div>
+<script type="text/javascript">
+
+  <!-- The default text does not fit in the box in IE or Chrome, so we need to check which browser we're in, and adjust accordingly -->
+	<!-- We adjust differently for ENG and JPN -->
+  
+	if ((/Chrome/).test(navigator.userAgent) || (/MSIE/).test(navigator.userAgent))
+	{
+	  text_area = document.getElementById("entry_4");
+	  text_area.cols = "31";
+		text_area.rows = "4";
+	
+  }	
+	
+</script>
+
 <input type="hidden" name="entry.1.single" value="Autopopulate with page URL" id="entry_1">
 <input type="hidden" name="entry.0.single" value="<medidata-product-name>" id="entry_0"/>
 <br/>
