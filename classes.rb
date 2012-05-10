@@ -416,8 +416,8 @@ def showVersionInformation (stop_after_this)
   puts " "
   puts "**********************"
   puts "Help processing script"
-  puts "Version:      2012.1.0"
-  puts "Date:      04 May 2012"
+  puts "Version:      2012.1.1"
+  puts "Date:      10 May 2012"
   puts "**********************"
   puts " "
 
