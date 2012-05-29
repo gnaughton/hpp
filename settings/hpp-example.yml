@@ -114,10 +114,9 @@ do_feedbackforms:           yes
 do_analytics:               yes
 tracked_scaffolding_files:  whtdhtml.htm=TOC,whibody.htm=Index,whfbody.htm=Search,whgbody.htm=Glossary
 track_root_file:            yes
-web_property_id_live:       UA-23248868-12
-web_property_id_test:       UA-23248868-13
-help_system_status:         live
 
+
+#Showmes settings.
 do_showmes:            no
 s3_bucket:             http://[foo]-webhelp[-staging].s3.amazonaws.com/WebHelp_Videos_<LANG>/
 showme_list_ENG:       [showme list file, eg. List_of_Showme_Videos.htm]
@@ -128,10 +127,19 @@ generate_wrappers:     no
 video_width:           950          
 video_height:          546
 
+#About box settings.
 do_aboutbox:   no
 link_image:    foo.png
 
+#Table icons settings.
 do_tableicons: no
 
-#Debug
+#Live or Test settings.
+help_system_status:         live
+web_property_id_live:       UA-23248868-12
+web_property_id_test:       UA-23248868-13
+feedback_form_key_live:     dDNocW9OVE1fTERlamY2aTFuYzBuV1E6MQ&amp;ifq    
+feedback_form_key_test:     dFpsVWJpMTQ1RHZpR2h0Z1VqMXpCSHc6MA&amp;ifq
+
+#Debug settings.
 debug_legacy_tagging: no
