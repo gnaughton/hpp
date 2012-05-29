@@ -42,8 +42,19 @@ class FeedbackFormProcessor
   def setFeedbackForm (lang)
   
     @FEEDBACK_FORM = File.read("files/system/feedbackform/" + lang.downcase + "_help_feedback_form.htm")
-    #update the product name.
+    
+		#update the product name.
     @FEEDBACK_FORM["<medidata-product-name>"] = $hSettings["product"]
+		
+		#point the feedback form at the Live or Test spreadsheet.
+		feedback_form_key_key = "feedback_form_key_" + $hSettings["help_system_status"]
+		
+    #use the Live key as the default for backward compatibility.	
+		feedback_form_key_value = $hSettings[feedback_form_key_key].nil? ? "dDNocW9OVE1fTERlamY2aTFuYzBuV1E6MQ&amp;ifq" : $hSettings[feedback_form_key_key]
+		
+		#update the boilerplate form.
+		@FEEDBACK_FORM["<feedback-form-key>"] = feedback_form_key_value
+		
 		
 		@FEEDBACK_LINK = File.read("files/system/feedbackform/" + lang.downcase + "_feedback_link.txt")
 		
