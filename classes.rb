@@ -41,8 +41,9 @@ class FeedbackFormProcessor
 
   def setFeedbackForm (lang)
   
-    @FEEDBACK_FORM = File.read("files/system/feedbackform/" + lang.downcase + "_help_feedback_form.htm")
-    
+    #@FEEDBACK_FORM = File.read("files/system/feedbackform/" + lang.downcase + "_help_feedback_form.htm").encode('UTF-8')
+    @FEEDBACK_FORM = openFile("files/system/feedbackform/" + lang.downcase + "_help_feedback_form.htm")
+		
 		#update the product name.
     @FEEDBACK_FORM["<medidata-product-name>"] = $hSettings["product"]
 		
@@ -56,7 +57,7 @@ class FeedbackFormProcessor
 		@FEEDBACK_FORM["<feedback-form-key>"] = feedback_form_key_value
 		
 		
-		@FEEDBACK_LINK = File.read("files/system/feedbackform/" + lang.downcase + "_feedback_link.txt")
+		@FEEDBACK_LINK = openFile("files/system/feedbackform/" + lang.downcase + "_feedback_link.txt")
 		
 		
   end
@@ -82,8 +83,8 @@ class ShowmeProcessor
   
   def loadFiles (lang, settings_file_root)
   
-    @LIST_TEMPLATE = File.read("files/system/showmes/list_link_template_" + lang + ".txt")
-    @CONTEXT_TEMPLATE = File.read("files/system/showmes/context_link_template_" + lang + ".txt")
+    @LIST_TEMPLATE = openFile("files/system/showmes/list_link_template_" + lang + ".txt")
+    @CONTEXT_TEMPLATE = openFile("files/system/showmes/context_link_template_" + lang + ".txt")
     @SHOWMES = IO.readlines($CONFIG_FILES_ROOT + "files/user/showmes/" + settings_file_root + "_showmes_" + lang + ".txt")
     
   
@@ -206,18 +207,41 @@ end #ShowmeProcessor
 class AboutboxProcessor
 
 
-  def UpdateAboutBox (webhelp_path, lang, settings_file_root)
+  def UpdateAboutBox (webhelp_path, lang)
 
-    files_root = $CONFIG_FILES_ROOT + "files/user/aboutbox/"
-    source_banner = settings_file_root + "_whskin_banner_" + lang + ".htm"
-    target_banner = "whskin_banner.htm"
+	  files_root =  "files/system/aboutbox/"
     
-		#
-		#source_javascript = settings_file_root + "_whtbar_" + lang + ".js"
-    #target_javascript = "whtbar.js"
-		#
+		#the box itself.
+    aboutbox = files_root + "whskin_banner_" + lang + ".htm"
+		aboutbox_html = openFile(aboutbox)
 		
-		javascript = "whtbar_" + lang + ".js"
+		
+		aboutbox_html.gsub!("[product_name]", $hSettings["product_name"])
+		aboutbox_html.gsub!("[product_version]", $hSettings["product_version"])
+		aboutbox_html.gsub!("[writer_name]", $hSettings["writer_name"])
+		
+    
+		writeFile(webhelp_path + "/whskin_banner.htm", aboutbox_html) 
+		
+		#the JavaScript.
+		
+		#we use language-specific JS files for now because there was an encoding issue when we tried to replace a
+		#search prompt placeholder with JPN text.
+		#the whole encoding issue needs to be resolved in a future spike.
+		
+		#get the boilerplate file and its text.
+		javascript = files_root + "whtbar_" + lang.downcase+ ".js"
+		javascript_text = openFile(javascript)
+		
+		#set the About box dimensions.
+		javascript_text.gsub!("[aboutbox_width]", $hSettings["aboutbox_width"].to_s)
+		javascript_text.gsub!("[aboutbox_height]", $hSettings["aboutbox_height"].to_s)
+		
+		#write the modified file.		
+		writeFile(webhelp_path + "/whtbar.js", javascript_text) 
+		
+		
+	
 		
 		#
     #image = $hSettings["link_image"]
@@ -226,7 +250,7 @@ class AboutboxProcessor
     begin
 
       #copy the banner file to the WebHelp system as 'whskin_banner.htm'.
-      FileUtils.cp files_root + source_banner, webhelp_path + "/" + target_banner 
+			#FileUtils.cp files_root + source_banner, webhelp_path + "/" + target_banner 
       
 			#
 		  #copy the JavaScript file.
@@ -235,11 +259,13 @@ class AboutboxProcessor
 			
 			#copy the JavaScript file.
 			#take it from the 'system' folder because the user doesn't need to modify it.
-			FileUtils.cp "files/system/aboutbox/" + javascript, webhelp_path + "/" + javascript 
+			#puts "files/system/aboutbox/" + javascript
+			#FileUtils.cp "files/system/aboutbox/" + javascript, webhelp_path + "/" + javascript 
       
 			#copy the image.
-      FileUtils.cp files_root + image, webhelp_path + "/" + image
-
+      #FileUtils.cp files_root + image, webhelp_path + "/" + image
+      #
+			
     rescue Exception => e
 
       puts e.message

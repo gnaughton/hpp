@@ -78,7 +78,7 @@ aLangs.each do |lang|
   $hScaffolding = getScaffoldingFiles(scaffolding_string)
   
   #update the About box.
-  ab.UpdateAboutBox(webhelp_path, lang, settings_file_root) if $hSettings["do_aboutbox"]
+  ab.UpdateAboutBox(webhelp_path, lang) if $hSettings["do_aboutbox"]
   
   #copy the table icons to the WebHelp system.
   ti.copyIcons(webhelp_path) if $hSettings["do_tableicons"]

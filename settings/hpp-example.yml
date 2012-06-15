@@ -99,6 +99,18 @@ language: [LANGUAGE]
 
 #showme_wrappers_folder:    foo
 
+#######################################################################################
+#About box settings.
+
+#To modify:
+do_aboutbox:       no
+
+product_name:      [NAME]
+product_version:   [VERSION]
+aboutbox_width:    390
+aboutbox_height:   340
+writer_name:       [WRITER]
+#######################################################################################
 
 #You're done! Please don't touch the following settings.
 #Some are for features that are beyond the scope of help metrics and might be officially 
@@ -126,10 +138,6 @@ default_showme_height: 560
 generate_wrappers:     no
 video_width:           950          
 video_height:          546
-
-#About box settings.
-do_aboutbox:   no
-link_image:    foo.png
 
 #Table icons settings.
 do_tableicons: no
