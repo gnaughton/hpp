@@ -74,8 +74,8 @@ aLangs.each do |lang|
   #are we tracking the root file? check 'track_root_file' in the settings file to see.
   scaffolding_string += ($hSettings["track_root_file"] ? "," + webhelp_file + "=Root" : "" )
   
-  #build the array.
-  $hScaffolding = getScaffoldingFiles(scaffolding_string)
+  #build the scaffolding hash.
+  $hScaffolding = buildHashFromKeyValueList(scaffolding_string)
   
   #update the About box.
   ab.UpdateAboutBox(webhelp_path, lang) if $hSettings["do_aboutbox"]

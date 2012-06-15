@@ -126,7 +126,7 @@ class ShowmeProcessor
       next if !(webhelp_file_in_contents_folder == page_where_link_goes)
 
       #use the default height and width if there are no height and width specified in the showme list.
-      showme_width = showme_width.nil? ? $hSettings["default_showme_width"] : showme_width
+      showme_showme_width.nil? ? $hSettings["default_showme_width"] : showme_width
       showme_height = showme_height.nil? ? $hSettings["default_showme_height"] : showme_height
       
       #build the URL to put into the link text.
@@ -233,9 +233,13 @@ class AboutboxProcessor
 		javascript = files_root + "whtbar_" + lang.downcase+ ".js"
 		javascript_text = openFile(javascript)
 		
-		#set the About box dimensions.
-		javascript_text.gsub!("[aboutbox_width]", $hSettings["aboutbox_width"].to_s)
-		javascript_text.gsub!("[aboutbox_height]", $hSettings["aboutbox_height"].to_s)
+		#get the About box dimensions.
+		width = buildHashFromKeyValueList($hSettings["aboutbox_width"].to_s)
+		height = buildHashFromKeyValueList($hSettings["aboutbox_height"].to_s)
+		
+		#set them in the file.
+		javascript_text.gsub!("[aboutbox_width]", width[lang])
+		javascript_text.gsub!("[aboutbox_height]", height[lang])
 		
 		#write the modified file.		
 		writeFile(webhelp_path + "/whtbar.js", javascript_text) 
@@ -429,10 +433,10 @@ def checkLanguage()
   
 end
 
-def getScaffoldingFiles (tracked_scaffolding_files)
+def buildHashFromKeyValueList (list)
 
     s = Array.new() 
-    tracked_scaffolding_files.split(",").each {|kv| s << kv.split("=")}
+    list.split(",").each {|kv| s << kv.split("=")}
     
     return Hash[*s.flatten]
 

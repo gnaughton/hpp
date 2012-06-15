@@ -101,15 +101,14 @@ language: [LANGUAGE]
 
 #######################################################################################
 #About box settings.
-
-#To modify:
 do_aboutbox:       no
 
 product_name:      [NAME]
 product_version:   [VERSION]
-aboutbox_width:    390
-aboutbox_height:   340
 writer_name:       [WRITER]
+
+aboutbox_width:    ENG=390,JPN=390
+aboutbox_height:   ENG=475,JPN=330
 #######################################################################################
 
 #You're done! Please don't touch the following settings.
