@@ -211,17 +211,33 @@ class AboutboxProcessor
     files_root = $CONFIG_FILES_ROOT + "files/user/aboutbox/"
     source_banner = settings_file_root + "_whskin_banner_" + lang + ".htm"
     target_banner = "whskin_banner.htm"
-    source_javascript = settings_file_root + "_whtbar_" + lang + ".js"
-    target_javascript = "whtbar.js"
-    image = $hSettings["link_image"]
     
+		#
+		#source_javascript = settings_file_root + "_whtbar_" + lang + ".js"
+    #target_javascript = "whtbar.js"
+		#
+		
+		javascript = "whtbar_" + lang + ".js"
+		
+		#
+    #image = $hSettings["link_image"]
+    #
+		
     begin
 
       #copy the banner file to the WebHelp system as 'whskin_banner.htm'.
       FileUtils.cp files_root + source_banner, webhelp_path + "/" + target_banner 
-      #copy the JavaScript file.
-      FileUtils.cp files_root + source_javascript, webhelp_path + "/" + target_javascript 
-      #copy the image.
+      
+			#
+		  #copy the JavaScript file.
+      #FileUtils.cp files_root + source_javascript, webhelp_path + "/" + target_javascript 
+			#
+			
+			#copy the JavaScript file.
+			#take it from the 'system' folder because the user doesn't need to modify it.
+			FileUtils.cp "files/system/aboutbox/" + javascript, webhelp_path + "/" + javascript 
+      
+			#copy the image.
       FileUtils.cp files_root + image, webhelp_path + "/" + image
 
     rescue Exception => e
