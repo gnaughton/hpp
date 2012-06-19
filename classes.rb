@@ -209,40 +209,49 @@ class AboutboxProcessor
 
   def UpdateAboutBox (webhelp_path, lang)
 
+	  ###########################################################################
+	  #first, edit the javascript file that controls the navigation bar in situ. 
+	  js = "whtbar.js"
 	  files_root =  "files/system/aboutbox/"
-    
-		#the box itself.
-    aboutbox = files_root + "whskin_banner_" + lang + ".htm"
-		aboutbox_html = openFile(aboutbox)
 		
+		#open it.
+		javascript = openFile(webhelp_path + "/" + js)
 		
-		aboutbox_html.gsub!("[product_name]", $hSettings["product_name"])
-		aboutbox_html.gsub!("[product_version]", $hSettings["product_version"])
-		aboutbox_html.gsub!("[author_name]", $hSettings["author_name"])
+		#text to find in the javascript file:
+		snippet_heightwidth = openFile(files_root + "snippet_heightwidth.txt")
 		
-    
-		writeFile(webhelp_path + "/whskin_banner.htm", aboutbox_html) 
-		
-		#the JavaScript.
-		
-		#we use language-specific JS files for now because there was an encoding issue when we tried to replace a
-		#search prompt placeholder with JPN text.
-		#the whole encoding issue needs to be resolved in a future spike.
-		
-		#get the boilerplate file and its text.
-		javascript = files_root + "whtbar_" + lang.downcase+ ".js"
-		javascript_text = openFile(javascript)
+		#template for the text we'll change it to.
+		snippet_heightwidth_new = openFile(files_root + "snippet_heightwidth_new.txt")
 		
 		#get the About box dimensions.
 		width = buildHashFromKeyValueList($hSettings["aboutbox_width"].to_s)
 		height = buildHashFromKeyValueList($hSettings["aboutbox_height"].to_s)
 		
-		#set them in the file.
-		javascript_text.gsub!("[aboutbox_width]", width[lang])
-		javascript_text.gsub!("[aboutbox_height]", height[lang])
+		#change the template text to the actual text we're changing in the file.
+		snippet_heightwidth_new.gsub!("[aboutbox_width]",width[lang])
+		snippet_heightwidth_new.gsub!("[aboutbox_height]",height[lang])
 		
-		#write the modified file.		
-		writeFile(webhelp_path + "/whtbar.js", javascript_text) 
+		#replace the text in the file and update it in situ.
+		javascript.gsub!(snippet_heightwidth, snippet_heightwidth_new)
+		writeFile(webhelp_path + "/" + js, javascript) 
+		
+		#done editing the javascript.
+		###############################################################################
+		
+		
+    ###############################################################################
+		#now, the About box itself.
+    aboutbox = files_root + "whskin_banner_" + lang + ".htm"
+		aboutbox_html = openFile(aboutbox)
+		
+		aboutbox_html.gsub!("[product_name]", $hSettings["product_name"])
+		aboutbox_html.gsub!("[product_version]", $hSettings["product_version"])
+		aboutbox_html.gsub!("[author_name]", $hSettings["author_name"])
+		
+		writeFile(webhelp_path + "/whskin_banner.htm", aboutbox_html) 
+		
+		#done the About box.
+		###############################################################################
 
   end #updateAboutBox
 
