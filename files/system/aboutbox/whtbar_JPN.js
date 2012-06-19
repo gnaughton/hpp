@@ -1,4 +1,5 @@
 ﻿//	WebHelp 5.10.006
+//  MDSOL JPN
 var gaButtons=new Array();
 var	gaTypes=new Array();
 var gaBtnBgColor=new Array();
@@ -615,10 +616,11 @@ function addBanner(sImage)
 }
 
 function showBanner()
+
 {
 	if (!gbPreview)
 	{
-		var nWidth=[aboutbox_width];
+		var nWidth=[aboutbox_width]; 
 		var nHeight=[aboutbox_height];
 		var	nScreenWidth=screen.width;
 		var	nScreenHeight=screen.height;

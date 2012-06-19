@@ -218,7 +218,7 @@ class AboutboxProcessor
 		
 		aboutbox_html.gsub!("[product_name]", $hSettings["product_name"])
 		aboutbox_html.gsub!("[product_version]", $hSettings["product_version"])
-		aboutbox_html.gsub!("[writer_name]", $hSettings["writer_name"])
+		aboutbox_html.gsub!("[author_name]", $hSettings["author_name"])
 		
     
 		writeFile(webhelp_path + "/whskin_banner.htm", aboutbox_html) 
@@ -243,38 +243,6 @@ class AboutboxProcessor
 		
 		#write the modified file.		
 		writeFile(webhelp_path + "/whtbar.js", javascript_text) 
-		
-		
-	
-		
-		#
-    #image = $hSettings["link_image"]
-    #
-		
-    begin
-
-      #copy the banner file to the WebHelp system as 'whskin_banner.htm'.
-			#FileUtils.cp files_root + source_banner, webhelp_path + "/" + target_banner 
-      
-			#
-		  #copy the JavaScript file.
-      #FileUtils.cp files_root + source_javascript, webhelp_path + "/" + target_javascript 
-			#
-			
-			#copy the JavaScript file.
-			#take it from the 'system' folder because the user doesn't need to modify it.
-			#puts "files/system/aboutbox/" + javascript
-			#FileUtils.cp "files/system/aboutbox/" + javascript, webhelp_path + "/" + javascript 
-      
-			#copy the image.
-      #FileUtils.cp files_root + image, webhelp_path + "/" + image
-      #
-			
-    rescue Exception => e
-
-      puts e.message
-
-    end
 
   end #updateAboutBox
 

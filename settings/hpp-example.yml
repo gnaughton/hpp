@@ -80,12 +80,15 @@ webhelp: [WEBHELP]
 
 webhelp_content_folder: default
 
+#######################################################################################
+#Language settings.
 #Always specify a language in the "language" key even when you're not using <LANG> above.
 #Language options are ENG | JPN | ENG,JPN
 #Example:
 #  language: ENG
 
 language: [LANGUAGE]
+#######################################################################################
 
 #If you don't have any showme videos, you're done.
 
@@ -105,7 +108,7 @@ do_aboutbox:       no
 
 product_name:      [NAME]
 product_version:   [VERSION]
-writer_name:       [WRITER]
+author_name:       [AUTHOR]
 
 aboutbox_width:    ENG=390,JPN=390
 aboutbox_height:   ENG=475,JPN=330
