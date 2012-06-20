@@ -110,8 +110,8 @@ product_name:      [NAME]
 product_version:   [VERSION]
 author_name:       [AUTHOR]
 
-aboutbox_width:    ENG=390,JPN=390
-aboutbox_height:   ENG=475,JPN=330
+aboutbox_width:    ENG=455,JPN=390
+aboutbox_height:   ENG=340,JPN=340
 #######################################################################################
 
 #You're done! Please don't touch the following settings.
