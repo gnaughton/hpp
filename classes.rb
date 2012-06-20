@@ -211,35 +211,40 @@ class AboutboxProcessor
 
 	  ###########################################################################
 	  #first, edit the javascript file that controls the navigation bar in situ. 
-	  js = "whtbar.js"
+	  
+		#variables:
+		whtbar = "whtbar.js"
 	  files_root =  "files/system/aboutbox/"
+		splitter_text = "function showBanner()"
 		
 		#open it.
-		javascript = openFile(webhelp_path + "/" + js)
+		javascript = openFile(webhelp_path + "/" + whtbar)
 		
-		#text to find in the javascript file:
-		snippet_heightwidth = openFile(files_root + "snippet_heightwidth.txt")
-		
-		#template for the text we'll change it to.
-		snippet_heightwidth_new = openFile(files_root + "snippet_heightwidth_new.txt")
+		#split the file into two on the name of the function we want to change.
+		scriptbits = javascript.split(splitter_text)
 		
 		#get the About box dimensions.
 		width = buildHashFromKeyValueList($hSettings["aboutbox_width"].to_s)
 		height = buildHashFromKeyValueList($hSettings["aboutbox_height"].to_s)
 		
-		#change the template text to the actual text we're changing in the file.
-		snippet_heightwidth_new.gsub!("[aboutbox_width]",width[lang])
-		snippet_heightwidth_new.gsub!("[aboutbox_height]",height[lang])
+		#put the dimensions into the second bit of the split file.
+		scriptbits[1].sub!(/nWidth=[0-9]*/,"nWidth=" + width[lang])
+		scriptbits[1].sub!(/nHeight=[0-9]*/,"nHeight=" + height[lang])
 		
-		#replace the text in the file and update it in situ.
-		javascript.gsub!(snippet_heightwidth, snippet_heightwidth_new)
-		writeFile(webhelp_path + "/" + js, javascript) 
+		#put the file back together and write it to disk.
+		new_javascript = scriptbits[0] + splitter_text + scriptbits[1]
+		writeFile(webhelp_path + "/" + whtbar, new_javascript)
 		
-		#done editing the javascript.
 		###############################################################################
+		#copy the image files
 		
+		images = ["mdsol_CR3_LR2.jpg", "mdsol_LOGO_LR1.jpg", "zzz.jpg" ]
+		images.each { |image| FileUtils.cp files_root + image, webhelp_path + "/" + image }
 		
+		#done the image files.
     ###############################################################################
+	  
+		###############################################################################
 		#now, the About box itself.
     aboutbox = files_root + "whskin_banner_" + lang + ".htm"
 		aboutbox_html = openFile(aboutbox)

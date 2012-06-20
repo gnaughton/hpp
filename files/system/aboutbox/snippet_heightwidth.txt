@@ -1,6 +1,0 @@
-function showBanner()
-{
-	if (!gbPreview)
-	{
-		var nWidth=390;
-		var nHeight=204;

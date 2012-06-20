@@ -1,7 +1,0 @@
-function showBanner()
-//Modified by MDSOL help processing script.
-{
-	if (!gbPreview)
-	{
-		var nWidth=[aboutbox_width];
-		var nHeight=[aboutbox_height];
