@@ -113,6 +113,7 @@ do_aboutbox:       no
 product_name:      [NAME]
 product_version:   [VERSION]
 author_name:       [AUTHOR]
+copyright_year:    [YEAR]
 
 aboutbox_width:    ENG=430,JPN=360
 aboutbox_height:   ENG=340,JPN=335

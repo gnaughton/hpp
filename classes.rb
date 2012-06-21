@@ -249,9 +249,13 @@ class AboutboxProcessor
     aboutbox = files_root + "whskin_banner_" + lang + ".htm"
 		aboutbox_html = openFile(aboutbox)
 		
-		aboutbox_html.gsub!("[product_name]", $hSettings["product_name"])
-		aboutbox_html.gsub!("[product_version]", $hSettings["product_version"])
-		aboutbox_html.gsub!("[author_name]", $hSettings["author_name"])
+		placeholders = ["product_name", "product_version", "author_name", "copyright_year"]
+		placeholders.each { |ph| aboutbox_html.gsub!("[" + ph + "]", $hSettings[ph].to_s) }
+		
+		#aboutbox_html.gsub!("[product_name]", $hSettings["product_name"])
+		#aboutbox_html.gsub!("[product_version]", $hSettings["product_version"])
+		#aboutbox_html.gsub!("[author_name]", $hSettings["author_name"])
+		#aboutbox_html.gsub!("[copyright_year]", $hSettings["copyright_year"])
 		
 		writeFile(webhelp_path + "/whskin_banner.htm", aboutbox_html) 
 		
