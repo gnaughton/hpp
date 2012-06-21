@@ -8,7 +8,7 @@
 #Bad Example:
 #  language:ENG
 
-
+#####################################################################################################
 #Specify the help system name in the 'product' key by pasting a name from the following list:
 
 #  Balance
@@ -52,7 +52,12 @@
 #  product: Balance
 
 product: [PRODUCT_NAME]
+#####################################################################################################
 
+
+
+
+#####################################################################################################
 #In the "webhelp" key, specify the fully-qualified WebHelp root file.
 #Always use forward slashes in paths.
 #You can use <LANG> multiple times (or not at all).
@@ -63,10 +68,17 @@ product: [PRODUCT_NAME]
 #  webhelp: C:/Webhelp/<LANG>/RootFile_<LANG>.htm
 
 webhelp: [WEBHELP]
+#####################################################################################################
 
-#In the "webhelp_content_folder" key, specify the WebHelp content folder if it isn't the same as the name of the root file minus the .htm extension.
+
+
+
+#####################################################################################################
+#In the "webhelp_content_folder" key, specify the WebHelp content folder if it isn't the same as the
+#name of the root file minus the .htm extension.
 #If it the same, specify 'default'.
-#If you are processing a legacy help system (a system built directly from RoboHelp rather than through single-sourcing), specify 'legacy'.
+#If you are processing a legacy help system (a system built directly from RoboHelp rather than 
+#through single-sourcing), specify 'legacy'.
 #This tells the script to treat the root folder as the content folder, but to ignore scaffolding files.
 
 #You can use <LANG> multiple times (or not at all).
@@ -79,8 +91,11 @@ webhelp: [WEBHELP]
 #  webhlp_content_folder:  legacy
 
 webhelp_content_folder: default
+#####################################################################################################
 
-#######################################################################################
+
+
+#####################################################################################################
 #Language settings.
 #Always specify a language in the "language" key even when you're not using <LANG> above.
 #Language options are ENG | JPN | ENG,JPN
@@ -88,21 +103,10 @@ webhelp_content_folder: default
 #  language: ENG
 
 language: [LANGUAGE]
-#######################################################################################
+#####################################################################################################
 
-#If you don't have any showme videos, you're done.
 
-#Uncomment the 'showme_wrappers_folder' key and specify the folder to bulk-tag a group of showme wrappers with GA code.
-#You need to copy this folder manually into the 'contents' folder tree of your WebHelp system.
-#Remove the folder once you're done.
-#You will probably only do this once, to tag a group of showme wrappers when you first set up your showmes.
-#Afterwards, it's just as easy to add GA code to each new wrapper manually.
-
-#Example: showme_wrappers_folder: C:/WebHelp/Balance/TempFolderForShowMeWrappers
-
-#showme_wrappers_folder:    foo
-
-#######################################################################################
+#####################################################################################################
 #About box settings.
 do_aboutbox:       no
 
@@ -110,9 +114,29 @@ product_name:      [NAME]
 product_version:   [VERSION]
 author_name:       [AUTHOR]
 
-aboutbox_width:    ENG=455,JPN=390
+aboutbox_width:    ENG=430,JPN=390
 aboutbox_height:   ENG=340,JPN=340
-#######################################################################################
+#####################################################################################################
+
+
+#If you don't have any showme videos, you're done.
+
+
+#####################################################################################################
+#Uncomment the 'showme_wrappers_folder' key and specify the folder to bulk-tag a group of showme 
+#wrappers with GA code.
+#You need to copy this folder manually into the 'contents' folder tree of your WebHelp system.
+#Remove the folder once you're done.
+#You will probably only do this once, to tag a group of showme wrappers when you first set up your 
+#showmes.
+#Afterwards, it's just as easy to add GA code to each new wrapper manually.
+
+#Example: showme_wrappers_folder: C:/WebHelp/Balance/TempFolderForShowMeWrappers
+
+#showme_wrappers_folder:    foo
+#####################################################################################################
+
+
 
 #You're done! Please don't touch the following settings.
 #Some are for features that are beyond the scope of help metrics and might be officially 

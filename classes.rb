@@ -238,7 +238,7 @@ class AboutboxProcessor
 		###############################################################################
 		#copy the image files
 		
-		images = ["mdsol_CR3_LR2.jpg", "mdsol_LOGO_LR1.jpg", "zzz.jpg" ]
+		images = ["mdsol_CR3_LR2.jpg", "mdsol_LOGO_LR1.jpg" ]
 		images.each { |image| FileUtils.cp files_root + image, webhelp_path + "/" + image }
 		
 		#done the image files.
