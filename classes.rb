@@ -252,11 +252,6 @@ class AboutboxProcessor
 		placeholders = ["product_name", "product_version", "author_name", "copyright_year"]
 		placeholders.each { |ph| aboutbox_html.gsub!("[" + ph + "]", $hSettings[ph].to_s) }
 		
-		#aboutbox_html.gsub!("[product_name]", $hSettings["product_name"])
-		#aboutbox_html.gsub!("[product_version]", $hSettings["product_version"])
-		#aboutbox_html.gsub!("[author_name]", $hSettings["author_name"])
-		#aboutbox_html.gsub!("[copyright_year]", $hSettings["copyright_year"])
-		
 		writeFile(webhelp_path + "/whskin_banner.htm", aboutbox_html) 
 		
 		#done the About box.
@@ -459,8 +454,7 @@ def showVersionInformation (stop_after_this)
   puts " "
   puts "**********************"
   puts "Help processing script"
-  puts "Version:      2012.1.1"
-  puts "Date:      10 May 2012"
+  puts "Version:      2012.2.0"
   puts "**********************"
   puts " "
 
