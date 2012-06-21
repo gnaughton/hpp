@@ -126,7 +126,7 @@ class ShowmeProcessor
       next if !(webhelp_file_in_contents_folder == page_where_link_goes)
 
       #use the default height and width if there are no height and width specified in the showme list.
-      showme_showme_width.nil? ? $hSettings["default_showme_width"] : showme_width
+      showme_width = showme_width.nil? ? $hSettings["default_showme_width"] : showme_width
       showme_height = showme_height.nil? ? $hSettings["default_showme_height"] : showme_height
       
       #build the URL to put into the link text.
