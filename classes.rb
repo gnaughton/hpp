@@ -231,6 +231,11 @@ class AboutboxProcessor
 		scriptbits[1].sub!(/nWidth=[0-9]*/,"nWidth=" + width[lang])
 		scriptbits[1].sub!(/nHeight=[0-9]*/,"nHeight=" + height[lang])
 		
+		#stop the JavaScript from increasing the height in IE5+.
+		#also increase the width in JPN.
+		change_to = (lang = "ENG" ? "nwidth+=0" : "{nHeight+=0;nWidth+=10;}")
+		scriptbits[1].sub!(/nWidth+=20/, change_to)
+		
 		#put the file back together and write it to disk.
 		new_javascript = scriptbits[0] + splitter_text + scriptbits[1]
 		writeFile(webhelp_path + "/" + whtbar, new_javascript)

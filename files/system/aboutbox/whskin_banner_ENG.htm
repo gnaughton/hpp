@@ -5,6 +5,8 @@
 
 <meta name="generator" content="Adobe RoboHelp 8" />
 <meta name="description" content="WebHelp 5.50" />
+
+
 </head>
 <style type="text/css">
 <!--
@@ -18,7 +20,7 @@ P.disp {margin-left:5pt; margin-top:0pt;margin-bottom:10pt;font-size:7pt;font-fa
 //-->
 </script> 
 <body bgcolor="white" scroll=yes RIGHTMARGIN=0 BOTTOMMARGIN=0 TOPMARGIN=0 LEFTMARGIN=0>
-	<table border="0" cellpadding="1" cellspacing="0" align="left" width="420" height="270">
+	<table id ="aboutbox_table" border="0" cellpadding="1" cellspacing="0" align="left" width="420" height="270">
   		<tr>
     			<td width="99" height="260" rowspan="3" valign="top">
 				<img src="mdsol_cr3_lr2.jpg" border="0">
@@ -52,5 +54,17 @@ P.disp {margin-left:5pt; margin-top:0pt;margin-bottom:10pt;font-size:7pt;font-fa
    			<td><img src="wht_spac.gif" width="1" height="10" border="0" alt=""></td>
   		</tr>
 	</table>
+	
+	<!-- Reduce the table width in IE -->
+	<script type="text/javascript">
+	  if ((/MSIE/).test(navigator.userAgent))
+	 {
+	    abt = document.getElementById('aboutbox_table');
+		  abt.width=415;
+	 }	
+	</script>
+
+	
+
 </body>
 </html>
