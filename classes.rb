@@ -208,6 +208,13 @@ class AboutboxProcessor
 
 
   def UpdateAboutBox (webhelp_path, lang)
+	
+	  ###########################################################################
+		#NOTE: as well as the changes to the JS here, the ENG whskin_banner.htm 
+		#file also has additional code that changes the width of the table 
+		#containing the About box text.
+		#(line 58 in version 2012.2.0)
+		###########################################################################
 
 	  ###########################################################################
 	  #first, edit the javascript file that controls the navigation bar in situ. 
@@ -231,14 +238,21 @@ class AboutboxProcessor
 		scriptbits[1].sub!(/nWidth=[0-9]*/,"nWidth=" + width[lang])
 		scriptbits[1].sub!(/nHeight=[0-9]*/,"nHeight=" + height[lang])
 		
-		#stop the JavaScript from increasing the height in IE5+.
-		#also increase the width in JPN.
-		change_to = (lang = "ENG" ? "nwidth+=0" : "{nHeight+=0;nWidth+=10;}")
-		scriptbits[1].sub!(/nWidth+=20/, change_to)
+		#there is a block of JavaScript that changes the dimensions in IE+ (line 629...)
+		#the following code modifies that block by changing the following: 'nHeight+=20'
+		#the changes are:
+		# * no height increase in JPN
+		# * increase the width in JPN and ENG
+		# * reduce the height increase in ENG
+		change_to = (lang == "ENG" ? "{nHeight+=12;nWidth+=15;}" : "{nHeight+=0;nWidth+=15;}")
+		scriptbits[1].sub!(/nHeight\+=20;/, change_to)
 		
 		#put the file back together and write it to disk.
 		new_javascript = scriptbits[0] + splitter_text + scriptbits[1]
 		writeFile(webhelp_path + "/" + whtbar, new_javascript)
+		
+		#done editing the JavaScript.
+		###############################################################################
 		
 		###############################################################################
 		#copy the image files
