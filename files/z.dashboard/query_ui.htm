@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>
+      Google Query Builder
+    </title>
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load('visualization', '1', {packages: ['table']});
+    </script>
+		
+		<script type="text/javascript">
+		
+
+			
+		
+		  function runQuery(e)  {
+			
+			  
+				if(typeof(table) !== 'undefined') {
+				
+				  table.ClearChart();
+				
+				}
+			
+			  
+			  var spreadsheet = 'http://spreadsheets.google.com/tq?key=' + document.getElementById('spreadsheet_id').value;
+				
+				var query = new google.visualization.Query(spreadsheet);
+				
+				var sql = document.getElementById('sql').value;
+				
+				if (sql == "") {
+				
+				  alert('Specify a query');
+					return;
+					
+				}
+			  
+			  query.setQuery(sql);
+				
+				query.send(displayResult);	
+        		
+			  e.preventDefault();
+			}
+			
+			function displayResult(response)  {
+			
+			 
+			
+			  if (response.isError()) {
+          alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+          return;
+        }  
+				
+				 
+				 var data = response.getDataTable();
+			   var table = new google.visualization.Table(document.getElementById('table_div'));
+				 
+				 table.draw(data, {showRowNumber: true});
+			
+			}
+			
+			
+			
+			
+		
+		</script>
+		
+		
+  </head>
+  <body>
+	  <div id="form">
+		  <form name="query_builder">
+			<p>Spreadsheet ID:</p>
+			<input name="spreadsheet_id" id="spreadsheet_id" size="70" value="0Ai7Er1_HcptydGtSSF9pRTB0QkMtRm0tRWRCcXQyUHc"/>
+			<p>SQL:</p>
+			  <textarea name="sql" rows="6" cols="35" id="sql"></textarea> 
+				<br/>
+				<br/>
+				<input type="submit" name="run_query" id="run_query" style="margin-top:5px;" value="Run Query" onclick="javascript:runQuery(event);">
+				
+				
+			
+			</form>
+		</div>
+		<br/>
+    <div id="table_div"></div>
+  </body>
+</html>
+

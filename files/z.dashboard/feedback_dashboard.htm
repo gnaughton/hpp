@@ -1,0 +1,58 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["table", "corechart"]});
+      google.setOnLoadCallback(drawCharts);
+      function drawCharts() {
+			
+			  var spreadsheet = "http://spreadsheets.google.com/tq?key=0Ai7Er1_HcptydGtSSF9pRTB0QkMtRm0tRWRCcXQyUHc";
+				
+				var sql  =  "select year(A)*100 + (month(A)+1), count(D)";
+				sql     +=  "where B != 'Product' and B != ''";
+        sql     +=  "group by year(A)*100 + (month(A)+1)";
+				sql     +=  "label year(A)*100 + (month(A)+1) 'Month', count(D) 'Responses'";
+				
+			
+				var query = new google.visualization.Query(spreadsheet);
+				query.setQuery(sql);
+				
+				query.send(displayNumberOfResponsesPerMonth);
+        
+      }
+			
+			function displayNumberOfResponsesPerMonth(response) {
+			
+			  if (response.isError()) {
+          alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+          return;
+        }  
+				
+			 
+			  var dataTable = response.getDataTable();
+				
+				visualization = new google.visualization.LineChart(document.getElementById('response_by_month_div'));
+				
+				var dataView = new google.visualization.DataView(dataTable);
+        dataView.setColumns([{calc: function(data, row) { return data.getFormattedValue(row, 0); }, type:'string'}, 1]);  
+				visualization.draw(dataView, {legend: 'bottom'});
+				 
+				table.draw(data, {showRowNumber: true});
+			
+			}
+    </script>
+  </head>
+  <body>
+	<style type="text/css">
+              h1 {
+                   font-size:14pt;
+                   color:#000065;
+                   font-family:Arial, sans-serif;
+									 text-align:center;
+                 }
+</style> 
+	  <h1 class="responses_by_month">Feedback Responses by Month</h1>
+    <div id="response_by_month_div" style="width: 900px; height: 500px;"></div>
+  </body>
+</html>
+
