@@ -14,10 +14,23 @@
 				sql     +=  "label year(A)*100 + (month(A)+1) 'Month', count(D) 'Responses'";
 				
 			
-				var query = new google.visualization.Query(spreadsheet);
-				query.setQuery(sql);
+				var queryNumResponses = new google.visualization.Query(spreadsheet);
+				queryNumResponses.setQuery(sql);
+			    queryNumResponses.send(displayNumberOfResponsesPerMonth);
 				
-				query.send(displayNumberOfResponsesPerMonth);
+				var queryAverageRating = new google.visualization.Query(spreadsheet);
+			
+	                        sql  = "select B, avg(D)";
+                                sql +=  "where B != 'Product' and B !=''";
+                                sql +=  "group by B";
+                                sql +=  "order by avg(D) desc";
+                                sql +=  "label avg(D) 'Average Rating'";
+                                sql +=  "format avg(D) '#.#'";
+
+				
+				queryAverageRating.setQuery(sql);
+				
+				queryAverageRating.send(displayAverageRating);
         
       }
 			
@@ -37,7 +50,19 @@
         dataView.setColumns([{calc: function(data, row) { return data.getFormattedValue(row, 0); }, type:'string'}, 1]);  
 				visualization.draw(dataView, {legend: 'bottom'});
 				 
-				table.draw(data, {showRowNumber: true});
+			
+			}
+			
+			function displayAverageRating(response) {
+			
+			  if (response.isError()) {
+                alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                return;
+              }  
+			
+			  var dataTable = response.getDataTable();
+			  visualization = new google.visualization.BarChart(document.getElementById('average_rating_div'));
+			  visualization.draw(dataTable, {legend: 'bottom'});
 			
 			}
     </script>
@@ -51,8 +76,10 @@
 									 text-align:center;
                  }
 </style> 
-	  <h1 class="responses_by_month">Feedback Responses by Month</h1>
+	  <h1>Feedback Responses by Month</h1>
     <div id="response_by_month_div" style="width: 900px; height: 500px;"></div>
+	<h1>Average Rating by Help System</h1>
+    <div id="average_rating_div" style="width: 900px; height: 500px;"></div>
   </body>
 </html>
 
