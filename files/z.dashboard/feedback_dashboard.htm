@@ -16,21 +16,46 @@
 			
 				var queryNumResponses = new google.visualization.Query(spreadsheet);
 				queryNumResponses.setQuery(sql);
-			    queryNumResponses.send(displayNumberOfResponsesPerMonth);
+			  queryNumResponses.send(displayNumberOfResponsesPerMonth);
 				
 				var queryAverageRating = new google.visualization.Query(spreadsheet);
 			
-	                        sql  = "select B, avg(D)";
-                                sql +=  "where B != 'Product' and B !=''";
-                                sql +=  "group by B";
-                                sql +=  "order by avg(D) desc";
-                                sql +=  "label avg(D) 'Average Rating'";
-                                sql +=  "format avg(D) '#.#'";
+	                        sql  = "select B, avg(D) ";
+                                sql +=  "where B != 'Product' and B !='' ";
+                                sql +=  "group by B ";
+                                sql +=  "order by avg(D) desc ";
+                                sql +=  "label avg(D) 'Average Rating' ";
+                                sql +=  "format avg(D) '#.#' ";
 
 				
 				queryAverageRating.setQuery(sql);
-				
 				queryAverageRating.send(displayAverageRating);
+				
+				var queryInProgressByWriter = new google.visualization.Query(spreadsheet);
+				
+				sql = "select F, count(D) ";
+        sql += "where F != '' ";
+        sql += "and datediff (now(), A) > 30 ";
+				sql += "and G = 'In progress' ";
+				sql += "group by F ";
+        sql += "order by count(D) desc ";
+        sql += "label count(D) 'In Progress'";
+				
+				queryInProgressByWriter.setQuery(sql);
+				queryInProgressByWriter.send(displayInProgressByWriter);
+				
+				var queryInProgressByHelpSystem = new google.visualization.Query(spreadsheet);
+				
+				sql =  "select B, count(D) ";
+        sql += "where B != 'Product' and B != '' ";
+        sql += "and datediff (now(), A) > 30 ";
+        sql += "and G = 'In progress' ";
+        sql += "group by B " ;
+        sql += "order by count(D) desc ";
+        sql += "label count(D) 'In Progress'";
+				
+				queryInProgressByHelpSystem.setQuery(sql);
+				queryInProgressByHelpSystem.send(displayInProgressByHelpSystem);
         
       }
 			
@@ -65,7 +90,37 @@
 			  visualization.draw(dataTable, {legend: 'bottom'});
 			
 			}
+			
+				
+			
+			function displayInProgressByWriter(response) {
+			
+			  if (response.isError()) {
+                alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                return;
+              }  
+			
+			  var dataTable = response.getDataTable();
+			  visualization = new google.visualization.BarChart(document.getElementById('in_progress_by_writer_div'));
+			  visualization.draw(dataTable, {legend: 'bottom'});
+			
+			}
+			
+					function displayInProgressByHelpSystem(response) {
+			
+			  if (response.isError()) {
+                alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                return;
+              }  
+			
+			  var dataTable = response.getDataTable();
+			  visualization = new google.visualization.BarChart(document.getElementById('in_progress_by_help_system_div'));
+			  visualization.draw(dataTable, {legend: 'bottom'});
+			
+			}
+			
     </script>
+		<title>OLH Feedback Dashboard</title>
   </head>
   <body>
 	<style type="text/css">
@@ -80,6 +135,10 @@
     <div id="response_by_month_div" style="width: 900px; height: 500px;"></div>
 	<h1>Average Rating by Help System</h1>
     <div id="average_rating_div" style="width: 900px; height: 500px;"></div>
+		<h1>In Progress More Than 30 Days By Writer</h1>
+    <div id="in_progress_by_writer_div" style="width: 900px; height: 500px;"></div>
+		<h1>In Progress More Than 30 Days By Help System</h1>
+    <div id="in_progress_by_help_system_div" style="width: 900px; height: 500px;"></div>
   </body>
 </html>
 
