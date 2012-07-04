@@ -59,6 +59,9 @@ class FeedbackFormProcessor
 		
 		@FEEDBACK_LINK = openFile("files/system/feedbackform/" + lang.downcase + "_feedback_link.txt")
 		
+		#update the path to the star images, which are installed in the root folder.
+		star_path = $hSettings["webhelp_content_folder"] == "legacy" ? "" : "../../"
+		@FEEDBACK_FORM.gsub!("<star-path>", star_path)
 		
   end
   
@@ -75,6 +78,15 @@ class FeedbackFormProcessor
       
     
   end  
+	
+	def copyStars (webhelp_path)
+		
+		stars = ["star_on.jpg", "star_off.jpg", "star_hover.jpg", "star_on_almost.jpg", "star_hover_almost.jpg"] 
+			#stars.each { |star| puts "files/system/feedbackform/" + star, webhelp_path + "/" + star }
+			#abort
+		stars.each { |star| FileUtils.cp "files/system/feedbackform/" + star, webhelp_path + "/" + star }
+	
+	end
 
 end
 
