@@ -84,7 +84,7 @@ aLangs.each do |lang|
   ti.copyIcons(webhelp_path) if $hSettings["do_tableicons"]
 	
 	#copy the feedback form stars to the WebHelp system.
-	ff.copyStars(webhelp_path) if $hSettings["do_feedbackforms"]
+	ff.copyStars(webhelp_path, webhelp_content_folder) if $hSettings["do_feedbackforms"]
   
   #tell the feedback form processor to build the text of the form.
   ff.setFeedbackForm(lang) if $hSettings["do_feedbackforms"]
