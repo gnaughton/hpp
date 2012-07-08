@@ -81,20 +81,14 @@ class FeedbackFormProcessor
 	
 	def copyStars (webhelp_path, webhelp_content_folder)
 	
-	  #this function is full of hacks!
-	
-	  #hack 1 - because we weren't consistent in parseWebHelpFile().
-		#the contents folder has '/' in a single-sourced system, but doesn't in a legacy system.
-		#we need to tidy up parseWebHelpFile() and also the code that calls it.
-	  webhelp_content_folder += "/" if $hSettings["webhelp_content_folder"] == "legacy"
 		
 		#copy the stars to the content folder.
 		stars = ["star_on.jpg", "star_off.jpg", "star_hover.jpg", "star_on_almost.jpg", "star_hover_almost.jpg"] 
 		
 		#copy the stars to the contents folder (which is the root in a legacy system).
-		stars.each { |star| FileUtils.cp "files/system/feedbackform/" + star, webhelp_content_folder + star }
+		stars.each { |star| FileUtils.cp "files/system/feedbackform/" + star, webhelp_content_folder + '/' + star }
 		
-		#hack 2 - copy them to the root folder as well (!).
+		#hack - copy them to the root folder as well (!).
 		#this is so that the relative links in the portal page work in a single-sourced system.
 		stars.each { |star| FileUtils.cp "files/system/feedbackform/" + star, webhelp_path + '/' + star }
 	
