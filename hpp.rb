@@ -167,7 +167,7 @@ aLangs.each do |lang|
       end
 			
 			#do the close pop-ups fix.
-			its_html.gsub!("<body", "<body onLoad=\'self.focus()'") if $hSettings["apply_close_popups_fix"]
+			its_html.gsub!("<body", "<body onLoad=\"self.focus()\"") if $hSettings["apply_close_popups_fix"]
       
       writeFile(file_in_webhelp, its_html) if its_html != its_original_html
 
