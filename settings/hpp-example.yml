@@ -120,10 +120,17 @@ aboutbox_height:   ENG=340,JPN=335
 #####################################################################################################
 
 
-#If you don't have any showme videos, you're done.
-
+#####################################################################################################
+#Showmes settings.
+do_showmes:            no
+s3_bucket:             http://[foo]-webhelp[-staging].s3.amazonaws.com/WebHelp_Videos_<LANG>/
+showme_list_ENG:       [showme list file, eg. List_of_Showme_Videos.htm]
+showme_list_JPN:       [showme list file, eg. List_of_Showme_Videos.htm]
+#####################################################################################################
 
 #####################################################################################################
+#Showme wrappers settings.
+
 #Uncomment the 'showme_wrappers_folder' key and specify the folder to bulk-tag a group of showme 
 #wrappers with GA code.
 #You need to copy this folder manually into the 'contents' folder tree of your WebHelp system.
@@ -132,12 +139,10 @@ aboutbox_height:   ENG=340,JPN=335
 #showmes.
 #Afterwards, it's just as easy to add GA code to each new wrapper manually.
 
-#Example: showme_wrappers_folder: C:/WebHelp/Balance/TempFolderForShowMeWrappers
+#Example: showme_wrappers_folder: TempFolderForShowMeWrappers
 
 #showme_wrappers_folder:    foo
 #####################################################################################################
-
-
 
 #You're done! Please don't touch the following settings.
 #Some are for features that are beyond the scope of help metrics and might be officially 
@@ -156,10 +161,6 @@ track_root_file:            yes
 
 
 #Showmes settings.
-do_showmes:            no
-s3_bucket:             http://[foo]-webhelp[-staging].s3.amazonaws.com/WebHelp_Videos_<LANG>/
-showme_list_ENG:       [showme list file, eg. List_of_Showme_Videos.htm]
-showme_list_JPN:       [showme list file, eg. List_of_Showme_Videos.htm]
 default_showme_width:  970
 default_showme_height: 560
 generate_wrappers:     no
