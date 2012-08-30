@@ -180,6 +180,11 @@ class ShowmeProcessor
         #the link comes immediately after the text_where_link_goes
         link_text_to_add = String.new(@CONTEXT_TEMPLATE)
         link_text_to_add = text_where_link_goes + link_text_to_add
+				
+				#add the path to the contextual icon.
+				#(if it's a legacy system, the icon is in the same folder as the topic file;
+				# in a single-sourced system, the icon is two folders up.)
+				link_text_to_add["<PATH>"] = $hSettings["webhelp_content_folder"] == "legacy" ? "" : "../../"	 
 	 
       end  # is it the showme list or a contextual file?
      
