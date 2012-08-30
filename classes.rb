@@ -129,6 +129,7 @@ class ShowmeProcessor
     s3_bucket.gsub!("<LANG>", lang)
     
     @SHOWMES.each do |row_in_showmes_file|
+		
       
       #get rid of the newline character that IO.readlines adds to the end of every line.	 
       row_in_showmes_file.chomp!
@@ -142,7 +143,7 @@ class ShowmeProcessor
       
       #skip to the next line in the list of showmes if the current line doesn't match the webhelp file we're looking at.
       next if !(webhelp_file_in_contents_folder == page_where_link_goes)
-
+			
       #use the default height and width if there are no height and width specified in the showme list.
       showme_width = showme_width.nil? ? $hSettings["default_showme_width"] : showme_width
       showme_height = showme_height.nil? ? $hSettings["default_showme_height"] : showme_height
@@ -179,7 +180,7 @@ class ShowmeProcessor
         #the link comes immediately after the text_where_link_goes
         link_text_to_add = String.new(@CONTEXT_TEMPLATE)
         link_text_to_add = text_where_link_goes + link_text_to_add
-	  
+	 
       end  # is it the showme list or a contextual file?
      
       #set the height and width of the showme popup.
@@ -189,13 +190,14 @@ class ShowmeProcessor
 	 
       #finish building the link text by adding the URL of the wrapper file.
       link_text_to_add["<URL>"] = url_in_link
-	  
+	    
       #update the HTML of the webhelp file with the link.
       begin
-        html_of_webhelp_file_in_contents_folder[text_where_link_goes] = link_text_to_add
+			
+        html_of_webhelp_file_in_contents_folder[text_where_link_goes] = link_text_to_add			
       rescue Exception => e
-        #puts e.message
-      end
+        puts "\r\n\r\nShowme links error!\r\nTopic:      " + webhelp_file_in_contents_folder + "\r\nLink text:  " + text_where_link_goes + "\r\nError:      " + e.message + "\r\n\r\n"
+			end
 
     end  #@SHOWMES.each
     
