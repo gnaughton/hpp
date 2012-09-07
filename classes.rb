@@ -75,28 +75,13 @@ class FeedbackFormProcessor
 			  star_path = ""
 			end
 			
-			@FEEDBACK_FORM.gsub!("<star-path>", star_path)
+			feedback_form = @FEEDBACK_FORM.gsub("<star-path>", star_path)
 			
-      #add the feedback form.			
-	    its_html.gsub!(/<\/body>/i, @FEEDBACK_FORM) 
+			#add the feedback form.			
+	    its_html.gsub!(/<\/body>/i, feedback_form) 
       
   end  
 	
-	def copyStars (webhelp_path, webhelp_content_folder)
-	
-		
-		#copy the stars to the content folder.
-		stars = ["star_on.jpg", "star_off.jpg", "star_hover.jpg", "star_on_almost.jpg", "star_hover_almost.jpg"] 
-		
-		#copy the stars to the contents folder (which is the root in a legacy system).
-		stars.each { |star| FileUtils.cp "files/system/feedbackform/" + star, webhelp_content_folder + '/' + star }
-		
-		#hack - copy them to the root folder as well (!).
-		#this is so that the relative links in the portal page work in a single-sourced system.
-		stars.each { |star| FileUtils.cp "files/system/feedbackform/" + star, webhelp_path + '/' + star }
-	
-	end
-
 end
 
 class ShowmeProcessor
@@ -373,36 +358,6 @@ def openFile(fileInWebHelp)
 
 end
 
-
-def parseWebHelpFile (webhelp_path_and_file, lang)
-
-  webhelp_path_and_file.gsub!("<LANG>", lang)
-  webhelp_path, webhelp_file_only = splitPathAndFile(webhelp_path_and_file)
-
-  is_legacy_webhelp = false
-if $hSettings["webhelp_content_folder"] == "default"
-  
-    
-    #assume the contents folder is the name of the root file minus the extension.
-    webhelp_content_folder = webhelp_path + "/" + File.basename(webhelp_file_only, '.htm') + "/"
-  
-  elsif $hSettings["webhelp_content_folder"] == "legacy"
- 
-    #set the contents folder to the folder containing the root file if we're dealing with a legacy system.
-    webhelp_content_folder = webhelp_path
-    is_legacy_webhelp = true
-
-  else
-
-    webhelp_content_folder = String.new($hSettings["webhelp_content_folder"])
-    webhelp_content_folder.gsub!("<LANG>", lang) 
-  
-  end  
-  
-  return webhelp_path, webhelp_file_only, webhelp_content_folder, is_legacy_webhelp
-
-end  
-
 def splitPathAndFile (strWebHelp)
 
     #split a dir + file string into dir and file and return them
@@ -468,17 +423,6 @@ def buildHashFromKeyValueList (list)
     
     return Hash[*s.flatten]
 
-
-end
-
-def getScaffoldingFileType (file_in_webhelp)
-
-  $hScaffolding.each do |sf, sf_type|
-        
-    #is the current file a scaffolding file?
-    return sf_type if file_in_webhelp.include? sf
-
-  end
 
 end
 
