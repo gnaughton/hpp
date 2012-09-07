@@ -8,7 +8,7 @@ class GAProcessor
       abort
     end
   
-  def addTrackingCode (file_in_webhelp, its_html, webhelp_file_type)
+  def addTrackingCode (its_html, webhelp_file_type)
   
     begin
     
@@ -28,7 +28,7 @@ class GAProcessor
 
     rescue Exception => e
 
-      puts "Couldn't add GA script. File: " + file_in_webhelp
+      puts "Couldn't add GA script." 
       puts "Exception: " + e.to_s
  
     end  
@@ -57,26 +57,29 @@ class FeedbackFormProcessor
 		@FEEDBACK_FORM["<feedback-form-key>"] = feedback_form_key_value
 		
 		
-		@FEEDBACK_LINK = openFile("files/system/feedbackform/" + lang.downcase + "_feedback_link.txt")
-		
-		#update the path to the star images, which are installed in the root folder.
-		star_path = $hSettings["webhelp_content_folder"] == "legacy" ? "" : "../"
-		@FEEDBACK_FORM.gsub!("<star-path>", star_path)
+		@FEEDBACK_LINK = openFile("files/system/feedbackform/" + lang.downcase + "_feedback_link.txt")	
 		
   end
   
   
-  def addFeedbackForm (file_in_webhelp, its_html)
+  def addFeedbackForm (url_in_toc_file, file_in_webhelp, its_html)
 	
 	    
 			#add the 'Rate this topic' link before the first closing <h> element.
 			position_of_first_closing_heading_element = its_html.index(/<\/h\d>/)
 			its_html.insert(position_of_first_closing_heading_element, @FEEDBACK_LINK) if !position_of_first_closing_heading_element.nil?
 
+			if (url_in_toc_file.include? '/')
+			  star_path = "../../"
+			else
+			  star_path = ""
+			end
+			
+			@FEEDBACK_FORM.gsub!("<star-path>", star_path)
+			
       #add the feedback form.			
 	    its_html.gsub!(/<\/body>/i, @FEEDBACK_FORM) 
       
-    
   end  
 	
 	def copyStars (webhelp_path, webhelp_content_folder)
@@ -503,5 +506,75 @@ def showVersionInformation (stop_after_this)
   puts " "
 
   abort if stop_after_this
+
+end
+
+def process_topic_files(elements, lang)
+
+   elements.each { |e|  
+	 
+	   print '.' if $hSettings["show_onscreen_progress"]
+	 
+	   if e.attributes['ref']
+		 #it's a 'chunk' element, with a url to a sub-toc file in the 'ref' attribute
+		   
+			 #read the sub-toc file and pass the elements of its root node recursively to this function.
+			 tocdoc = Document.new(File.new($TOCFILES_FOLDER + e.attributes['ref']))
+			 process_topic_files(tocdoc.root.elements, lang)
+		 
+		 else
+		 #it's a 'book' or 'item' element.
+     #if it has a 'url' attribute that references a topic file, we need to process that file.		 
+			  
+		   if e.attributes['url']
+			   
+			   #there is a referenced topic file, so read in its html.
+				 topic_file = $WEBHELP_PATH + "/" + e.attributes['url']
+				 topic_html = File.read(topic_file)
+				 
+				 #add the Google Analytics tracking code.
+				 $GA.addTrackingCode(topic_html, "Content") if $hSettings["do_analytics"]
+				 
+				 #add the feedback form.
+				 $FF.addFeedbackForm(e.attributes['url'], topic_file, topic_html) if $hSettings["do_feedbackforms"]
+				 
+				 #fix the table icons.
+				 $TI.addIcons(topic_html) if $hSettings["do_tableicons"]
+				 
+				 #add the showme links.
+				 if $hSettings["do_showmes"]
+				   topic_file_without_path = getFile(e.attributes['url'])
+				   $SM.addShowmeLinks(topic_file_without_path, topic_html, lang) 
+				 end
+				 
+				 #do the close pop-ups fix.
+			   topic_html.gsub!("<body", "<body onLoad=\"self.focus()\"") if $hSettings["apply_close_popups_fix"]
+				 
+				 #save the modified file.
+				 writeFile(topic_file, topic_html)
+				 
+			 
+			 end
+			
+			#recursively call the function on the child elements of the current element.
+			process_topic_files(e.elements, lang)
+		 
+		 end
+		 
+	} #end each
+
+end
+
+def build_scaffolding_hash
+
+  scaffolding_string = String.new($hSettings["tracked_scaffolding_files"])
+  
+  #are we tracking the root file? check 'track_root_file' in the settings file to see.
+  scaffolding_string += ($hSettings["track_root_file"] ? "," + $WEBHELP_FILE + "=Root" : "" )
+  
+  #build the scaffolding hash.
+  $hScaffolding = buildHashFromKeyValueList(scaffolding_string)
+	
+	return $hScaffolding
 
 end

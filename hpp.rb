@@ -2,6 +2,8 @@ load 'classes.rb'
 require 'fileutils.rb'
 require 'yaml'
 require 'optparse'
+require 'rexml/document'
+include REXML
 
 options = {}
 optparse = OptionParser.new do |opts|
@@ -36,8 +38,6 @@ rescue Errno::ENOENT
 
 end
 
-
-
 #get the settings file from the command line; if none was specified, use 'hpp.yml'
 settings_file_root = (ARGV[0].nil? ? "hpp" : ARGV[0])
 
@@ -51,51 +51,90 @@ aLangs = checkLanguage()
 #GAProcessor needs to be global because it's also accessed in classes.rb
 #in fact all these vars should probably be global
 $GA = GAProcessor.new
-ff = FeedbackFormProcessor.new
-sm = ShowmeProcessor.new
+$FF = FeedbackFormProcessor.new
+$SM = ShowmeProcessor.new
 ab = AboutboxProcessor.new
-ti = TableIconProcessor.new
+$TI = TableIconProcessor.new
+
+
 
 aLangs.each do |lang|
 
-  #get the WebHelp path/file and the contents folder if specified.
+  #get the WebHelp path/file and the contents folder if specified. 
   webhelp = String.new($hSettings["webhelp"])
-
-  #extract all the various bits we need from the WebHelp path/file.
-  webhelp_path, webhelp_file, webhelp_content_folder, is_legacy_webhelp = parseWebHelpFile(webhelp, lang)
 	
+  #get the WebHelp path and file.
+  $WEBHELP_PATH, $WEBHELP_FILE = splitPathAndFile(webhelp)
+ 
+	$WEBHELP_PATH.gsub!("<LANG>", lang) 
+	
+	puts "File: " + $WEBHELP_PATH + "/" + $WEBHELP_FILE if $hSettings["show_onscreen_progress"]
+  print "Working" if $hSettings["show_onscreen_progress"]
+
 	#copy the Japanese 'Go' button to the help system.
-	copyGoButton(webhelp_path) if lang == "JPN"
+	copyGoButton($WEBHELP_PATH) if lang == "JPN"
   
   #build the scaffolding files array.
   #first, get the string from the settings file.
   scaffolding_string = String.new($hSettings["tracked_scaffolding_files"])
   
   #are we tracking the root file? check 'track_root_file' in the settings file to see.
-  scaffolding_string += ($hSettings["track_root_file"] ? "," + webhelp_file + "=Root" : "" )
-  
-  #build the scaffolding hash.
-  $hScaffolding = buildHashFromKeyValueList(scaffolding_string)
+  scaffolding_string += ($hSettings["track_root_file"] ? "," + $WEBHELP_FILE + "=Root" : "" )
   
   #update the About box.
-  ab.UpdateAboutBox(webhelp_path, lang) if $hSettings["do_aboutbox"]
+  ab.UpdateAboutBox($WEBHELP_PATH, lang) if $hSettings["do_aboutbox"]
   
   #copy the table icons to the WebHelp system.
-  ti.copyIcons(webhelp_path) if $hSettings["do_tableicons"]
+  $TI.copyIcons($WEBHELP_PATH) if $hSettings["do_tableicons"]
 	
 	#copy the feedback form stars to the WebHelp system.
-	ff.copyStars(webhelp_path, webhelp_content_folder) if $hSettings["do_feedbackforms"]
+	stars = ["star_on.jpg", "star_off.jpg", "star_hover.jpg", "star_on_almost.jpg", "star_hover_almost.jpg"] 
+	stars.each { |star| FileUtils.cp "files/system/feedbackform/" + star, $WEBHELP_PATH + '/' + star }
+	#ff.copyStars($WEBHELP_PATH, webhelp_content_folder) if $hSettings["do_feedbackforms"]
   
   #tell the feedback form processor to build the text of the form.
-  ff.setFeedbackForm(lang) if $hSettings["do_feedbackforms"]
+  $FF.setFeedbackForm(lang) if $hSettings["do_feedbackforms"]
   
   #load the files for the showme links.
-  sm.loadFiles(lang, settings_file_root) if $hSettings["do_showmes"]
+  $SM.loadFiles(lang, settings_file_root) if $hSettings["do_showmes"]
   
   #copy the icon for the contextual links.
-  sm.copyContextualIcon(webhelp_path) if $hSettings["do_showmes"]
-  
-  #find all the HTML files in all the folders and subfolders. 
+  $SM.copyContextualIcon($WEBHELP_PATH) if $hSettings["do_showmes"]
+	
+	#build an XML document from the base TOC file.
+	$TOCFILES_FOLDER = $WEBHELP_PATH + "/whxdata/"
+	tocdoc = Document.new(File.new($TOCFILES_FOLDER + "whtdata0.xml"))
+	
+	#process the topic files (add feedback forms, GA code...)
+	process_topic_files(tocdoc.root.elements, lang)
+	
+	#add Google Analytics to the scaffolding files.
+	if $hSettings["do_analytics"]
+	
+	  #build the scaffolding hash and loop around it.
+    $hScaffolding = build_scaffolding_hash()
+	  $hScaffolding.each_key { |key| 
+	
+	    #read in the file, add the GA code, write the file.
+	    scaffolding_file =  $WEBHELP_PATH + "/" + key
+		  scaffolding_html = File.read(scaffolding_file)
+		  $GA.addTrackingCode(scaffolding_html, $hScaffolding[key]) 
+			writeFile(scaffolding_file, scaffolding_html)
+	
+	  }
+		
+	end	
+	
+end #language loop
+
+print "Done!\r\n" if $hSettings["show_onscreen_progress"] 
+
+exit
+
+
+#TO BE DELETED:
+
+#find all the HTML files in all the folders and subfolders. 
   #if this is a legacy help system we're only interested in the current folder.
   search = ($hSettings["webhelp_content_folder"] == "legacy" ? "/*.htm" : "/**/*.htm")
   aFiles = Dir[webhelp_path + search]
@@ -107,8 +146,8 @@ aLangs.each do |lang|
   aFiles.each do |file_in_webhelp|
 
     #the list of ignored files in the contents folder will be relevant only if we're dealing with a legacy system.
-    add_to_ignored_files = removeFileExtension(webhelp_file) + "_csh.htm," + removeFileExtension(webhelp_file) + "_rhc.htm"
-    add_to_ignored_files += ("," + webhelp_file) if !$hSettings["track_root_file"]
+    add_to_ignored_files = removeFileExtension($WEBHELP_FILE) + "_csh.htm," + removeFileExtension($WEBHELP_FILE) + "_rhc.htm"
+    add_to_ignored_files += ("," + $WEBHELP_FILE) if !$hSettings["track_root_file"]
     ignored_files = (is_legacy_webhelp ? String.new($hSettings["ignored_files"] + add_to_ignored_files) : "")
     
     #are we in the contents directory tree? if so:
@@ -123,7 +162,7 @@ aLangs.each do |lang|
       #this rule will only fire for legacy systems:
       next if ignored_files.include? getFile(file_in_webhelp)
 
-      webhelp_file_type = "Content"
+      $WEBHELP_FILE_type = "Content"
     
       its_html = openFile(file_in_webhelp)
       next if its_html.nil?
@@ -137,8 +176,8 @@ aLangs.each do |lang|
         #if we're dealing with a legacy system, the scaffolding files are in the 'contents' folder, so we need to
         #check for them and tag them according to the type of scaffolding file.
         if is_legacy_webhelp
-          webhelp_file_type = getScaffoldingFileType(getFile(file_in_webhelp)) if scaffolding_string.include? getFile(file_in_webhelp)
-          puts (getFile(file_in_webhelp) + " " + webhelp_file_type) if $hSettings["debug_legacy_tagging"]
+          $WEBHELP_FILE_type = getScaffoldingFileType(getFile(file_in_webhelp)) if scaffolding_string.include? getFile(file_in_webhelp)
+          puts (getFile(file_in_webhelp) + " " + $WEBHELP_FILE_type) if $hSettings["debug_legacy_tagging"]
         end
 
         #to tag a group of showme wrappers, we can put them in a folder and move them into the 'contents' folder tree.
@@ -153,8 +192,8 @@ aLangs.each do |lang|
         #set the wrappers folder to 'path_that_will_never_exist' if it isn't specified in the settings file.
         showme_wrappers_folder = String.new(($hSettings["showme_wrappers_folder"].nil?) ? "path_that_will_never_exist" : $hSettings["showme_wrappers_folder"])
         showme_wrappers_folder.gsub!("<LANG>", lang)
-        webhelp_file_type = (file_in_webhelp.include? showme_wrappers_folder) ? "ShowMe" : webhelp_file_type
-        $GA.addTrackingCode(file_in_webhelp, its_html, webhelp_file_type)
+        $WEBHELP_FILE_type = (file_in_webhelp.include? showme_wrappers_folder) ? "ShowMe" : $WEBHELP_FILE_type
+        $GA.addTrackingCode(file_in_webhelp, its_html, $WEBHELP_FILE_type)
       
       end
 
@@ -204,5 +243,3 @@ aLangs.each do |lang|
   end #loop around WebHelp files
   
   print "Done!\r\n" if $hSettings["show_onscreen_progress"]
-
-end #language loop
