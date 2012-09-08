@@ -32,6 +32,7 @@ the script searches in '<path-root>/settings/...' and '<path-root>/files/user/..
 end
 
 def get_options()
+
   begin
 	
 	  require 'optparse'
@@ -89,39 +90,37 @@ def openFile(fileInWebHelp)
 
 end
 
-def splitPathAndFile (strWebHelp)
+def split_path_and_file (path_and_file)
 
     #split a dir + file string into dir and file and return them
 
     #get the file name from the end of the string, by:
     #putting the string into an array,
-    aWebHelp = strWebHelp.split("/")
+    a = path_and_file.split("/")
   
     #then getting the last element (i.e. the file name).
-    strFile = aWebHelp[aWebHelp.length-1]
+    file = a[a.length-1]
   
     #now get rid of the last element (the file name) from the array,
-    aWebHelp.delete_at(aWebHelp.length-1)
+    a.delete_at(a.length-1)
   
-    #then build a string from what's left (to give the path)
-    strPath = aWebHelp.join("/")
+    #then build a string from what's left to give the path
+    path = a.join("/")
   
-    return strPath, strFile
+    return path, file
   
 end
 
-def getFile (strWebHelp)
+def get_file (path_and_file) 
 
-    #get the file name from the end of the string, by:
-    #putting the string into an array,
-    aWebHelp = strWebHelp.split("/")
-  
-    #then getting the last element (i.e. the file name).
-    strFile = aWebHelp[aWebHelp.length-1]
-  
-    return strFile
-  
+    #get the file from a path + file
+
+    path, file = split_path_and_file(path_and_file)
+		
+		return file
+		
 end
+
 
 def removeFileExtension (strFile)
 
@@ -206,7 +205,7 @@ def process_topic_files(elements, lang)
 				 
 				 #add the showme links.
 				 if $hSettings["do_showmes"]
-				   topic_file_without_path = getFile(e.attributes['url'])
+				   topic_file_without_path = get_file(e.attributes['url'])
 				   $SM.addShowmeLinks(topic_file_without_path, topic_html, lang) 
 				 end
 				 

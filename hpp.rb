@@ -29,15 +29,15 @@ $TI = TableIconProcessor.new
 
 #check the language and filespec keys in the ini file.
 #if everything's OK the array will contain all the languages we're processing.
-aLangs = checkLanguage()
+langs = checkLanguage()
 
-aLangs.each do |lang|
+langs.each do |lang|
 
   #get the WebHelp path/file and the contents folder if specified. 
   webhelp = String.new($hSettings["webhelp"])
 	
   #get the WebHelp path and file.
-  $WEBHELP_PATH, $WEBHELP_FILE = splitPathAndFile(webhelp)
+  $WEBHELP_PATH, $WEBHELP_FILE = split_path_and_file(webhelp)
  
 	$WEBHELP_PATH.gsub!("<LANG>", lang) 
 	
