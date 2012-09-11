@@ -135,14 +135,14 @@ def checkLanguage()
     abort
   end
   
-  aLangs = $hSettings["language"].split(",")
+  langs = $hSettings["language"].split(",")
 
-  if aLangs.length > 1 and !($hSettings["webhelp"].include? "<LANG>")
+  if langs.length > 1 and !($hSettings["webhelp"].include? "<LANG>")
     puts "No <LANG> in WebHelp path but multiple languages specified."
     abort
   end
   
-  return aLangs
+  return langs
   
 end
 
@@ -156,7 +156,7 @@ def buildHashFromKeyValueList (list)
 
 end
 
-def copyGoButton(webhelp_path)
+def copy_go_button(webhelp_path)
     
     begin
 
@@ -192,7 +192,13 @@ def process_topic_files(elements, lang)
 			   
 			   #there is a referenced topic file, so read in its html.
 				 topic_file = $WEBHELP_PATH + "/" + e.attributes['url']
-				 topic_html = File.read(topic_file)
+				 
+				 begin
+				   topic_html = File.read(topic_file)
+				 rescue 
+				   puts "\r\nCouldn't open following TOC item: " + e.attributes['url']
+					 next
+				 end
 				 
 				 #add the Google Analytics tracking code.
 				 $GA.addTrackingCode(topic_html, "Content") if $hSettings["do_analytics"]
@@ -238,5 +244,11 @@ def build_scaffolding_hash
   $hScaffolding = buildHashFromKeyValueList(scaffolding_string)
 	
 	return $hScaffolding
+
+end
+
+def do_something?
+
+  return false
 
 end

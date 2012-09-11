@@ -64,7 +64,10 @@ class FeedbackFormProcessor
   
   def addFeedbackForm (url_in_toc_file, file_in_webhelp, its_html)
 	
-	    
+	    portal_page_name = ($hSettings["portal_page_name"].nil? ? "kpp.htm" : get_file($hSettings["portal_page_name"])) 
+	    return if portal_page_name == get_file(file_in_webhelp)
+			#next if (get_file (e.attributes['url']) == $hSettings["Sportal_page_name"])
+			   
 			#add the 'Rate this topic' link before the first closing <h> element.
 			position_of_first_closing_heading_element = its_html.index(/<\/h\d>/)
 			its_html.insert(position_of_first_closing_heading_element, @FEEDBACK_LINK) if !position_of_first_closing_heading_element.nil?
@@ -220,7 +223,7 @@ end #ShowmeProcessor
 class AboutboxProcessor
 
 
-  def UpdateAboutBox (webhelp_path, lang)
+  def update_about_box (webhelp_path, lang)
 	
 	  ###########################################################################
 		#NOTE: as well as the changes to the JS here, the ENG whskin_banner.htm 
@@ -296,7 +299,7 @@ end #Aboutbox processor
 
 class TableIconProcessor
 
-  def copyIcons(webhelp_path)
+  def copy_icons(webhelp_path)
     
     begin
 

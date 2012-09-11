@@ -41,12 +41,16 @@ langs.each do |lang|
  
 	$WEBHELP_PATH.gsub!("<LANG>", lang) 
 	
-	puts ''
-	puts "File: " + $WEBHELP_PATH + "/" + $WEBHELP_FILE if $hSettings["show_onscreen_progress"]
-  print "Working" if $hSettings["show_onscreen_progress"]
+	if $hSettings["show_onscreen_progress"]
+	
+	  puts ''
+	  puts "File: " + $WEBHELP_PATH + "/" + $WEBHELP_FILE if $hSettings["show_onscreen_progress"]
+    print "Working" if $hSettings["show_onscreen_progress"]
+		
+  end		
 
 	#copy the Japanese 'Go' button to the help system.
-	copyGoButton($WEBHELP_PATH) if lang == "JPN"
+	copy_go_button($WEBHELP_PATH) if lang == "JPN"
   
   #build the scaffolding files array.
   #first, get the string from the settings file.
@@ -56,10 +60,10 @@ langs.each do |lang|
   scaffolding_string += ($hSettings["track_root_file"] ? "," + $WEBHELP_FILE + "=Root" : "" )
   
   #update the About box.
-  ab.UpdateAboutBox($WEBHELP_PATH, lang) if $hSettings["do_aboutbox"]
+  ab.update_about_box($WEBHELP_PATH, lang) if $hSettings["do_aboutbox"]
   
   #copy the table icons to the WebHelp system.
-  $TI.copyIcons($WEBHELP_PATH) if $hSettings["do_tableicons"]
+  $TI.copy_icons($WEBHELP_PATH) if $hSettings["do_tableicons"]
 	
 	#prepare for adding feedback forms.
 	if $hSettings["do_feedbackforms"]

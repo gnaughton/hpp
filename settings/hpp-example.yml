@@ -47,6 +47,7 @@
 #  Medidata Insights - Site Quality Management
 #  Medidata Designer
 #  ePRO
+#  Medidata Enterprise Reporting
 
 #Example:
 #  product: Balance
@@ -116,15 +117,18 @@ showme_list_JPN:       [showme list file, eg. List_of_Showme_Videos.htm]
 
 #####################################################################################################
 #Feedback forms settings.
-#Change to 'no' if for some reason you don't want to add feedback forms.
+#Change to 'no' if you don't want to add feedback forms.
 do_feedbackforms:           yes
 #####################################################################################################
 
 #####################################################################################################
 #GA settings.
-#Change to 'no' if for some reason you don't want to add Google Analytics.
+#Change to 'no' if you don't want to add Google Analytics.
 do_analytics:               yes
 #####################################################################################################
+
+portal_page_name:      kpp.htm
+include_feedback_form: no 
 
 #You're done! Please don't touch any setttings below this line.
 
