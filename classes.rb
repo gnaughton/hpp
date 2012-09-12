@@ -208,24 +208,6 @@ class ShowmeProcessor
     
   end  #addShowmeLinks
 	
-	def generateWrapper (wrapper_file_for_showme, text_where_link_goes, lang)
-	
-	  #get the boilerplate text and fill in the placeholders.
-	  wrapper_template = File.read("files/system/showmes/wrapper_template.txt")
-    wrapper_template.sub!("SHOWME-TITLE", text_where_link_goes)	 
-		wrapper_template.sub!("SWF-NAME", removeFileExtension(wrapper_file_for_showme) + ".swf")
-		wrapper_template.sub!("VIDEO-WIDTH", $hSettings["video_width"].to_s)
-		wrapper_template.sub!("VIDEO-HEIGHT", $hSettings["video_height"].to_s)
-		
-		#add the GA tracking code.
-		$GA.addTrackingCode(wrapper_file_for_showme, wrapper_template, "Show Me")
-		
-		#write the wrapper file to disk.
-		wrapper_to_save =  $CONFIG_FILES_ROOT + "files/user/showmes/wrappers/" + lang + "/" + wrapper_file_for_showme
-		writeFile(wrapper_to_save, wrapper_template)
-	
-	end
-
 end #ShowmeProcessor
 
 

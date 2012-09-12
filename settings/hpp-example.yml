@@ -161,7 +161,6 @@ track_root_file:            yes
 #Showmes settings.
 default_showme_width:  970
 default_showme_height: 560
-generate_wrappers:     no
 video_width:           950          
 video_height:          546
 
