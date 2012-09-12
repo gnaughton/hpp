@@ -115,8 +115,6 @@ product_version:   [VERSION]
 author_name:       [AUTHOR]
 copyright_year:    [YEAR]
 
-aboutbox_width:    ENG=430,JPN=360
-aboutbox_height:   ENG=340,JPN=335
 #####################################################################################################
 
 
@@ -167,8 +165,12 @@ generate_wrappers:     no
 video_width:           950          
 video_height:          546
 
+#About box settings.
+aboutbox_width:    ENG=430,JPN=360
+aboutbox_height:   ENG=340,JPN=335
+
 #Table icons settings.
-do_tableicons: no
+do_tableicons: yes
 
 #Live or Test settings.
 help_system_status:         live
@@ -180,4 +182,5 @@ feedback_form_key_test:     dFpsVWJpMTQ1RHZpR2h0Z1VqMXpCSHc6MA&amp;ifq
 #Debug settings.
 debug_legacy_tagging: no
 
+#close popups fix.
 apply_close_popups_fix: yes
