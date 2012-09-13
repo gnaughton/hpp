@@ -47,15 +47,13 @@
 #  Medidata Insights - Site Quality Management
 #  Medidata Designer
 #  ePRO
+#  Medidata Enterprise Reporting
 
 #Example:
 #  product: Balance
 
 product: [PRODUCT_NAME]
 #####################################################################################################
-
-
-
 
 #####################################################################################################
 #In the "webhelp" key, specify the fully-qualified WebHelp root file.
@@ -70,35 +68,11 @@ product: [PRODUCT_NAME]
 webhelp: [WEBHELP]
 #####################################################################################################
 
-
-
-
-#####################################################################################################
-#In the "webhelp_content_folder" key, specify the WebHelp content folder if it isn't the same as the
-#name of the root file minus the .htm extension.
-#If it the same, specify 'default'.
-#If you are processing a legacy help system (a system built directly from RoboHelp rather than 
-#through single-sourcing), specify 'legacy'.
-#This tells the script to treat the root folder as the content folder, but to ignore scaffolding files.
-
-#You can use <LANG> multiple times (or not at all).
-
-#Examples:
-#  webhelp_content_folder: C:/Webhelp/<LANG>/HelpSystemContentFolder
-#  webhelp_content_folder: C:/Webhelp/<LANG>/HelpSystemContentFolder_<LANG>
-#  webhelp_content_folder: C:/Webhelp/HelpSystemContentFolder
-#  webhelp_content_folder: default
-#  webhlp_content_folder:  legacy
-
-webhelp_content_folder: default
-#####################################################################################################
-
-
-
 #####################################################################################################
 #Language settings.
 #Always specify a language in the "language" key even when you're not using <LANG> above.
 #Language options are ENG | JPN | ENG,JPN
+#Don't put a space after the comma!
 #Example:
 #  language: ENG
 
@@ -114,7 +88,6 @@ product_name:      ABOUT_BOX_PRODUCT_NAME
 product_version:   ABOUT_BOX_VERSION
 author_name:       ABOUT_BOX_AUTHOR_NAME
 copyright_year:    ABOUT_BOX_YEAR
-
 #####################################################################################################
 
 
@@ -128,59 +101,90 @@ showme_list_JPN:       [showme list file, eg. List_of_Showme_Videos.htm]
 
 #####################################################################################################
 #Showme wrappers settings.
-
+#
 #Uncomment the 'showme_wrappers_folder' key and specify the folder to bulk-tag a group of showme 
 #wrappers with GA code.
-#You need to copy this folder manually into the 'contents' folder tree of your WebHelp system.
-#Remove the folder once you're done.
+#Specify the full path. You can put this folder anywhwere. You can include <LANG> in it.
+#Don't put the '/' at the end.
 #You will probably only do this once, to tag a group of showme wrappers when you first set up your 
 #showmes.
 #Afterwards, it's just as easy to add GA code to each new wrapper manually.
-
+#
 #Example: showme_wrappers_folder: TempFolderForShowMeWrappers
 #(where the fully qualified folder name is C:/Balance/BalanceContent/TempFolderForShowMeWrappers)
+#
 #
 #showme_wrappers_folder:    foo
 #####################################################################################################
 
-#You're done! Please don't touch the following settings.
-#Some are for features that are beyond the scope of help metrics and might be officially 
-#rolled out in a future version of this script.
-show_onscreen_progress:     yes
-
-ignored_files:           whcsh_home.htm,whcshdata.htm,whfdhtml.htm,whfform.htm,whidhtml.htm,whiform.htm,whnjs.htm,whproj.htm,whskin_banner.htm,whskin_blank.htm,whskin_frmset01.htm,whskin_frmset010.htm,whskin_homepage.htm,whskin_info.htm,whskin_mbars.htm,whskin_papplet.htm,whskin_pdhtml.htm,whskin_pickup.htm,whskin_plist.htm,whskin_tbars.htm,whskin_tw.htm,wghdef.htm,whgdhtml.htm,cshdat_robohelp.htm,cshdat_webhelp.htm,whgdef.htm
-
+#####################################################################################################
 #Feedback forms settings.
+#Change to 'no' if you don't want to add feedback forms.
 do_feedbackforms:           yes
+#####################################################################################################
 
+#####################################################################################################
 #GA settings.
+#Change to 'no' if you don't want to add Google Analytics.
 do_analytics:               yes
+#####################################################################################################
+
+portal_page_name:      kpp.htm
+include_feedback_form: no 
+
+#You're done! Please don't touch any setttings below this line.
+
+
+
+
+
+
+
+
+
+
+######################################################################################################
+#Private About box settings.
+aboutbox_width:    ENG=430,JPN=360
+aboutbox_height:   ENG=340,JPN=335
+######################################################################################################
+
+######################################################################################################
+#Private Google Analytics settings.
 tracked_scaffolding_files:  whtdhtml.htm=TOC,whibody.htm=Index,whfbody.htm=Search,whgbody.htm=Glossary
 track_root_file:            yes
+#######################################################################################################
 
-
-#Showmes settings.
+######################################################################################################
+#Private showmes settings.
 default_showme_width:  970
 default_showme_height: 560
 video_width:           950          
 video_height:          546
+######################################################################################################
 
-#About box settings.
-aboutbox_width:    ENG=430,JPN=360
-aboutbox_height:   ENG=340,JPN=335
-
+######################################################################################################
 #Table icons settings.
 do_tableicons: yes
+######################################################################################################
 
+######################################################################################################
 #Live or Test settings.
 help_system_status:         live
 web_property_id_live:       UA-23248868-12
 web_property_id_test:       UA-23248868-13
 feedback_form_key_live:     dDNocW9OVE1fTERlamY2aTFuYzBuV1E6MQ&amp;ifq    
 feedback_form_key_test:     dFpsVWJpMTQ1RHZpR2h0Z1VqMXpCSHc6MA&amp;ifq
+######################################################################################################
 
-#Debug settings.
-debug_legacy_tagging: no
+######################################################################################################
+#Popups fix settings.
+apply_close_popups_fix: yes
+######################################################################################################
+
 
 #close popups fix.
 apply_close_popups_fix: yes
+
+show_onscreen_progress:     yes
+

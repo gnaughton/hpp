@@ -8,7 +8,7 @@ class GAProcessor
       abort
     end
   
-  def addTrackingCode (file_in_webhelp, its_html, webhelp_file_type)
+  def addTrackingCode (its_html, webhelp_file_type)
   
     begin
     
@@ -28,7 +28,7 @@ class GAProcessor
 
     rescue Exception => e
 
-      puts "Couldn't add GA script. File: " + file_in_webhelp
+      puts "Couldn't add GA script." 
       puts "Exception: " + e.to_s
  
     end  
@@ -56,23 +56,25 @@ class FeedbackFormProcessor
 		#update the boilerplate form.
 		@FEEDBACK_FORM["<feedback-form-key>"] = feedback_form_key_value
 		
-		
-		@FEEDBACK_LINK = openFile("files/system/feedbackform/" + lang.downcase + "_feedback_link.txt")
+		@FEEDBACK_LINK = openFile("files/system/feedbackform/" + lang.downcase + "_feedback_link.txt")	
+
 		
   end
   
   
-  def addFeedbackForm (file_in_webhelp, its_html)
+  def addFeedbackForm (url_in_toc_file, file_in_webhelp, its_html)
 	
-	    
+	    portal_page_name = ($hSettings["portal_page_name"].nil? ? "kpp.htm" : get_file($hSettings["portal_page_name"])) 
+	    return if portal_page_name == get_file(file_in_webhelp)
+			#next if (get_file (e.attributes['url']) == $hSettings["Sportal_page_name"])
+			   
 			#add the 'Rate this topic' link before the first closing <h> element.
 			position_of_first_closing_heading_element = its_html.index(/<\/h\d>/)
 			its_html.insert(position_of_first_closing_heading_element, @FEEDBACK_LINK) if !position_of_first_closing_heading_element.nil?
-
-      #add the feedback form.			
-	    its_html.gsub!(/<\/body>/i, @FEEDBACK_FORM) 
+			
+			#add the feedback form.			
+	    its_html.gsub!(/<\/body>/i, feedback_form) 
       
-    
   end  
 
 end
@@ -195,7 +197,7 @@ end #ShowmeProcessor
 class AboutboxProcessor
 
 
-  def UpdateAboutBox (webhelp_path, lang)
+  def update_about_box (webhelp_path, lang)
 	
 	  ###########################################################################
 		#NOTE: as well as the changes to the JS here, the ENG whskin_banner.htm 
@@ -271,7 +273,7 @@ end #Aboutbox processor
 
 class TableIconProcessor
 
-  def copyIcons(webhelp_path)
+  def copy_icons(webhelp_path)
     
     begin
 
@@ -308,163 +310,3 @@ class TableIconProcessor
 
 
 end # TableIconProcessor
-
-
-def writeFile(file_in_webhelp, its_html)
-
-  begin
-    f = File.open(file_in_webhelp, 'w')
-    f.write(its_html)
-    f.close
-  rescue Exception
-    puts ("Problem reading/writing " + file_in_webhelp) if $hSettings["show_onscreen_progress"]
-  end
-
-end
-
-
-def openFile(fileInWebHelp)
-
-  begin
-    return File.read(fileInWebHelp)
-  rescue
-    puts "Couldn't open " + fileInWebHelp if $hSettings["show_onscreen_progress"]
-  end
-
-end
-
-
-def parseWebHelpFile (webhelp_path_and_file, lang)
-
-  webhelp_path_and_file.gsub!("<LANG>", lang)
-  webhelp_path, webhelp_file_only = splitPathAndFile(webhelp_path_and_file)
-
-  is_legacy_webhelp = false
-if $hSettings["webhelp_content_folder"] == "default"
-  
-    
-    #assume the contents folder is the name of the root file minus the extension.
-    webhelp_content_folder = webhelp_path + "/" + File.basename(webhelp_file_only, '.htm') + "/"
-  
-  elsif $hSettings["webhelp_content_folder"] == "legacy"
- 
-    #set the contents folder to the folder containing the root file if we're dealing with a legacy system.
-    webhelp_content_folder = webhelp_path
-    is_legacy_webhelp = true
-
-  else
-
-    webhelp_content_folder = String.new($hSettings["webhelp_content_folder"])
-    webhelp_content_folder.gsub!("<LANG>", lang) 
-  
-  end  
-  
-  return webhelp_path, webhelp_file_only, webhelp_content_folder, is_legacy_webhelp
-
-end  
-
-def splitPathAndFile (strWebHelp)
-
-    #split a dir + file string into dir and file and return them
-
-    #get the file name from the end of the string, by:
-    #putting the string into an array,
-    aWebHelp = strWebHelp.split("/")
-  
-    #then getting the last element (i.e. the file name).
-    strFile = aWebHelp[aWebHelp.length-1]
-  
-    #now get rid of the last element (the file name) from the array,
-    aWebHelp.delete_at(aWebHelp.length-1)
-  
-    #then build a string from what's left (to give the path)
-    strPath = aWebHelp.join("/")
-  
-    return strPath, strFile
-  
-end
-
-def getFile (strWebHelp)
-
-    #get the file name from the end of the string, by:
-    #putting the string into an array,
-    aWebHelp = strWebHelp.split("/")
-  
-    #then getting the last element (i.e. the file name).
-    strFile = aWebHelp[aWebHelp.length-1]
-  
-    return strFile
-  
-end
-
-def removeFileExtension (strFile)
-
-    return File.basename(strFile, '.*')
-
-end
-
-def checkLanguage()
-
-  if $hSettings["language"].nil?
-    puts "No language specified."
-    abort
-  end
-  
-  aLangs = $hSettings["language"].split(",")
-
-  if aLangs.length > 1 and !($hSettings["webhelp"].include? "<LANG>")
-    puts "No <LANG> in WebHelp path but multiple languages specified."
-    abort
-  end
-  
-  return aLangs
-  
-end
-
-def buildHashFromKeyValueList (list)
-
-    s = Array.new() 
-    list.split(",").each {|kv| s << kv.split("=")}
-    
-    return Hash[*s.flatten]
-
-
-end
-
-def getScaffoldingFileType (file_in_webhelp)
-
-  $hScaffolding.each do |sf, sf_type|
-        
-    #is the current file a scaffolding file?
-    return sf_type if file_in_webhelp.include? sf
-
-  end
-
-end
-
-def copyGoButton(webhelp_path)
-    
-    begin
-
-      FileUtils.cp "files/system/misc/Gray_Go.gif", webhelp_path + "/Gray_Go.gif" 
-      
-    rescue Exception => e
-
-      puts e.to_s 
-
-    end  
-
-  end #copyGoButton
-
-def showVersionInformation (stop_after_this)
-
-  puts " "
-  puts "**********************"
-  puts "Help processing script"
-  puts "Version:      2012.2.0"
-  puts "**********************"
-  puts " "
-
-  abort if stop_after_this
-
-end
