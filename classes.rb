@@ -71,14 +71,6 @@ class FeedbackFormProcessor
 			#add the 'Rate this topic' link before the first closing <h> element.
 			position_of_first_closing_heading_element = its_html.index(/<\/h\d>/)
 			its_html.insert(position_of_first_closing_heading_element, @FEEDBACK_LINK) if !position_of_first_closing_heading_element.nil?
-
-			if (url_in_toc_file.include? '/')
-			  star_path = "../../"
-			else
-			  star_path = ""
-			end
-			
-			feedback_form = @FEEDBACK_FORM.gsub("<star-path>", star_path)
 			
 			#add the feedback form.			
 	    its_html.gsub!(/<\/body>/i, feedback_form) 

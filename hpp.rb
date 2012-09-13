@@ -65,15 +65,8 @@ langs.each do |lang|
   #copy the table icons to the WebHelp system.
   $TI.copy_icons($WEBHELP_PATH) if $hSettings["do_tableicons"]
 	
-	#prepare for adding feedback forms.
-	if $hSettings["do_feedbackforms"]
-	  
-		#copy stars.
-		stars = ["star_on.jpg", "star_off.jpg", "star_hover.jpg", "star_on_almost.jpg", "star_hover_almost.jpg"] 
-	  stars.each { |star| FileUtils.cp "files/system/feedbackform/" + star, $WEBHELP_PATH + '/' + star }
-	
-    #tell the feedback form processor to build the text of the form.
-    $FF.setFeedbackForm(lang) if $hSettings["do_feedbackforms"]
+  #tell the feedback form processor to build the text of the form.
+  $FF.setFeedbackForm(lang) if $hSettings["do_feedbackforms"]
 		
   end
   
