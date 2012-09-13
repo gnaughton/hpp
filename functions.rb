@@ -233,12 +233,20 @@ def process_topic_files(elements, lang)
 
 end
 
-def process_nontoc_topic_files
+def process_nontoc_topic_files(settings_file_root)
 
+  begin
 
+    open('files/user/nontoc/' + settings_file_root + '.txt').each do |nontoc_file| 
+	    p nontoc_file.chomp
+		end
+  
+	rescue => e
+    #no problem if there isn't a nontoc topics file.
+  end
+	
+end	
 
-
-end
 
 def build_scaffolding_hash
 
