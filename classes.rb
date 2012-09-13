@@ -59,10 +59,6 @@ class FeedbackFormProcessor
 		
 		@FEEDBACK_LINK = openFile("files/system/feedbackform/" + lang.downcase + "_feedback_link.txt")
 		
-		#update the path to the star images, which are installed in the root folder.
-		star_path = $hSettings["webhelp_content_folder"] == "legacy" ? "" : "../"
-		@FEEDBACK_FORM.gsub!("<star-path>", star_path)
-		
   end
   
   
@@ -78,21 +74,6 @@ class FeedbackFormProcessor
       
     
   end  
-	
-	def copyStars (webhelp_path, webhelp_content_folder)
-	
-		
-		#copy the stars to the content folder.
-		stars = ["star_on.jpg", "star_off.jpg", "star_hover.jpg", "star_on_almost.jpg", "star_hover_almost.jpg"] 
-		
-		#copy the stars to the contents folder (which is the root in a legacy system).
-		stars.each { |star| FileUtils.cp "files/system/feedbackform/" + star, webhelp_content_folder + '/' + star }
-		
-		#hack - copy them to the root folder as well (!).
-		#this is so that the relative links in the portal page work in a single-sourced system.
-		stars.each { |star| FileUtils.cp "files/system/feedbackform/" + star, webhelp_path + '/' + star }
-	
-	end
 
 end
 
