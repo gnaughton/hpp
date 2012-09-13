@@ -201,8 +201,11 @@ end
 
 def process_topic_file(file_in_toc, lang)
 
+         #process a file in the TOC.
+
          #read in the file's HTML.  
 				 topic_file = $WEBHELP_PATH + "/" + file_in_toc
+				 p topic_file
 				 begin
 				   topic_html = File.read(topic_file)
 				 rescue 
@@ -233,12 +236,15 @@ def process_topic_file(file_in_toc, lang)
 				 
 end
 
-def process_nontoc_topic_files(settings_file_root)
+def process_nontoc_topic_files(settings_file_root, lang)
 
   begin
 
+	  p 'files/user/nontoc/' + settings_file_root + '.txt'
     open('files/user/nontoc/' + settings_file_root + '.txt').each do |nontoc_file| 
-	    p nontoc_file.chomp
+	    
+			process_topic_file(nontoc_file.chomp!, lang)
+		
 		end
   
 	rescue => e
