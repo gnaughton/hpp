@@ -173,6 +173,9 @@ def copy_go_button(webhelp_path)
 
 def process_topic_files(elements, lang)
 
+  #walk through the TOC files stored in the /whxdata folder as whtdata.0xml, whtdata1.xml...
+	#only whtdata0.xml might be present. If there are more, they are referenced in 'chunk' elements.
+
    elements.each { |e|  
 	 
 	   print '.' if $hSettings["show_onscreen_progress"]
@@ -238,14 +241,37 @@ end
 
 def process_nontoc_topic_files(settings_file_root, lang)
 
-  #look for a file with a language extension first (balance_ENG.txt), then one without (balance.txt)
+=begin
+	  if the help system has topics not in the toc, they are stored in a file in files/user/nontoc/
+		the file has the name of the settings file used to process the help system + '.txt', 
+		so balance.txt for balance.yml. 
+		
+		the user can be more specific and use a language-specific file, so balance_ENG.txt, balance_JPN.
+		
+		this function looks for the language-specific file first, then the general file.
+		if it doesn't find either, it carries on - in most cases these files won't exist.
+		
+		the file has one topic file per line, so:
+		Not_in_TOC1.htm
+		Not_in_TOC2.htm
+		
+		files are specified relative to the root folder of the help system, so:
+		C:/BalanceHelp/Balance/Not_in_TOC.htm --> Balance/Not_in_TOC.htm
+		C:/RaveHelp/Not_in_TOC.htm            --> Not_in_TOC.htm
+		
+=end
+
+  #look for a file with a language extension first, then one without.
   files_to_open = ["files/user/nontoc/" + settings_file_root + "_" + lang + ".txt", "files/user/nontoc/" + settings_file_root + ".txt"]
   files_to_open.each do |file_to_open|
 	
 	  begin	
 		
 		  open(file_to_open).each do |nontoc_file| 
+			
+			  #add the GA, feedback forms etc. to the topic.
 	      process_topic_file(nontoc_file.chomp!, lang)
+			
 			end #open(file_to_open).each do
 		
 		rescue 
