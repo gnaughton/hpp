@@ -205,7 +205,7 @@ def process_topic_file(file_in_toc, lang)
 
          #read in the file's HTML.  
 				 topic_file = $WEBHELP_PATH + "/" + file_in_toc
-				 p topic_file
+				
 				 begin
 				   topic_html = File.read(topic_file)
 				 rescue 
@@ -238,20 +238,23 @@ end
 
 def process_nontoc_topic_files(settings_file_root, lang)
 
-  begin
-
-	  p 'files/user/nontoc/' + settings_file_root + '.txt'
-    open('files/user/nontoc/' + settings_file_root + '.txt').each do |nontoc_file| 
-	    
-			process_topic_file(nontoc_file.chomp!, lang)
-		
-		end
-  
-	rescue => e
-    #no problem if there isn't a nontoc topics file.
-  end
+  #look for a file with a language extension first (balance_ENG.txt), then one without (balance.txt)
+  files_to_open = ["files/user/nontoc/" + settings_file_root + "_" + lang + ".txt", "files/user/nontoc/" + settings_file_root + ".txt"]
+  files_to_open.each do |file_to_open|
 	
-end	
+	  begin	
+		
+		  open(file_to_open).each do |nontoc_file| 
+	      process_topic_file(nontoc_file.chomp!, lang)
+			end #open(file_to_open).each do
+		
+		rescue 
+      #no problem if there isn't a nontoc topics file.
+    end #begin rescue block    
+			
+	end #files_to_open.each do
+		
+end #def process_nontoc...	
 
 
 def build_scaffolding_hash
@@ -265,11 +268,5 @@ def build_scaffolding_hash
   $hScaffolding = buildHashFromKeyValueList(scaffolding_string)
 	
 	return $hScaffolding
-
-end
-
-def do_something?
-
-  return false
 
 end
