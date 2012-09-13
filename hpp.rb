@@ -94,6 +94,9 @@ langs.each do |lang|
 	#process the topic files (add feedback forms, GA code...)
 	process_topic_files(tocdoc.root.elements, lang)
 	
+	#process any additional files not in the TOC.
+	process_nontoc_topic_files()
+	
 	#add Google Analytics to the scaffolding files.
 	if $hSettings["do_analytics"]
 	

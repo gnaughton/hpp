@@ -233,6 +233,13 @@ def process_topic_files(elements, lang)
 
 end
 
+def process_nontoc_topic_files
+
+
+
+
+end
+
 def build_scaffolding_hash
 
   scaffolding_string = String.new($hSettings["tracked_scaffolding_files"])
