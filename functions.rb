@@ -211,8 +211,8 @@ def process_topic_file(file_in_toc, lang)
 				
 				 begin
 				   topic_html = File.read(topic_file)
-				 rescue 
-				   puts "\r\nCouldn't open following TOC item: " + e.attributes['url']
+				 rescue => e 
+				   puts "\r\nCouldn't open following topic: " + file_in_toc
 					 return
 				 end
 				 
