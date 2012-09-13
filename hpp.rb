@@ -130,7 +130,8 @@ langs.each do |lang|
 		} # end each wrapper_file
 			
 	end # if showme_wrappers_folder
+  
+  print "Done!\r\n" if $hSettings["show_onscreen_progress"] 
 	
 end #language loop
 
-print "Done!\r\n" if $hSettings["show_onscreen_progress"] 
