@@ -188,30 +188,40 @@ def process_topic_files(elements, lang)
 		 #it's a 'book' or 'item' element.
      #if it has a 'url' attribute that references a topic file, we need to process that file.		 
 			  
-		   if e.attributes['url']
-			   
-			   #there is a referenced topic file, so read in its html.
-				 topic_file = $WEBHELP_PATH + "/" + e.attributes['url']
-				 
+		   process_topic_file(e.attributes['url'], lang) if e.attributes['url']
+			
+			 #recursively call the function on the child elements of the current element.
+			 process_topic_files(e.elements, lang)
+		 
+		 end
+		 
+	} #end each
+
+end
+
+def process_topic_file(file_in_toc, lang)
+
+         #read in the file's HTML.  
+				 topic_file = $WEBHELP_PATH + "/" + file_in_toc
 				 begin
 				   topic_html = File.read(topic_file)
 				 rescue 
 				   puts "\r\nCouldn't open following TOC item: " + e.attributes['url']
-					 next
+					 return
 				 end
 				 
 				 #add the Google Analytics tracking code.
 				 $GA.addTrackingCode(topic_html, "Content") if $hSettings["do_analytics"]
 				 
 				 #add the feedback form.
-				 $FF.addFeedbackForm(e.attributes['url'], topic_file, topic_html) if $hSettings["do_feedbackforms"]
+				 $FF.addFeedbackForm(file_in_toc, topic_file, topic_html) if $hSettings["do_feedbackforms"]
 				 
 				 #fix the table icons.
 				 $TI.addIcons(topic_html) if $hSettings["do_tableicons"]
 				 
 				 #add the showme links.
 				 if $hSettings["do_showmes"]
-				   topic_file_without_path = get_file(e.attributes['url'])
+				   topic_file_without_path = get_file(file_in_toc)
 				   $SM.addShowmeLinks(topic_file_without_path, topic_html, lang) 
 				 end
 				 
@@ -221,16 +231,6 @@ def process_topic_files(elements, lang)
 				 #save the modified file.
 				 writeFile(topic_file, topic_html)
 				 
-			 
-			 end
-			
-			#recursively call the function on the child elements of the current element.
-			process_topic_files(e.elements, lang)
-		 
-		 end
-		 
-	} #end each
-
 end
 
 def process_nontoc_topic_files(settings_file_root)
