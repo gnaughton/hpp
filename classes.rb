@@ -73,7 +73,7 @@ class FeedbackFormProcessor
 			its_html.insert(position_of_first_closing_heading_element, @FEEDBACK_LINK) if !position_of_first_closing_heading_element.nil?
 			
 			#add the feedback form.			
-	    its_html.gsub!(/<\/body>/i, feedback_form) 
+	    its_html.gsub!(/<\/body>/i, @FEEDBACK_FORM) 
       
   end  
 

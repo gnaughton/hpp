@@ -67,8 +67,6 @@ langs.each do |lang|
 	
   #tell the feedback form processor to build the text of the form.
   $FF.setFeedbackForm(lang) if $hSettings["do_feedbackforms"]
-		
-  end
   
 	#prepare showmes.
 	if $hSettings["do_showmes"]
