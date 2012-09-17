@@ -143,20 +143,7 @@ class ShowmeProcessor
         #we wrap the link around the text_where_link_goes
         link_text_to_add = String.new(@LIST_TEMPLATE)
         link_text_to_add["<LINK_TEXT>"] = text_where_link_goes
-				
-				#generate the showme wrapper.
-				if $hSettings["generate_wrappers"]
-				  
-					#make the wrappers folder for the language we're processing.
-					dir_to_make = "files/user/showmes/wrappers/" + lang
-					FileUtils.makedirs(dir_to_make) unless File.exists?(dir_to_make)
-				  
-					#build the wrapper for the showme.
-					generateWrapper(wrapper_file_for_showme, text_where_link_goes, lang)
-				
-				end
-		
-             
+						     
       else
 
         #it's a file that contains contextual links;
