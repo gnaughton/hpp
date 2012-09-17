@@ -86,7 +86,7 @@ class ShowmeProcessor
   
     @LIST_TEMPLATE = openFile("files/system/showmes/list_link_template_" + lang + ".txt")
     @CONTEXT_TEMPLATE = openFile("files/system/showmes/context_link_template_" + lang + ".txt")
-    @SHOWMES = IO.readlines($CONFIG_FILES_ROOT + "files/user/showmes/" + settings_file_root + "_showmes_" + lang + ".txt")
+    @SHOWMES = IO.readlines("files/user/showmes/" + settings_file_root + "_showmes_" + lang + ".txt")
     
   
   end
@@ -148,7 +148,7 @@ class ShowmeProcessor
 				if $hSettings["generate_wrappers"]
 				  
 					#make the wrappers folder for the language we're processing.
-					dir_to_make = $CONFIG_FILES_ROOT + "files/user/showmes/wrappers/" + lang
+					dir_to_make = "files/user/showmes/wrappers/" + lang
 					FileUtils.makedirs(dir_to_make) unless File.exists?(dir_to_make)
 				  
 					#build the wrapper for the showme.

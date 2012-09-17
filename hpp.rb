@@ -13,13 +13,10 @@ show_version()
 #stop if the user gave the '-v' or '--version' option and the command line.
 abort if options[:version]
 
-#set the value of $CONFIG_FILES_ROOT (see function for explanation).
-get_config_files_root()
-
 #get the settings file from the command line; if none was specified, use 'hpp.yml'
 settings_file_root = (ARGV[0].nil? ? "hpp" : ARGV[0])
 
-$hSettings = YAML.load_file $CONFIG_FILES_ROOT + "settings/" + settings_file_root + '.yml'
+$hSettings = YAML.load_file "settings/" + settings_file_root + '.yml'
 
 $GA = GAProcessor.new
 $FF = FeedbackFormProcessor.new
