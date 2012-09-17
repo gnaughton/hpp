@@ -129,8 +129,12 @@ do_feedbackforms:           yes
 do_analytics:               yes
 #####################################################################################################
 
+#####################################################################################################
+#Portal page settings. 
+#Tell the script what the portal page is called so it doesn't add the feedback form.
 portal_page_name:      kpp.htm
-include_feedback_form: no 
+#####################################################################################################
+
 
 #You're done! Please don't touch any setttings below this line.
 
