@@ -45,7 +45,7 @@ def writeFile(file_in_webhelp, its_html)
     f.write(its_html)
     f.close
   rescue Exception
-    puts ("Problem reading/writing " + file_in_webhelp) if $hSettings["show_onscreen_progress"]
+    puts ("Problem reading/writing " + file_in_webhelp)
   end
 
 end
@@ -56,7 +56,7 @@ def openFile(fileInWebHelp)
   begin
     return File.read(fileInWebHelp)
   rescue
-    puts "Couldn't open " + fileInWebHelp if $hSettings["show_onscreen_progress"]
+    puts "Couldn't open " + fileInWebHelp 
   end
 
 end
@@ -149,7 +149,7 @@ def process_topic_files(elements, lang)
 
    elements.each { |e|  
 	 
-	   print '.' if $hSettings["show_onscreen_progress"]
+	   print '.'
 	 
 	   if e.attributes['ref']
 		 #it's a 'chunk' element, with a url to a sub-toc file in the 'ref' attribute

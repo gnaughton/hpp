@@ -38,14 +38,10 @@ langs.each do |lang|
  
 	$WEBHELP_PATH.gsub!("<LANG>", lang) 
 	
-	if $hSettings["show_onscreen_progress"]
+	puts ''
+	puts "File: " + $WEBHELP_PATH + "/" + $WEBHELP_FILE
+  print "Working" 
 	
-	  puts ''
-	  puts "File: " + $WEBHELP_PATH + "/" + $WEBHELP_FILE if $hSettings["show_onscreen_progress"]
-    print "Working" if $hSettings["show_onscreen_progress"]
-		
-  end		
-
 	#copy the Japanese 'Go' button to the help system.
 	copy_go_button($WEBHELP_PATH) if lang == "JPN"
   
@@ -119,7 +115,7 @@ langs.each do |lang|
 			
 	end # if showme_wrappers_folder
   
-  print "Done!\r\n" if $hSettings["show_onscreen_progress"] 
+  print "Done!\r\n"
 	
 end #language loop
 
