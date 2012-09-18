@@ -3,26 +3,25 @@ load 'functions.rb'
 require 'fileutils.rb'
 require 'yaml'
 
-
-#parse the command line options.
-options = get_options()
-
-#show the script version.
-show_version() 
-
-#stop if the user gave the '-v' or '--version' option and the command line.
-abort if options[:version]
-
-#get the settings file from the command line; if none was specified, use 'hpp.yml'
-settings_file_root = (ARGV[0].nil? ? "hpp" : ARGV[0])
-
-$hSettings = YAML.load_file "settings/" + settings_file_root + '.yml'
-
+$CM = ConsoleMessages.new
 $GA = GAProcessor.new
 $FF = FeedbackFormProcessor.new
 $SM = ShowmeProcessor.new
 ab = AboutboxProcessor.new
 $TI = TableIconProcessor.new
+
+
+#parse the command line options.
+options = get_options()
+
+#show the script version. 
+#this function will stop the script if the user gave the '-v' or '--version' option on the command line.
+$CM.show_version(options[:version]) 
+
+#get the settings file from the command line; if none was specified, use 'hpp.yml'
+settings_file_root = (ARGV[0].nil? ? "hpp" : ARGV[0])
+
+$hSettings = YAML.load_file "settings/" + settings_file_root + '.yml'
 
 #check the language and filespec keys in the ini file.
 #if everything's OK the array will contain all the languages we're processing.
@@ -35,12 +34,10 @@ langs.each do |lang|
 	
   #get the WebHelp path and file.
   $WEBHELP_PATH, $WEBHELP_FILE = split_path_and_file(webhelp)
- 
-	$WEBHELP_PATH.gsub!("<LANG>", lang) 
+  $WEBHELP_PATH.gsub!("<LANG>", lang) 
 	
-	puts ''
-	puts "File: " + $WEBHELP_PATH + "/" + $WEBHELP_FILE
-  print "Working" 
+	#show the message that we've started processing a webhelp system.
+	$CM.start_file_message()
 	
 	#copy the Japanese 'Go' button to the help system.
 	copy_go_button($WEBHELP_PATH) if lang == "JPN"
@@ -115,7 +112,7 @@ langs.each do |lang|
 			
 	end # if showme_wrappers_folder
   
-  print "Done!\r\n"
+  $CM.done()
 	
 end #language loop
 

@@ -26,18 +26,6 @@ def get_options()
 	
 end # get_options()
 
-def show_version ()
-
-  puts " "
-  puts "**********************"
-  puts "Help processing script"
-  puts "Version:      2012.2.0"
-  puts "**********************"
-  puts " "
-
-end  # show_version()
-
-
 def writeFile(file_in_webhelp, its_html)
 
   begin
@@ -101,17 +89,11 @@ end
 
 def checkLanguage()
 
-  if $hSettings["language"].nil?
-    puts "No language specified."
-    abort
-  end
+  $CM.add_error("No language specified", true) if $hSettings["language"].nil?
   
   langs = $hSettings["language"].split(",")
 
-  if langs.length > 1 and !($hSettings["webhelp"].include? "<LANG>")
-    puts "No <LANG> in WebHelp path but multiple languages specified."
-    abort
-  end
+  $CM.add_error("No <LANG> in WebHelp path but multiple languages specified.", true) if langs.length > 1 and !($hSettings["webhelp"].include? "<LANG>")
   
   return langs
   
@@ -135,7 +117,7 @@ def copy_go_button(webhelp_path)
       
     rescue Exception => e
 
-      puts e.to_s 
+     $CM.add_error("Couldn't copy Go button", false)
 
     end  
 
@@ -149,7 +131,7 @@ def process_topic_files(elements, lang)
 
    elements.each { |e|  
 	 
-	   print '.'
+	  $CM.update_progress_display()
 	 
 	   if e.attributes['ref']
 		 #it's a 'chunk' element, with a url to a sub-toc file in the 'ref' attribute
@@ -183,7 +165,7 @@ def process_topic_file(file_in_toc, lang)
 				 begin
 				   topic_html = File.read(topic_file)
 				 rescue => e 
-				   puts "\r\nCouldn't open following topic: " + file_in_toc
+				   $CM.add_error("Couldn't open topic: " + file_in_toc, false)
 					 return
 				 end
 				 

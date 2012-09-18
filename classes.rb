@@ -4,34 +4,24 @@ class GAProcessor
   
     @TRACKING_SCRIPT = File.read("files/system/googleanalytics/ga_tracking_script.txt")
     rescue
-      puts "Couldn't open  GA tracking file."
-      abort
+      $CM.add_error("Couldn't open template GA tracking file.", true)
     end
   
   def addTrackingCode (its_html, webhelp_file_type)
   
-    begin
-    
-      tracking_script = String.new(@TRACKING_SCRIPT)
-     
-      web_property_id = $hSettings["web_property_id_" + $hSettings["help_system_status"]]
-      tracking_script.gsub!("HELP_SYSTEM_NAME", $hSettings["product"])
-      tracking_script.gsub!("WEB_PROPERTY_ID", web_property_id)
-      tracking_script.gsub!("HELP_SYSTEM_PAGE_TYPE", webhelp_file_type) 
+    tracking_script = String.new(@TRACKING_SCRIPT)
+    web_property_id = $hSettings["web_property_id_" + $hSettings["help_system_status"]]
+    tracking_script.gsub!("HELP_SYSTEM_NAME", $hSettings["product"])
+    tracking_script.gsub!("WEB_PROPERTY_ID", web_property_id)
+    tracking_script.gsub!("HELP_SYSTEM_PAGE_TYPE", webhelp_file_type) 
 			
-			#track the pageview only if it's the root file or a content file.
-			#we don't track the pageviews of scaffolding files, just the event.
-			pageview = (webhelp_file_type == "Content" || webhelp_file_type == "Root" ? "_gaq.push(['_trackPageview']);" : "")
-			tracking_script.gsub!("HELP_SYSTEM_PAGEVIEW", pageview) 
+	  #track the pageview only if it's the root file or a content file.
+	  #we don't track the pageviews of scaffolding files, just the event.
+	  pageview = (webhelp_file_type == "Content" || webhelp_file_type == "Root" ? "_gaq.push(['_trackPageview']);" : "")
+		tracking_script.gsub!("HELP_SYSTEM_PAGEVIEW", pageview) 
 			
-      its_html.gsub!(/<\/head>/i, tracking_script) 
-
-    rescue Exception => e
-
-      puts "Couldn't add GA script." 
-      puts "Exception: " + e.to_s
+    its_html.gsub!(/<\/head>/i, tracking_script) 
  
-    end  
 
   end #addTrackingCode
 
@@ -97,9 +87,9 @@ class ShowmeProcessor
     
     FileUtils.cp "files/system/showmes/i_help_video.png", webhelp_path + "/i_help_video.png"
   
-    rescue Exception => e
+    rescue Exception
 
-      #puts e.to_s
+      $CM.add_error("Couldn't copy showme icon to help system", false)
 
     end
   
@@ -170,8 +160,12 @@ class ShowmeProcessor
       begin
 			
         html_of_webhelp_file_in_contents_folder[text_where_link_goes] = link_text_to_add			
-      rescue Exception => e
-        puts "\r\n\r\nShowme links error!\r\nTopic:      " + webhelp_file_in_contents_folder + "\r\nLink text:  " + text_where_link_goes + "\r\nError:      " + e.message + "\r\n\r\n"
+      
+			rescue Exception => e
+			  
+				errmsg = "Couldn't add showme link. Topic: " + webhelp_file_in_contents_folder + " Link text: " + text_where_link_goes
+			  $CM.add_error(errmsg, false)
+        
 			end
 
     end  #@SHOWMES.each
@@ -268,9 +262,9 @@ class TableIconProcessor
       FileUtils.cp "files/system/tableicons/pushpin_d.png", webhelp_path + "/pushpin_d.png"
       FileUtils.cp "files/system/tableicons/triangle_d.png", webhelp_path + "/triangle_d.png"
     
-    rescue Exception => e
-
-      puts e.to_s 
+    rescue Exception
+		
+		  $CM.add_error("Problem copying table icons to help system", false)
 
     end  
 
@@ -297,3 +291,113 @@ class TableIconProcessor
 
 
 end # TableIconProcessor
+
+class ConsoleMessages 
+
+  def initialize
+	
+	  @pos       = 0
+		@reset_pos = 60
+		@errors    = []
+		showstopper = false
+		
+		#display strings.
+		@working_message = "Working"
+		@done_message = "Done!"
+		@symbol = "."
+		@error_header = "Errors:"
+		@error_start = "* "
+	  
+	end
+	
+	def show_version (stop_now)
+
+    puts " "
+    puts "**********************"
+    puts "Help processing script"
+    puts "Version:      2012.2.0"
+    puts "**********************"
+    puts " "
+		
+		abort if stop_now
+
+  end  # show_version()
+	
+	def show_start_message()
+	  
+		print @start_message
+	  
+	end
+	
+	def start_file_message()
+	
+	  puts ''
+	  puts "File: " + $WEBHELP_PATH + "/" + $WEBHELP_FILE
+    print @working_message
+	
+	end # start_file_message
+	
+	def start
+	
+	  show_start_message()
+	
+	end
+	
+	def show_done_message()
+	
+	  print "\r" + @working_message + (@symbol * (@reset_pos - @working_message.length)) + @done_message
+		
+	end
+	
+	def done
+	
+	  show_done_message()
+		display_errors()
+		reset()
+	
+	end
+	
+	def reset()
+	
+	  @errors = []
+		
+	end
+
+  def update_progress_display() 
+
+	  @pos += 1
+	  print @symbol
+    print ("\r" + @working_message + (" " * (@reset_pos - @working_message.length)) + "\r" + @working_message) if (@pos % (@reset_pos - @working_message.length)) == 0
+	
+	end
+	
+	def add_error (error, showstopper)
+	
+	  if showstopper
+	
+	    puts @done_message + "\r\n"	
+		  puts @error_header + "\r\n"
+	    puts @error_start + error
+		  abort
+	
+	  else
+	
+	    @errors << error
+	
+	  end
+	
+  end # add error
+	
+	
+	def display_errors
+	
+	  if (@errors.length > 0)
+		  puts "\r\n" + @error_header
+	    @errors.each { |e| puts @error_start + e }
+		end
+			
+			
+	
+	end
+
+end # ConsoleMessages
