@@ -80,7 +80,7 @@ langs.each do |lang|
 	process_topic_files(tocdoc.root.elements, lang, missing_mandatory)
 	
 	#process any additional files not in the TOC.
-	process_nontoc_topic_files(settings_file_root, lang)
+	process_nontoc_topic_files(settings_file_root, lang, missing_mandatory)
 	
 	#add Google Analytics to the scaffolding files.
 	if $hSettings["do_analytics"]

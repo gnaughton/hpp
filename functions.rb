@@ -191,7 +191,7 @@ def process_topic_file(file_in_toc, lang, missing_mandatory)
 				 
 end
 
-def process_nontoc_topic_files(settings_file_root, lang)
+def process_nontoc_topic_files(settings_file_root, lang, missing_mandatory)
 
 =begin
 	  if the help system has topics not in the toc, they are stored in a file in files/user/nontoc/
@@ -228,7 +228,7 @@ def process_nontoc_topic_files(settings_file_root, lang)
 		  open(file_to_open).each do |nontoc_file| 
 			
 			  #add the GA, feedback forms etc. to the topic.
-	      process_topic_file(nontoc_file.chomp!, lang)
+	      process_topic_file(nontoc_file.chomp!, lang, missing_mandatory)
 			
 			end #open(file_to_open).each do
 			
