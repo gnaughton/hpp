@@ -212,33 +212,21 @@ def process_nontoc_topic_files(settings_file_root, lang, missing_mandatory)
 		C:/RaveHelp/Not_in_TOC.htm            --> Not_in_TOC.htm
 		
 =end
-
-  #used to stop processing of two files in error. see comment below.
-  found_file_to_open = false
   
-  #look for a file with a language extension first, then one without.
-  files_to_open = ["files/user/nontoc/" + settings_file_root + "_" + lang + ".txt", "files/user/nontoc/" + settings_file_root + ".txt"]
-  files_to_open.each do |file_to_open|
-	
-	  #if for some reason there are foo.txt and foo_<LANG>.txt files, don't process foo.txt.
-	  next if found_file_to_open
-	
-	  begin	
+	begin	
+	  
+		file_to_open = "files/user/nontoc/" + settings_file_root + ".txt"
 		
-		  open(file_to_open).each do |nontoc_file| 
+		open(file_to_open).each do |nontoc_file| 
 			
-			  #add the GA, feedback forms etc. to the topic.
-	      process_topic_file(nontoc_file.chomp!, lang, missing_mandatory)
-			
-			end #open(file_to_open).each do
-			
-			found_file_to_open = true
+		  #add the GA, feedback forms etc. to the topic.
+	     process_topic_file(nontoc_file.chomp, lang, missing_mandatory)
 		
-		rescue 
-      #no problem if there isn't a nontoc topics file.
-    end #begin rescue block    
-			
-	end #files_to_open.each do
+    end # open(file_to_open).each do		
+	  
+	rescue 
+     #no problem if there isn't a nontoc topics file.
+   end #begin rescue block    
 		
 end #def process_nontoc...	
 

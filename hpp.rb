@@ -122,7 +122,4 @@ langs.each do |lang|
 	#display the wrapup text for the help system.
 	$CM.done()
 	
-	
-	
 end #language loop
-
