@@ -253,3 +253,13 @@ def build_scaffolding_hash
 	return $hScaffolding
 
 end
+
+def load_settings_file(settings_file_root)
+
+  begin
+    $hSettings = YAML.load_file "settings/" + settings_file_root + '.yml'
+  rescue Errno::ENOENT 
+    $CM.add_error("Couldn't open settings file: " + settings_file_root + '.yml', true)
+  end
+
+end
