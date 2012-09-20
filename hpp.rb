@@ -28,6 +28,12 @@ load_settings_file(settings_file_root)
 #if everything's OK the array will contain all the languages we're processing.
 langs = checkLanguage()
 
+
+#this array starts with the list of mandatory files.
+#each time a topic is processed, it is subtracted from the array.
+#the remaining topics in the array are the missing mandatory files.
+missing_mandatory = get_mandatory_files(settings_file_root)
+
 langs.each do |lang|
 
   #get the WebHelp path/file and the contents folder if specified. 
@@ -71,7 +77,7 @@ langs.each do |lang|
 	tocdoc = Document.new(File.new($TOCFILES_FOLDER + "whtdata0.xml"))
 	
 	#process the topic files (add feedback forms, GA code...)
-	process_topic_files(tocdoc.root.elements, lang)
+	process_topic_files(tocdoc.root.elements, lang, missing_mandatory)
 	
 	#process any additional files not in the TOC.
 	process_nontoc_topic_files(settings_file_root, lang)
@@ -110,7 +116,13 @@ langs.each do |lang|
 			
 	end # if showme_wrappers_folder
   
-  $CM.done()
+	#add the list of missing topics to the list of errors.
+	$CM.add_missing_mandatory_messages(missing_mandatory)
+  
+	#display the wrapup text for the help system.
+	$CM.done()
+	
+	
 	
 end #language loop
 

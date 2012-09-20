@@ -402,13 +402,22 @@ class ConsoleMessages
 	
 	def display_errors
 	
+	  @errors.sort!
 	  if (@errors.length > 0)
 		  puts "\r\n" + @error_header
 	    @errors.each { |e| puts @error_start + e }
 		end
 			
-			
+	end # display_errors 
 	
-	end
+	def add_missing_mandatory_messages (mm)
+	 
+	  #add the list of missing mandatory topics to the list of errors.
+	  mm.each do |m| 
+		  msg = "Missing mandatory topic: " + m
+		  @errors << msg 
+		end # mm.each do
+	
+	end # add_missing_mandatory_messages
 
 end # ConsoleMessages

@@ -120,7 +120,7 @@ def copy_go_button(webhelp_path)
   end #copyGoButton
 
 
-def process_topic_files(elements, lang)
+def process_topic_files(elements, lang, missing_mandatory)
 
   #walk through the TOC files stored in the /whxdata folder as whtdata.0xml, whtdata1.xml...
 	#only whtdata0.xml might be present. If there are more, they are referenced in 'chunk' elements.
@@ -134,16 +134,16 @@ def process_topic_files(elements, lang)
 		   
 			 #read the sub-toc file and pass the elements of its root node recursively to this function.
 			 tocdoc = Document.new(File.new($TOCFILES_FOLDER + e.attributes['ref']))
-			 process_topic_files(tocdoc.root.elements, lang)
+			 process_topic_files(tocdoc.root.elements, lang, missing_mandatory)
 		 
 		 else
 		 #it's a 'book' or 'item' element.
      #if it has a 'url' attribute that references a topic file, we need to process that file.		 
 			  
-		   process_topic_file(e.attributes['url'], lang) if e.attributes['url']
+		   process_topic_file(e.attributes['url'], lang, missing_mandatory) if e.attributes['url']
 			
 			 #recursively call the function on the child elements of the current element.
-			 process_topic_files(e.elements, lang)
+			 process_topic_files(e.elements, lang, missing_mandatory)
 		 
 		 end
 		 
@@ -151,9 +151,12 @@ def process_topic_files(elements, lang)
 
 end
 
-def process_topic_file(file_in_toc, lang)
+def process_topic_file(file_in_toc, lang, missing_mandatory)
 
          #process a file in the TOC.
+				 
+				 #remove it from the global array that stores mandatory files.
+				 missing_mandatory.delete(file_in_toc)
 
          #read in the file's HTML.  
 				 topic_file = $WEBHELP_PATH + "/" + file_in_toc
@@ -261,5 +264,20 @@ def load_settings_file(settings_file_root)
   rescue Errno::ENOENT 
     $CM.add_error("Couldn't open settings file: " + settings_file_root + '.yml', true)
   end
+
+end
+
+def get_mandatory_files(settings_file_root)
+
+  #if there is a mandatory topics file, use it to populate the mandatory topics array.
+  file_to_open = "files/user/mandatory/" + settings_file_root + ".txt"
+  mandatory = []
+	begin
+	  open(file_to_open).each { |m| mandatory << m.chomp} 
+	rescue
+	  #no need to worry if there isn't a mandatory topics file.
+	end
+	
+	return mandatory
 
 end
