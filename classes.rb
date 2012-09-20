@@ -31,8 +31,12 @@ class FeedbackFormProcessor
 
   def setFeedbackForm (lang)
   
-    #@FEEDBACK_FORM = File.read("files/system/feedbackform/" + lang.downcase + "_help_feedback_form.htm").encode('UTF-8')
-    @FEEDBACK_FORM = openFile("files/system/feedbackform/" + lang.downcase + "_help_feedback_form.htm")
+	  begin
+      @FEEDBACK_FORM = openFile("files/system/feedbackform/" + lang.downcase + "_help_feedback_form.htm")
+		rescue Errno::ENOENT
+		  $CM.add_error("Couldn't open feedback form template.", true)
+		end
+		
 		
 		#update the product name.
     @FEEDBACK_FORM["<medidata-product-name>"] = $hSettings["product"]
@@ -56,7 +60,6 @@ class FeedbackFormProcessor
 	
 	    portal_page_name = ($hSettings["portal_page_name"].nil? ? "kpp.htm" : get_file($hSettings["portal_page_name"])) 
 	    return if portal_page_name == get_file(file_in_webhelp)
-			#next if (get_file (e.attributes['url']) == $hSettings["Sportal_page_name"])
 			   
 			#add the 'Rate this topic' link before the first closing <h> element.
 			position_of_first_closing_heading_element = its_html.index(/<\/h\d>/)
@@ -74,10 +77,20 @@ class ShowmeProcessor
   
   def loadFiles (lang, settings_file_root)
   
-    @LIST_TEMPLATE = openFile("files/system/showmes/list_link_template_" + lang + ".txt")
-    @CONTEXT_TEMPLATE = openFile("files/system/showmes/context_link_template_" + lang + ".txt")
-    @SHOWMES = IO.readlines("files/user/showmes/" + settings_file_root + "_showmes_" + lang + ".txt")
+	  begin
+		
+      @LIST_TEMPLATE = openFile("files/system/showmes/list_link_template_" + lang + ".txt")
+      @CONTEXT_TEMPLATE = openFile("files/system/showmes/context_link_template_" + lang + ".txt")
+      @SHOWMES = IO.readlines("files/user/showmes/" + settings_file_root + "_showmes_" + lang + ".txt")
     
+		rescue Errno::ENOENT 
+		  
+			$CM.add_error("Couldn't add showmes: couldn't load template file or showmes file.", false)
+		  
+			#don't do any more showmes processing.
+		  $hSettings["do_showmes"] = false
+			
+		end
   
   end
   
@@ -85,11 +98,11 @@ class ShowmeProcessor
   
     begin
     
-    FileUtils.cp "files/system/showmes/i_help_video.png", webhelp_path + "/i_help_video.png"
+      FileUtils.cp "files/system/showmes/i_help_video.png", webhelp_path + "/i_help_video.png"
   
-    rescue Exception
+    rescue Errno::ENOENT
 
-      $CM.add_error("Couldn't copy showme icon to help system", false)
+      $CM.add_error("Couldn't copy showme icon to help system.", false)
 
     end
   
@@ -375,9 +388,7 @@ class ConsoleMessages
 	
 	  if showstopper
 	
-	    puts @done_message + "\r\n"	
-		  puts @error_header + "\r\n"
-	    puts @error_start + error
+	    puts "\rCouldn't process help system!\r\n"	+ @error_header + "\r\n" + @error_start + error
 		  abort
 	
 	  else

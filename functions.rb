@@ -32,8 +32,8 @@ def writeFile(file_in_webhelp, its_html)
     f = File.open(file_in_webhelp, 'w')
     f.write(its_html)
     f.close
-  rescue Exception
-    puts ("Problem reading/writing " + file_in_webhelp)
+  rescue Errno::ENOENT
+   $CM.add_error("Couldn't write file: " + file_in_webhelp, false)
   end
 
 end
@@ -41,12 +41,8 @@ end
 
 def openFile(fileInWebHelp)
 
-  begin
     return File.read(fileInWebHelp)
-  rescue
-    puts "Couldn't open " + fileInWebHelp 
-  end
-
+   
 end
 
 def split_path_and_file (path_and_file)
@@ -115,7 +111,7 @@ def copy_go_button(webhelp_path)
 
       FileUtils.cp "files/system/misc/Gray_Go.gif", webhelp_path + "/Gray_Go.gif" 
       
-    rescue Exception => e
+    rescue Errno::ENOENT
 
      $CM.add_error("Couldn't copy Go button", false)
 
@@ -164,7 +160,7 @@ def process_topic_file(file_in_toc, lang)
 				
 				 begin
 				   topic_html = File.read(topic_file)
-				 rescue => e 
+				 rescue Errno::ENOENT 
 				   $CM.add_error("Couldn't open topic: " + file_in_toc, false)
 					 return
 				 end

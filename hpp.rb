@@ -58,15 +58,12 @@ langs.each do |lang|
   #tell the feedback form processor to build the text of the form.
   $FF.setFeedbackForm(lang) if $hSettings["do_feedbackforms"]
   
-	#prepare showmes.
-	if $hSettings["do_showmes"]
+	#load the showme files.
+	$SM.loadFiles(lang, settings_file_root) if $hSettings["do_showmes"]
+  
+	#copy the showme icon.
+	$SM.copyContextualIcon($WEBHELP_PATH) if $hSettings["do_showmes"]
 	
-    #load the files.
-		$SM.loadFiles(lang, settings_file_root) if $hSettings["do_showmes"]
-    #copy the icon.
-		$SM.copyContextualIcon($WEBHELP_PATH) if $hSettings["do_showmes"]
-	
-	end
 	
 	#build an XML document from the base TOC file.
 	$TOCFILES_FOLDER = $WEBHELP_PATH + "/whxdata/"
