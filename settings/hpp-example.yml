@@ -110,9 +110,7 @@ showme_list_JPN:       [showme list file, eg. List_of_Showme_Videos.htm]
 #showmes.
 #Afterwards, it's just as easy to add GA code to each new wrapper manually.
 #
-#Example: showme_wrappers_folder: TempFolderForShowMeWrappers
-#(where the fully qualified folder name is C:/Balance/BalanceContent/TempFolderForShowMeWrappers)
-#
+#Example: showme_wrappers_folder: C:/Balance/wrappers
 #
 #showme_wrappers_folder:    foo
 #####################################################################################################

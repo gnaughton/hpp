@@ -185,6 +185,21 @@ class ShowmeProcessor
     
   end  #addShowmeLinks
 	
+	def tag_wrappers(lang)
+	
+	  wf = String.new($hSettings["showme_wrappers_folder"])
+		wf.gsub!("<LANG>", lang)
+	  
+		Dir.glob(wf + "/*.htm").each do |w|
+
+      html = openFile(w)
+	    $GA.addTrackingCode(html, "ShowMe")
+	    writeFile(w, html)
+
+    end #each.do 
+
+	end #tag_wrappers
+	
 end #ShowmeProcessor
 
 

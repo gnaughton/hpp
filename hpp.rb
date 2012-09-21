@@ -11,6 +11,7 @@ ab = AboutboxProcessor.new
 $TI = TableIconProcessor.new
 
 
+
 #parse the command line options.
 options = get_options()
 
@@ -23,7 +24,8 @@ settings_file_root = (ARGV[0].nil? ? "hpp" : ARGV[0])
 
 #load it.
 load_settings_file(settings_file_root)
- 
+
+
 #check the language and filespec keys in the ini file.
 #if everything's OK the array will contain all the languages we're processing.
 langs = checkLanguage()
@@ -100,22 +102,8 @@ langs.each do |lang|
 	end
 		
 	#Add GA code to the showme wrappers.
-	if $hSettings["showme_wrappers_folder"]
-		
-		showme_wrappers_folder = String.new($hSettings["showme_wrappers_folder"])
-		showme_wrappers_folder.gsub!("<LANG>", lang)
-		
-		wrappers = Dir[showme_wrappers_folder + "/*.htm"]
-	  wrappers.each { |wrapper_file| 
-			
-		 wrapper_html = File.read(wrapper_file)
-		 $GA.addTrackingCode(wrapper_html, "ShowMe") 
-		 writeFile(wrapper_file, wrapper_html)
-			
-		} # end each wrapper_file
-			
-	end # if showme_wrappers_folder
-  
+	$SM.tag_wrappers(lang) if ($hSettings["do_showmes"] and $hSettings["do_analytics"] and !$hSettings["showme_wrappers_folder"].nil?)
+	
 	#add the list of missing topics to the list of errors.
 	$CM.add_missing_mandatory_messages(missing_mandatory)
   
