@@ -272,11 +272,11 @@ end
 
 def add_ga_to_scaffolding_files()
 
-if $hSettings["do_analytics"]
+  if $hSettings["do_analytics"]
 	
 	  #build the scaffolding hash and loop around it.
     $hScaffolding = build_scaffolding_hash()
-	  $hScaffolding.each_key { |key| 
+	  $hScaffolding.each_key do |key| 
 	
 	    #read in the file, add the GA code, write the file.
 	    scaffolding_file =  $WEBHELP_PATH + "/" + key
@@ -284,9 +284,8 @@ if $hSettings["do_analytics"]
 		  $GA.addTrackingCode(scaffolding_html, $hScaffolding[key]) 
 			writeFile(scaffolding_file, scaffolding_html)
 	
-	  } #end each_key
+	  end #each_key do
 		
-	end
+	end # if $hSettings
 		
-
-end
+end # add_ga...
