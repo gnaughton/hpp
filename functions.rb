@@ -269,3 +269,24 @@ def get_mandatory_files(settings_file_root)
 	return mandatory
 
 end
+
+def add_ga_to_scaffolding_files()
+
+if $hSettings["do_analytics"]
+	
+	  #build the scaffolding hash and loop around it.
+    $hScaffolding = build_scaffolding_hash()
+	  $hScaffolding.each_key { |key| 
+	
+	    #read in the file, add the GA code, write the file.
+	    scaffolding_file =  $WEBHELP_PATH + "/" + key
+		  scaffolding_html = File.read(scaffolding_file)
+		  $GA.addTrackingCode(scaffolding_html, $hScaffolding[key]) 
+			writeFile(scaffolding_file, scaffolding_html)
+	
+	  } #end each_key
+		
+	end
+		
+
+end
