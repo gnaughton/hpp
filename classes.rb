@@ -41,6 +41,9 @@ class FeedbackFormProcessor
 		#update the product name.
     @FEEDBACK_FORM["<medidata-product-name>"] = $hSettings["product"]
 		
+		#update the location of the graphics files.
+		@FEEDBACK_FORM.gsub!(/<image-path>/i, $hSettings["feedback_form_graphics_location"])
+		
 		#point the feedback form at the Live or Test spreadsheet.
 		feedback_form_key_key = "feedback_form_key_" + $hSettings["help_system_status"]
 		
@@ -125,7 +128,7 @@ class ShowmeProcessor
   
       #get all the bits from the current line.
       #there can be an abitrary number of tabs between the bits.
-      text_where_link_goes, wrapper_file_for_showme, page_where_link_goes, showme_width, showme_height = row_in_showmes_file.split(/\t+/)
+      text_where_link_goes, wrapper_file_for_showme, page_where_link_goes, link_type, showme_width, showme_height = row_in_showmes_file.split(/\t+/)
       
       #skip to the next line in the list of showmes if the current line doesn't match the webhelp file we're looking at.
       next if !(webhelp_file_in_contents_folder == page_where_link_goes)
@@ -137,29 +140,24 @@ class ShowmeProcessor
       #build the URL to put into the link text.
       url_in_link = s3_bucket + wrapper_file_for_showme
   
-      #check whether the file we're looking at is the file that contains the list of showmes, or a file
-      #that contains contextual links from within its text.
-      #the text we use to build the link is different in these cases.
-      if webhelp_file_in_contents_folder == $hSettings["showme_list_" + lang]
-    
-        #it's the file that contains the list of showmes;
-        #we wrap the link around the text_where_link_goes
-        link_text_to_add = String.new(@LIST_TEMPLATE)
-        link_text_to_add["<LINK_TEXT>"] = text_where_link_goes
-						     
-      else
-
-        #it's a file that contains contextual links;
-        #the link comes immediately after the text_where_link_goes
-        link_text_to_add = String.new(@CONTEXT_TEMPLATE)
+      #is it a contextual link or hyperlinked link?
+      if link_type == "I"
+			
+			  #it's a contextual link. put an icon after the text.
+				link_text_to_add = String.new(@CONTEXT_TEMPLATE)
         link_text_to_add = text_where_link_goes + link_text_to_add
 				
 				#add the path to the contextual icon.
-				#(if it's a legacy system, the icon is in the same folder as the topic file;
-				# in a single-sourced system, the icon is two folders up.)
-				link_text_to_add["<PATH>"] = $hSettings["webhelp_content_folder"] == "legacy" ? "" : "../../"	 
+				link_text_to_add["<PATH>"] = $hSettings["contextual_link_graphics_location"]	 
+						     
+      else
+			
+		  	#it's a hyperlink link.
+        #we wrap the link around the text_where_link_goes
+        link_text_to_add = String.new(@LIST_TEMPLATE)
+        link_text_to_add["<LINK_TEXT>"] = text_where_link_goes
 	 
-      end  # is it the showme list or a contextual file?
+      end  # is it a contextual link or hyperlinked link?
      
       #set the height and width of the showme popup.
 	  
