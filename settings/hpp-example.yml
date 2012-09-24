@@ -79,6 +79,13 @@ webhelp: [WEBHELP]
 language: ENG
 #####################################################################################################
 
+#####################################################################################################
+#Portal page settings.
+#The name of the portal page. Use this to identify the portal page so the script does not add a 
+#feedback form to it.
+#If you don't have a portal page, just leave this setting as it is.
+portal_page_name:  kpp.htm
+#####################################################################################################
 
 #####################################################################################################
 #About box settings.
