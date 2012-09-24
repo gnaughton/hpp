@@ -159,10 +159,12 @@ track_root_file:            yes
 
 ######################################################################################################
 #Private showmes settings.
-default_showme_width:  970
-default_showme_height: 560
-video_width:           950          
-video_height:          546
+default_showme_width:              970
+default_showme_height:             560
+video_width:                       950          
+video_height:                      546
+#include the / at the end:
+contextual_link_graphics_location: http://zzz-help-metrics-sandbox.s3.amazonaws.com/
 ######################################################################################################
 
 ######################################################################################################
@@ -182,4 +184,10 @@ feedback_form_key_test:     dFpsVWJpMTQ1RHZpR2h0Z1VqMXpCSHc6MA&amp;ifq
 ######################################################################################################
 #Popups fix settings.
 apply_close_popups_fix: yes
+######################################################################################################
+
+##########################s############################################################################
+#Private feedback form settings.
+#Images location (include the / at the end):
+feedback_form_graphics_location:	http://webhelp-resources.s3.amazonaws.com/ff/images/
 ######################################################################################################
