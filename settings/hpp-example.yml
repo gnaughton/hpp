@@ -102,8 +102,6 @@ copyright_year:    ABOUT_BOX_YEAR
 #Showmes settings.
 do_showmes:            no
 s3_bucket:             http://[foo]-webhelp[-staging].s3.amazonaws.com/WebHelp_Videos_<LANG>/
-showme_list_ENG:       [showme list file, eg. List_of_Showme_Videos.htm]
-showme_list_JPN:       [showme list file, eg. List_of_Showme_Videos.htm]
 #####################################################################################################
 
 #####################################################################################################
