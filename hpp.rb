@@ -70,10 +70,6 @@ langs.each do |lang|
 	#load the showme files.
 	$SM.loadFiles(lang, settings_file_root) if $hSettings["do_showmes"]
   
-	#copy the showme icon.
-	$SM.copyContextualIcon($WEBHELP_PATH) if $hSettings["do_showmes"]
-	
-	
 	#build an XML document from the base TOC file.
 	$TOCFILES_FOLDER = $WEBHELP_PATH + "/whxdata/"
 	tocdoc = Document.new(File.new($TOCFILES_FOLDER + "whtdata0.xml"))

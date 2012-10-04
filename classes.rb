@@ -96,22 +96,7 @@ class ShowmeProcessor
 		end
   
   end
-  
-  def copyContextualIcon(webhelp_path)
-  
-    begin
     
-      FileUtils.cp "files/system/showmes/i_help_video.png", webhelp_path + "/i_help_video.png"
-  
-    rescue Errno::ENOENT
-
-      $CM.add_error("Couldn't copy showme icon to help system.", false)
-
-    end
-  
-  end
-
-  
   def addShowmeLinks (webhelp_file_in_contents_folder, html_of_webhelp_file_in_contents_folder, lang)
   
     s3_bucket = String.new($hSettings["s3_bucket"])
