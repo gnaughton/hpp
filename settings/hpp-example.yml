@@ -169,7 +169,7 @@ default_showme_height:             560
 video_width:                       950          
 video_height:                      546
 #include the / at the end:
-contextual_link_graphics_location: http://zzz-help-metrics-sandbox.s3.amazonaws.com/
+contextual_link_graphics_location: http://webhelp-resources.s3.amazonaws.com/sm/images/
 ######################################################################################################
 
 ######################################################################################################
