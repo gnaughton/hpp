@@ -30,11 +30,15 @@ load_settings_file(settings_file_root)
 #if everything's OK the array will contain all the languages we're processing.
 langs = checkLanguage()
 
-
 #this array starts with the list of mandatory files.
 #each time a topic is processed, it is subtracted from the array.
 #the remaining topics in the array are the missing mandatory files.
 missing_mandatory = get_mandatory_files(settings_file_root)
+
+#the global hash that stores the files to be written to disk at the end.
+#the key is the file to be written.
+#the value is its modified html.
+$files_to_write = Hash.new
 
 langs.each do |lang|
 
@@ -90,6 +94,9 @@ langs.each do |lang|
 	$CM.add_missing_mandatory_messages(missing_mandatory)
   
 	#display the wrapup text for the help system.
-	$CM.done()
+	$CM.done_help_system()
 	
 end #language loop
+
+#write the changed files to disk.
+write_files()

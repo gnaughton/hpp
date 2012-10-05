@@ -26,7 +26,7 @@ def get_options()
 	
 end # get_options()
 
-def writeFile(file_in_webhelp, its_html)
+def add_to_file_list(file_in_webhelp, its_html)
 
   begin
     f = File.open(file_in_webhelp, 'w')
@@ -127,8 +127,6 @@ def process_topic_files(elements, lang, missing_mandatory)
 
    elements.each { |e|  
 	 
-	  $CM.update_progress_display()
-	 
 	   if e.attributes['ref']
 		 #it's a 'chunk' element, with a url to a sub-toc file in the 'ref' attribute
 		   
@@ -187,7 +185,7 @@ def process_topic_file(file_in_toc, lang, missing_mandatory)
 			   topic_html.gsub!("<body", "<body onLoad=\"self.focus()\"") if $hSettings["apply_close_popups_fix"]
 				 
 				 #save the modified file.
-				 writeFile(topic_file, topic_html)
+				 add_to_file_list(topic_file, topic_html)
 				 
 end
 
@@ -282,10 +280,39 @@ def add_ga_to_scaffolding_files()
 	    scaffolding_file =  $WEBHELP_PATH + "/" + key
 		  scaffolding_html = File.read(scaffolding_file)
 		  $GA.addTrackingCode(scaffolding_html, $hScaffolding[key]) 
-			writeFile(scaffolding_file, scaffolding_html)
+			add_to_file_list(scaffolding_file, scaffolding_html)
 	
 	  end #each_key do
 		
 	end # if $hSettings
 		
 end # add_ga...
+
+def add_to_file_list(file, html)
+
+  $files_to_write[file] = html
+
+end
+
+def write_files
+
+  $CM.display_start_write_message()
+  $files_to_write.each_key do |file|
+		  
+    html = $files_to_write[file]
+		begin
+	    
+			f = File.open(file, 'w')
+      f.write(html)
+      f.close
+		rescue Errno::ENOENT
+      $CM.add_error("Couldn't write "  + file + " to disk.", true)
+    end  #rescue
+		
+		$CM.update_filewrite_progress_display()
+   
+	end  #each_key
+	
+	$CM.display_end_write_message()
+		
+end  #write_files

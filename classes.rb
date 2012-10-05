@@ -177,7 +177,7 @@ class ShowmeProcessor
 
       html = openFile(w)
 	    $GA.addTrackingCode(html, "ShowMe")
-	    writeFile(w, html)
+	    add_to_file_list(w, html)
 
     end #each.do 
 
@@ -231,7 +231,7 @@ class AboutboxProcessor
 		
 		#put the file back together and write it to disk.
 		new_javascript = scriptbits[0] + splitter_text + scriptbits[1]
-		writeFile(webhelp_path + "/" + whtbar, new_javascript)
+		add_to_file_list(webhelp_path + "/" + whtbar, new_javascript)
 		
 		#done editing the JavaScript.
 		###############################################################################
@@ -253,7 +253,7 @@ class AboutboxProcessor
 		placeholders = ["product_name", "product_version", "author_name", "copyright_year"]
 		placeholders.each { |ph| aboutbox_html.gsub!("[" + ph + "]", $hSettings[ph].to_s) }
 		
-		writeFile(webhelp_path + "/whskin_banner.htm", aboutbox_html) 
+		add_to_file_list(webhelp_path + "/whskin_banner.htm", aboutbox_html) 
 		
 		#done the About box.
 		###############################################################################
@@ -307,19 +307,31 @@ class ConsoleMessages
 
   def initialize
 	
-	  @pos       = 0
-		@reset_pos = 60
 		@errors    = []
 		showstopper = false
+		@files = 0
+		@progress_display_freq = 30
 		
 		#display strings.
-		@working_message = "Working"
-		@done_message = "Done!"
-		@symbol = "."
 		@error_header = "Errors:"
 		@error_start = "* "
+		
 	  
 	end
+	
+	def display_start_write_message 
+	
+		puts "Writing files to disk..."
+		
+	end #display_start_write_message
+	
+	def display_end_write_message 
+	
+		puts "Wrote files to disk."
+		puts ""
+		puts "Updated WebHelp systems!"
+		
+	end #display_end_write_message
 	
 	def show_version (stop_now)
 
@@ -334,78 +346,53 @@ class ConsoleMessages
 
   end  # show_version()
 	
-	def show_start_message()
-	  
-		print @start_message
-	  
-	end
-	
 	def start_file_message()
 	
-	  puts ''
-	  puts "File: " + $WEBHELP_PATH + "/" + $WEBHELP_FILE
-    print @working_message
+	  puts "Updating WebHelp system: " + $WEBHELP_PATH + "/" + $WEBHELP_FILE + "..."
 	
 	end # start_file_message
 	
-	def start
+	def done_help_system
 	
-	  show_start_message()
-	
-	end
-	
-	def show_done_message()
-	
-	  print "\r" + @working_message + (@symbol * (@reset_pos - @working_message.length)) + @done_message
-		
-	end
-	
-	def done
-	
-	  show_done_message()
 		display_errors()
-		reset()
+		puts "Updated WebHelp system: " + $WEBHELP_PATH + "/" + $WEBHELP_FILE
+		puts ""
 	
 	end
 	
-	def reset()
-	
-	  @errors = []
-		
-	end
+	def update_filewrite_progress_display() 
 
-  def update_progress_display() 
-
-	  @pos += 1
-	  print @symbol
-    print ("\r" + @working_message + (" " * (@reset_pos - @working_message.length)) + "\r" + @working_message) if (@pos % (@reset_pos - @working_message.length)) == 0
+	  @files += 1
+	  puts "Wrote " + @files.to_s + " files to disk." if (@files % @progress_display_freq) == 0 
 	
 	end
 	
 	def add_error (error, showstopper)
 	
 	  if showstopper
-	
-	    puts "\rCouldn't process help system!\r\n"	+ @error_header + "\r\n" + @error_start + error
+		  puts ""
+      puts 	@error_header + "\r\n" + @error_start + error
+			puts ""
+			puts "Couldn't finish processing WebHelp system(s)."
+			puts "The error that appears after 'Writing files to disk...' is the showstopper."
 		  abort
-	
 	  else
-	
 	    @errors << error
-	
-	  end
+		end
 	
   end # add error
 	
 	
 	def display_errors
 	
-	  @errors.sort!
 	  if (@errors.length > 0)
-		  puts "\r\n" + @error_header
+	    @errors.sort!
+	    puts "\r\n" + @error_header
 	    @errors.each { |e| puts @error_start + e }
+		  @errors = []
+			puts ""
 		end
-			
+		
 	end # display_errors 
 	
 	def add_missing_mandatory_messages (mm)
