@@ -88,10 +88,7 @@ class ShowmeProcessor
     
 		rescue Errno::ENOENT 
 		  
-			$CM.add_error("Couldn't add showmes: couldn't load template file or showmes file.", false)
-		  
-			#don't do any more showmes processing.
-		  $hSettings["do_showmes"] = false
+			$CM.add_error("Couldn't add showmes: couldn't load template file or showmes file.", true)
 			
 		end
   
@@ -160,7 +157,7 @@ class ShowmeProcessor
 			rescue Exception => e
 			  
 				errmsg = "Couldn't add showme link. Topic: " + webhelp_file_in_contents_folder + " Link text: " + text_where_link_goes
-			  $CM.add_error(errmsg, false)
+			  $CM.add_error(errmsg, true)
         
 			end
 
@@ -275,7 +272,7 @@ class TableIconProcessor
     
     rescue Errno::ENOENT
 		
-		  $CM.add_error("Problem copying table icons to help system.", false)
+		  $CM.add_error("Couldn't copy table icons to help system.", true)
 
     end  
 
@@ -313,7 +310,8 @@ class ConsoleMessages
 		@progress_display_freq = 30
 		
 		#display strings.
-		@error_header = "Errors:"
+		@warning_header = "Warnings:"
+		@error_header = "Error:"
 		@error_start = "* "
 		
 	  
@@ -373,8 +371,7 @@ class ConsoleMessages
 		  puts ""
       puts 	@error_header + "\r\n" + @error_start + error
 			puts ""
-			puts "Couldn't finish processing WebHelp system(s)."
-			puts "The error that appears after 'Writing files to disk...' is the showstopper."
+			puts "Couldn't process WebHelp system(s)."
 		  abort
 	  else
 	    @errors << error
@@ -387,22 +384,12 @@ class ConsoleMessages
 	
 	  if (@errors.length > 0)
 	    @errors.sort!
-	    puts "\r\n" + @error_header
+	    puts "\r\n" + @warning_header
 	    @errors.each { |e| puts @error_start + e }
 		  @errors = []
 			puts ""
 		end
 		
 	end # display_errors 
-	
-	def add_missing_mandatory_messages (mm)
-	 
-	  #add the list of missing mandatory topics to the list of errors.
-	  mm.each do |m| 
-		  msg = "Missing mandatory topic: " + m
-		  @errors << msg 
-		end # mm.each do
-	
-	end # add_missing_mandatory_messages
 
 end # ConsoleMessages

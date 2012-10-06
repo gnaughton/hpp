@@ -84,15 +84,17 @@ langs.each do |lang|
 	#process any additional files not in the TOC.
 	process_nontoc_topic_files(settings_file_root, lang, missing_mandatory)
 	
+	#are there still files in the missing mandatory list?
+	#if so, flag the first one as a show-stopper error.
+	$CM.add_error("Missing mandatory topic: " + missing_mandatory[0], true) if missing_mandatory.length > 0
+	#$CM.add_missing_mandatory_messages(missing_mandatory)
+	
 	#add GA code to the scaffolding files.
 	add_ga_to_scaffolding_files() if $hSettings["do_analytics"]
 	
 	#Add GA code to the showme wrappers.
 	$SM.tag_wrappers(lang) if ($hSettings["do_showmes"] and $hSettings["do_analytics"] and !$hSettings["showme_wrappers_folder"].nil?)
 	
-	#add the list of missing topics to the list of errors.
-	$CM.add_missing_mandatory_messages(missing_mandatory)
-  
 	#display the wrapup text for the help system.
 	$CM.done_help_system()
 	
