@@ -101,7 +101,7 @@ langs.each do |lang|
 	#display the wrapup text for the help system.
 	$CM.done_help_system()
 	
-end #language loop
+end #langs.each |do|
 
 #write the changed files to disk.
 write_files()
