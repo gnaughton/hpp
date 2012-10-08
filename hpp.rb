@@ -25,21 +25,24 @@ settings_file_root = (ARGV[0].nil? ? "hpp" : ARGV[0])
 #load it.
 load_settings_file(settings_file_root)
 
-
 #check the language and filespec keys in the ini file.
-#if everything's OK the array will contain all the languages we're processing.
+#if everything's OK the 'langs' array will contain all the languages we're processing.
 langs = checkLanguage()
 
-#this array starts with the list of mandatory files.
+
+#the 'missing_mandatory' array starts with the list of mandatory files.
 #each time a topic is processed, it is subtracted from the array.
 #the remaining topics in the array are the missing mandatory files.
+#(this should probably have been defined as a global variable to remove
+#the need to pass it to functions like process_topic_files(tocdoc.root.elements, lang, missing_mandatory)
 missing_mandatory = get_mandatory_files(settings_file_root)
 
+
 #the global hash that stores the files to be written to disk at the end.
-#the key is the file to be written.
-#the value is its modified html.
+#the key is the file to be written; the value is its modified html.
 $files_to_write = Hash.new
 
+#once around this outer loop for each language to be processed.
 langs.each do |lang|
 
   #get the WebHelp path/file and the contents folder if specified. 
@@ -86,8 +89,8 @@ langs.each do |lang|
 	
 	#are there still files in the missing mandatory list?
 	#if so, flag the first one as a show-stopper error.
+	#the writer will have to fix them one by one until the script can continue.
 	$CM.add_error("Missing mandatory topic: " + missing_mandatory[0], true) if missing_mandatory.length > 0
-	#$CM.add_missing_mandatory_messages(missing_mandatory)
 	
 	#add GA code to the scaffolding files.
 	add_ga_to_scaffolding_files() if $hSettings["do_analytics"]

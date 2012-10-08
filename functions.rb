@@ -123,7 +123,8 @@ def copy_go_button(webhelp_path)
 def process_topic_files(elements, lang, missing_mandatory)
 
   #walk through the TOC files stored in the /whxdata folder as whtdata.0xml, whtdata1.xml...
-	#only whtdata0.xml might be present. If there are more, they are referenced in 'chunk' elements.
+	#whtdata0.xml might be the only file. If there are more, they are referenced in 'chunk' elements
+	#in whtdata0.xml.
 
    elements.each { |e|  
 	 
@@ -137,8 +138,7 @@ def process_topic_files(elements, lang, missing_mandatory)
 		 else
 		 #it's a 'book' or 'item' element.
      #if it has a 'url' attribute that references a topic file, we need to process that file.		 
-			  
-		   process_topic_file(e.attributes['url'], lang, missing_mandatory) if e.attributes['url']
+			  process_topic_file(e.attributes['url'], lang, missing_mandatory) if e.attributes['url']
 			
 			 #recursively call the function on the child elements of the current element.
 			 process_topic_files(e.elements, lang, missing_mandatory)
@@ -196,11 +196,9 @@ def process_nontoc_topic_files(settings_file_root, lang, missing_mandatory)
 		the file has the name of the settings file used to process the help system + '.txt', 
 		so balance.txt for balance.yml. 
 		
-		the user can be more specific and use a language-specific file, so balance_ENG.txt, balance_JPN.
-		
-		this function looks for the language-specific file first, then the general file.
-		if it doesn't find either, it carries on - in most cases these files won't exist.
-		
+	  fine if the file doesn't exist - the script just carries on.
+		(most help systems don't have nontoc topic files.)
+		 
 		the file has one topic file per line, so:
 		Not_in_TOC1.htm
 		Not_in_TOC2.htm
@@ -276,7 +274,8 @@ def add_ga_to_scaffolding_files()
     $hScaffolding = build_scaffolding_hash()
 	  $hScaffolding.each_key do |key| 
 	
-	    #read in the file, add the GA code, write the file.
+	    #read in the file, add the GA code, add the file to the list
+			#of files to be written.
 	    scaffolding_file =  $WEBHELP_PATH + "/" + key
 		  scaffolding_html = File.read(scaffolding_file)
 		  $GA.addTrackingCode(scaffolding_html, $hScaffolding[key]) 
