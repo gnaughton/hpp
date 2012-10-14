@@ -69,6 +69,12 @@ webhelp: [WEBHELP]
 #####################################################################################################
 
 #####################################################################################################
+#This key specifies the .hhp file in the RoboHelp system. This file contains the list of topics
+#in the help system
+robohelp_hhp_file: [RH_HHP_FILE]
+#####################################################################################################
+
+#####################################################################################################
 #Language settings.
 #Always specify a language in the "language" key even when you're not using <LANG> above.
 #Language options are ENG | JPN | ENG,JPN
