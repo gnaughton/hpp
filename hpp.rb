@@ -82,10 +82,10 @@ langs.each do |lang|
 	tocdoc = Document.new(File.new($TOCFILES_FOLDER + "whtdata0.xml"))
 	
 	#process the topic files (add feedback forms, GA code...)
-	process_topic_files(tocdoc.root.elements, lang, missing_mandatory)
+	process_topic_files(lang, missing_mandatory)
 	
 	#process any additional files not in the TOC.
-	process_nontoc_topic_files(settings_file_root, lang, missing_mandatory)
+	#process_nontoc_topic_files(settings_file_root, lang, missing_mandatory)
 	
 	#are there still files in the missing mandatory list?
 	#if so, flag the first one as a show-stopper error.

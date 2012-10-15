@@ -76,6 +76,15 @@ def get_file (path_and_file)
 		
 end
 
+def get_path (path_and_file)
+
+  #get the path from a path + file
+  path, file = split_path_and_file(path_and_file)
+  
+	return path
+
+end
+
 
 def removeFileExtension (strFile)
 
@@ -120,49 +129,52 @@ def copy_go_button(webhelp_path)
   end #copyGoButton
 
 
-def process_topic_files(elements, lang, missing_mandatory)
+def process_topic_files(lang, missing_mandatory)
 
-  #walk through the TOC files stored in the /whxdata folder as whtdata.0xml, whtdata1.xml...
-	#whtdata0.xml might be the only file. If there are more, they are referenced in 'chunk' elements
-	#in whtdata0.xml.
+  #get the list of topics from the RoboHelp.hhp file.
+	hhp = String.new($hSettings["robohelp_hhp_file"]).gsub("<LANG>",lang)
+	
+	#read in the .hhp file.
+	begin
+	  rh = File.read(hhp)
+	rescue Errno::ENOENT
+	  $CM.add_error("Couldn't read hhp file: " + hhp, true)
+	end
+	
+	#extract the topic list from it.
+	topics = rh.match(/\[FILES\]\n(.*?)\n\n/m).to_s.chomp
+	
+	#loop through the topics.
+	topics.each_line do |topic|
+	
+	  #couldn't figure out a regexp that ignores the initial [FILES], so ignore it here.
+	  next if topic.chomp == "[FILES]"
+		
+		#add the feedback form, etc.
+		process_topic_file(topic, lang, missing_mandatory)
+	
+	end #each_line do 
+	
+end #process_topic_files
 
-   elements.each { |e|  
-	 
-	   if e.attributes['ref']
-		 #it's a 'chunk' element, with a url to a sub-toc file in the 'ref' attribute
-		   
-			 #read the sub-toc file and pass the elements of its root node recursively to this function.
-			 tocdoc = Document.new(File.new($TOCFILES_FOLDER + e.attributes['ref']))
-			 process_topic_files(tocdoc.root.elements, lang, missing_mandatory)
-		 
-		 else
-		 #it's a 'book' or 'item' element.
-     #if it has a 'url' attribute that references a topic file, we need to process that file.		 
-			  process_topic_file(e.attributes['url'], lang, missing_mandatory) if e.attributes['url']
-			
-			 #recursively call the function on the child elements of the current element.
-			 process_topic_files(e.elements, lang, missing_mandatory)
-		 
-		 end
-		 
-	} #end each
-
-end
-
-def process_topic_file(file_in_toc, lang, missing_mandatory)
-
-         #process a file in the TOC.
+def process_topic_file(topic, lang, missing_mandatory)
+         
 				 
-				 #remove it from the global array that stores mandatory files.
-				 missing_mandatory.delete(file_in_toc)
-
-         #read in the file's HTML.  
-				 topic_file = $WEBHELP_PATH + "/" + file_in_toc
+				 #change the direction of the separators - Ruby likes "/", not "\" 
+				 #replace spaces with underscores; the RoboHelp project has spaces, the WebHelp system has underscores.
+	       t = topic.chomp.gsub("\\","\/").gsub(" ","_")
+				 
+				 #remove the topic from the global array that stores mandatory files.
+				 missing_mandatory.delete(t)
 				
+				 #get the fully-qualified topic file.
+ 				 topic_file =  $WEBHELP_PATH + "\/" + t
+				 
+         #read in its HTML
 				 begin
 				   topic_html = File.read(topic_file)
 				 rescue Errno::ENOENT 
-				   $CM.add_error("Couldn't open topic: " + file_in_toc, false)
+				   $CM.add_error("Couldn't open topic: " + topic_file, false)
 					 return
 				 end
 				 
@@ -170,14 +182,14 @@ def process_topic_file(file_in_toc, lang, missing_mandatory)
 				 $GA.addTrackingCode(topic_html, "Content") if $hSettings["do_analytics"]
 				 
 				 #add the feedback form.
-				 $FF.addFeedbackForm(file_in_toc, topic_file, topic_html) if $hSettings["do_feedbackforms"]
+				 $FF.addFeedbackForm(topic, topic_file, topic_html) if $hSettings["do_feedbackforms"]
 				 
 				 #fix the table icons.
 				 $TI.addIcons(topic_html) if $hSettings["do_tableicons"]
 				 
 				 #add the showme links.
 				 if $hSettings["do_showmes"]
-				   topic_file_without_path = get_file(file_in_toc)
+				   topic_file_without_path = get_file(topic)
 				   $SM.addShowmeLinks(topic_file_without_path, topic_html, lang) 
 				 end
 				 
