@@ -163,7 +163,7 @@ def process_topic_file(topic, lang, missing_mandatory)
 				 #change the direction of the separators - Ruby likes "/", not "\" 
 				 #replace spaces with underscores; the RoboHelp project has spaces, the WebHelp system has underscores.
 	       t = topic.chomp.gsub("\\","\/").gsub(" ","_")
-				 
+
 				 #remove the topic from the global array that stores mandatory files.
 				 missing_mandatory.delete(t)
 				
@@ -200,43 +200,6 @@ def process_topic_file(topic, lang, missing_mandatory)
 				 add_to_file_list(topic_file, topic_html)
 				 
 end
-
-def process_nontoc_topic_files(settings_file_root, lang, missing_mandatory)
-
-=begin
-	  if the help system has topics not in the toc, they are stored in a file in files/user/nontoc/
-		the file has the name of the settings file used to process the help system + '.txt', 
-		so balance.txt for balance.yml. 
-		
-	  fine if the file doesn't exist - the script just carries on.
-		(most help systems don't have nontoc topic files.)
-		 
-		the file has one topic file per line, so:
-		Not_in_TOC1.htm
-		Not_in_TOC2.htm
-		
-		files are specified relative to the root folder of the help system, so:
-		C:/BalanceHelp/Balance/Not_in_TOC.htm --> Balance/Not_in_TOC.htm
-		C:/RaveHelp/Not_in_TOC.htm            --> Not_in_TOC.htm
-		
-=end
-  
-	begin	
-	  
-		file_to_open = "files/user/nontoc/" + settings_file_root + ".txt"
-		
-		open(file_to_open).each do |nontoc_file| 
-			
-		  #add the GA, feedback forms etc. to the topic.
-	     process_topic_file(nontoc_file.chomp, lang, missing_mandatory)
-		
-    end # open(file_to_open).each do		
-	  
-	rescue 
-     #no problem if there isn't a nontoc topics file.
-   end #begin rescue block    
-		
-end #def process_nontoc...	
 
 
 def build_scaffolding_hash
