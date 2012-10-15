@@ -77,9 +77,6 @@ langs.each do |lang|
 	#load the showme files.
 	$SM.loadFiles(lang, settings_file_root) if $hSettings["do_showmes"]
   
-	#build an XML document from the base TOC file.
-	$TOCFILES_FOLDER = $WEBHELP_PATH + "/whxdata/"
-	tocdoc = Document.new(File.new($TOCFILES_FOLDER + "whtdata0.xml"))
 	
 	#process the topic files (add feedback forms, GA code...)
 	process_topic_files(lang, missing_mandatory)

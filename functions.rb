@@ -189,7 +189,7 @@ def process_topic_file(topic, lang, missing_mandatory)
 				 
 				 #add the showme links.
 				 if $hSettings["do_showmes"]
-				   topic_file_without_path = get_file(topic)
+				   topic_file_without_path = get_file(t)
 				   $SM.addShowmeLinks(topic_file_without_path, topic_html, lang) 
 				 end
 				 
