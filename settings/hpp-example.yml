@@ -69,8 +69,12 @@ webhelp: [WEBHELP]
 #####################################################################################################
 
 #####################################################################################################
-#This key specifies the .hhp file in the RoboHelp system. This file contains the list of topics
-#in the help system
+#The .hhp file in the RoboHelp system. This file contains the list of topics in the help system.
+#Use the fully-qualified path.
+#You can use a <LANG>.
+#
+#Example: C:/RoboHelp/<LANG>/Balance/Balance.hhp
+
 robohelp_hhp_file: [RH_HHP_FILE]
 #####################################################################################################
 
