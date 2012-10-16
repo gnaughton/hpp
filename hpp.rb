@@ -35,8 +35,6 @@ langs = checkLanguage()
 #the 'missing_mandatory' array starts with the list of mandatory files.
 #each time a topic is processed, it is subtracted from the array.
 #the remaining topics in the array are the missing mandatory files.
-#(this should probably have been defined as a global variable to remove
-#the need to pass it to functions like process_topic_files(tocdoc.root.elements, lang, missing_mandatory)
 missing_mandatory = get_mandatory_files(settings_file_root)
 
 
@@ -47,11 +45,9 @@ $files_to_write = Hash.new
 #once around this outer loop for each language to be processed.
 langs.each do |lang|
 
-  #get the WebHelp path/file and the contents folder if specified. 
-  webhelp = String.new($hSettings["webhelp"])
-	
   #get the WebHelp path and file.
-  $WEBHELP_PATH, $WEBHELP_FILE = split_path_and_file(webhelp)
+  webhelp = String.new($hSettings["webhelp"])
+	$WEBHELP_PATH, $WEBHELP_FILE = split_path_and_file(webhelp)
   $WEBHELP_PATH.gsub!("<LANG>", lang) 
 	
 	#show the message that we've started processing a webhelp system.
