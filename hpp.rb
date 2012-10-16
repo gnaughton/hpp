@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 load 'classes.rb'
 load 'functions.rb'
 require 'fileutils.rb'

@@ -136,7 +136,9 @@ def process_topic_files(lang, missing_mandatory)
 	
 	#read in the .hhp file.
 	begin
-	  rh = File.read(hhp)
+	  rh = read_file(hhp)
+	  #f = File.open(hhp, 'r:UTF-8') 
+	  #rh = f.read
 	rescue Errno::ENOENT
 	  $CM.add_error("Couldn't read hhp file: " + hhp, true)
 	end
@@ -290,3 +292,11 @@ def write_files
 	$CM.display_end_write_message()
 		
 end  #write_files
+
+
+def read_file(file)
+
+    f = File.open(file, 'r:UTF-8') 
+	  return f.read
+
+end #read_file
