@@ -111,7 +111,7 @@ copyright_year:    ABOUT_BOX_YEAR
 #####################################################################################################
 #Showmes settings.
 do_showmes:            no
-s3_bucket:             http://[foo]-webhelp[-staging].s3.amazonaws.com/WebHelp_Videos_<LANG>/
+s3_bucket:             http://[foo]-webhelp[-staging].s3.amazonaws.com/WebHelpVideos_<LANG>/
 #####################################################################################################
 
 #####################################################################################################
