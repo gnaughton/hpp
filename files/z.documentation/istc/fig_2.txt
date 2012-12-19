@@ -1,0 +1,12 @@
+<html>
+<head>
+<title>Feedback Form</title>
+<body>
+<form method="POST">
+<input type="hidden" value="Adding a User"/>
+Rating: <input type="text"/><br/>
+Comment: <input type="text"/><br/>
+<input type="submit" name="submit"/>
+</form>
+</body>
+</html>
